@@ -7,7 +7,7 @@ import javafx.scene.control.Alert;
 public class Door {
     private double x;
     private double y;
-    private boolean locked;
+    boolean locked;
     boolean inRange;
     Sound sound = new Sound();
 

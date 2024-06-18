@@ -10,6 +10,7 @@ module tech.makers.demo {
     requires junit;
     requires jcommander;
     requires java.desktop;
+    requires org.mockito;
 
     opens tech.makers.demo to javafx.fxml;
     exports tech.makers.demo;
