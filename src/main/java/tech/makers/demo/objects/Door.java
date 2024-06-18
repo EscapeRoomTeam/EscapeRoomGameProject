@@ -1,14 +1,16 @@
-package tech.makers.demo;
+package tech.makers.demo.objects;
 
 import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
+import tech.makers.demo.player.Player;
+import tech.makers.demo.puzzles.Puzzle;
 
 public class Door {
     private double x;
     private double y;
     private boolean locked;
-    boolean inRange;
+    public boolean inRange;
 
     public Door(double x, double y) {
         this.x = x;
@@ -30,7 +32,7 @@ public class Door {
         }
     }
 
-    void showLockedMessage() {
+    public void showLockedMessage() {
         if (inRange) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

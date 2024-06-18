@@ -8,6 +8,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import tech.makers.demo.objects.Door;
+import tech.makers.demo.player.Player;
+import tech.makers.demo.puzzles.Puzzle;
 
 public class EscapeRoomGame extends Application {
     private Player player;
@@ -68,7 +71,8 @@ public class EscapeRoomGame extends Application {
         }.start();
     }
 
-    private void checkInteraction() {
+    // Change to public for testing purposes
+    public void checkInteraction() {
         if (puzzle.intersects(player.getX(), player.getY())) {
             puzzle.checkPlayerInRange(player);
         } else if (door.intersects(player.getX(), player.getY())) {
@@ -81,8 +85,4 @@ public class EscapeRoomGame extends Application {
             }
         }
     }
-
 }
-
-
-

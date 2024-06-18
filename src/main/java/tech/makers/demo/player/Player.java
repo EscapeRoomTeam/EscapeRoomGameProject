@@ -1,7 +1,9 @@
-package tech.makers.demo;
+package tech.makers.demo.player;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import tech.makers.demo.objects.Door;
+import tech.makers.demo.puzzles.Puzzle;
 
 public class Player {
     private double x;
@@ -38,14 +40,14 @@ public class Player {
         }
     }
 
-    boolean checkPuzzleCollision(double newX, double newY, Puzzle puzzle) {
+    public boolean checkPuzzleCollision(double newX, double newY, Puzzle puzzle) {
         if (puzzle.intersects(newX, newY)) {
             return true;
         }
         return false;
     }
 
-    boolean checkDoorCollision(double newX, double newY, Door door) {
+    public boolean checkDoorCollision(double newX, double newY, Door door) {
         if (door.intersects(newX, newY)) {
             return true;
         }

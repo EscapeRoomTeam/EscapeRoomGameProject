@@ -1,11 +1,12 @@
-package tech.makers.demo;
+package tech.makers.demo.puzzles;
 
-import com.beust.ah.A;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
 import javafx.scene.control.TextInputDialog;
 import javafx.application.Platform;
+import tech.makers.demo.player.Player;
+
 import java.util.Optional;
 
 public class Puzzle {

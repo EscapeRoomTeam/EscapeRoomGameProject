@@ -3,8 +3,12 @@ package tech.makers.demo;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.testng.annotations.Test;
+import tech.makers.demo.objects.Door;
+import tech.makers.demo.player.Player;
+import tech.makers.demo.puzzles.Puzzle;
+
+import static org.testng.AssertJUnit.*;
 
 public class PlayerTest {
 
