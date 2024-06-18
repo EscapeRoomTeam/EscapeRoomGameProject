@@ -8,7 +8,7 @@ public class Door {
     private double x;
     private double y;
     private boolean locked;
-    boolean inRange;
+    public boolean inRange;
 
     public Door(double x, double y) {
         this.x = x;
@@ -22,35 +22,34 @@ public class Door {
         gc.fillRect(x, y, 100, 100);
     }
 
-    public void interact(Puzzle puzzle) {
+    public void interact(Puzzle puzzle, LevelManager levelManager) {
         if (locked) {
             showLockedMessage();
         } else {
-            showGameCompleteMessage();
+            showGameCompleteMessage(levelManager);
         }
     }
 
-    void showLockedMessage() {
+    public void showLockedMessage() {
         if (inRange) {
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Door Locked");
-            alert.setHeaderText(null);
-            alert.setContentText("The door is locked until puzzle is completed");
-            alert.showAndWait();
-        });
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Door Locked");
+                alert.setHeaderText(null);
+                alert.setContentText("The door is locked until the puzzle is completed.");
+                alert.showAndWait();
+            });
+        }
     }
-    }
 
-
-
-    private void showGameCompleteMessage() {
+    public void showGameCompleteMessage(LevelManager levelManager) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Door Unlocked");
             alert.setHeaderText(null);
-            alert.setContentText("You have completed the Game!");
+            alert.setContentText("You have completed the level!");
             alert.showAndWait();
+            levelManager.loadNextLevel();
         });
     }
 
@@ -62,15 +61,10 @@ public class Door {
 
     public void checkPlayerInRange(Player player) {
         double distance = Math.sqrt(Math.pow(player.getX() - x, 2) + Math.pow(player.getY() - y, 2));
-        if (distance < 100) {
-            inRange = true;
-        } else {
-            inRange = false;
-        }
+        inRange = distance < 100;
     }
 
     public boolean intersects(Double playerX, double playerY) {
-        return playerX < x + 100 && playerX + 50 > x && playerY < y + 100 && playerY + 50 > y;
+        return playerX < x + 100 && playerX + 50 > x && playerY < y + 100;
     }
-
 }

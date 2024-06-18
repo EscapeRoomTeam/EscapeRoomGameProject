@@ -13,6 +13,7 @@ public class EscapeRoomGame extends Application {
     private Player player;
     private Puzzle puzzle;
     private Door door;
+    private LevelManager levelManager;
 
     // Main method, starts the game
     public static void main(String[] args) {
@@ -46,7 +47,7 @@ public class EscapeRoomGame extends Application {
             if (event.getCode() == KeyCode.D) player.moveRight(puzzle, door);
             if (event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.E) {
                 puzzle.interact();
-                door.interact(puzzle);
+                door.interact(puzzle, levelManager);
             }
         });
 

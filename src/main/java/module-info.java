@@ -12,4 +12,6 @@ module tech.makers.demo {
 
     opens tech.makers.demo to javafx.fxml;
     exports tech.makers.demo;
+    exports tech.makers.demo.levels;
+    opens tech.makers.demo.levels to javafx.fxml;
 }
