@@ -1,19 +1,21 @@
 package tech.makers.demo;
 
-import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.TextInputDialog;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import javafx.scene.paint.Color;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
-
-import org.junit.Test;
-
-import static javafx.beans.binding.Bindings.when;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class PuzzleTest {
+    private Puzzle puzzle;
+    private Player player;
+
+    @BeforeEach
+    public void setUp() {
+        puzzle = new Puzzle(300, 300, "What is 2 + 2?", "4");
+        player = mock(Player.class);
+    }
 
     @Test
     public void testConstructor() {
@@ -29,8 +31,6 @@ public class PuzzleTest {
         assertFalse(puzzle.isSolved());
     }
 
-
-
     @Test
     public void testRender_notSolved_isRed() {
         Puzzle puzzle = new Puzzle(300, 300, "What is 2 + 2?", "4");
@@ -42,23 +42,39 @@ public class PuzzleTest {
         verify(mockContext).setFill(Color.RED);
     }
 
-
     @Test
     public void testRender_solved_isGreen() {
         Puzzle puzzle = new Puzzle(300, 300, "What is 2 + 2?", "4");
-        puzzle.solved = true;
+        puzzle.solved=true;
         GraphicsContext mockContext = mock(GraphicsContext.class); // Mock the GraphicsContext
         puzzle.render(mockContext);
-        //Verify the colour is Green
+        // Verify the colour is Green
         verify(mockContext).setFill(Color.GREEN);
     }
 
+    @Test
+    public void testCheckPlayerInRange() {
+        when(player.getX()).thenReturn(290.0);
+        when(player.getY()).thenReturn(290.0);
+        puzzle.checkPlayerInRange(player);
+        assertTrue(puzzle.inRange);
+    }
 
-
-
-
-
-
-
-
+    @Test
+    public void testIntersects() {
+        assertTrue(puzzle.intersects(310, 310));
+        assertFalse(puzzle.intersects(400, 400));
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
