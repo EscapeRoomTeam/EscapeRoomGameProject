@@ -9,6 +9,7 @@ public class Door {
     private double y;
     boolean locked;
     boolean inRange;
+    Sound sound = new Sound();
 
     public Door(double x, double y) {
         this.x = x;
@@ -27,6 +28,9 @@ public class Door {
             showLockedMessage();
         } else {
             showGameCompleteMessage();
+            // play sfx
+            sound.setFile(1);
+            sound.play();
         }
     }
 

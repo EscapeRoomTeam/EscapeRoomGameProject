@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 public class Player {
     private double x;
     private double y;
+    Sound sound = new Sound();
 
     //Player constructor, sets the player's starting position
     public Player(double x, double y) {
@@ -17,6 +18,10 @@ public class Player {
     public void moveUp(Puzzle puzzle, Door door) {
         if (!checkPuzzleCollision(x, y -20, puzzle) && !checkDoorCollision(x, y -20, door)) {
             y -= 20;
+
+//            Placeholder for time being: triggers sound every time sprite moves, need to stop from happening for each movement
+//            sound.setFile(1);
+//            sound.play();
         }
     }
 

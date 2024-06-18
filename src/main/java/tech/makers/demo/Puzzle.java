@@ -13,9 +13,10 @@ public class Puzzle {
     private double y;
     private String question;
     private String answer;
-    boolean solved;
-    boolean interacting;
-    boolean inRange;
+    private boolean solved;
+    private boolean interacting;
+    private boolean inRange;
+    Sound sound = new Sound();
 
     //Constructor to initialize the position, question, and answer of the puzzle
     public Puzzle(double x, double y, String question, String answer) {
@@ -38,6 +39,9 @@ public class Puzzle {
     public void interact() {
         if (inRange && !solved && !interacting) {  //checks if puzzle is not solved and player is not interacting
             interacting = true; //sets flag to true to stop puzzle spamming
+            // Plays sfx
+            sound.setFile(2);
+            sound.play();
             Platform.runLater(() -> { //run the following code on the JavaFX thread
                 TextInputDialog dialog = new TextInputDialog();
                 dialog.setTitle("Puzzle");
