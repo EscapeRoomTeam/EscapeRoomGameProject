@@ -1,6 +1,6 @@
 package tech.makers.demo;
 
-import com.beust.ah.A;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
@@ -16,6 +16,7 @@ public class Puzzle {
     private boolean solved;
     private boolean interacting;
     private boolean inRange;
+    Sound sound = new Sound();
 
     //Constructor to initialize the position, question, and answer of the puzzle
     public Puzzle(double x, double y, String question, String answer) {
@@ -38,6 +39,9 @@ public class Puzzle {
     public void interact() {
         if (inRange && !solved && !interacting) {  //checks if puzzle is not solved and player is not interacting
             interacting = true; //sets flag to true to stop puzzle spamming
+            // Plays sfx
+            sound.setFile(2);
+            sound.play();
             Platform.runLater(() -> { //run the following code on the JavaFX thread
                 TextInputDialog dialog = new TextInputDialog();
                 dialog.setTitle("Puzzle");
@@ -86,6 +90,23 @@ public class Puzzle {
     //method to check if the player intersects with the puzzle
     public boolean intersects(double playerX, double playerY) {
         return playerX < x + 50 && playerX + 50 > x && playerY < y + 50 && playerY + 50 > y;
+    }
+
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public String getAnswer() {
+        return answer;
     }
 
 

@@ -7,8 +7,9 @@ import javafx.scene.control.Alert;
 public class Door {
     private double x;
     private double y;
-    private boolean locked;
-    private boolean inRange;
+    boolean locked;
+    boolean inRange;
+    Sound sound = new Sound();
 
     public Door(double x, double y) {
         this.x = x;
@@ -27,10 +28,13 @@ public class Door {
             showLockedMessage();
         } else {
             showGameCompleteMessage(levelManager);
+            // play sfx
+            sound.setFile(1);
+            sound.play();
         }
     }
 
-    private void showLockedMessage() {
+    public void showLockedMessage() {
         if (inRange) {
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -42,7 +46,7 @@ public class Door {
         }
     }
 
-    private void showGameCompleteMessage(LevelManager levelManager) {
+    public void showGameCompleteMessage(LevelManager levelManager) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Door Unlocked");
