@@ -13,7 +13,7 @@ public class EscapeRoomGame extends Application {
     private Player player;
     private Puzzle puzzle;
     private Door door;
-
+    Sound sound = new Sound();
     // Main method, starts the game
     public static void main(String[] args) {
         launch(args);
@@ -25,6 +25,9 @@ public class EscapeRoomGame extends Application {
         // Create the canvas/window
         Canvas canvas = new Canvas(800, 600);
         GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        // Starts music
+        playMusic(0);
 
         // Create the player and puzzle
         player = new Player(100, 100);
@@ -80,6 +83,20 @@ public class EscapeRoomGame extends Application {
                 }
             }
         }
+    }
+    public void playMusic(int i) {
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic(int i) {
+        sound.stop();
+    }
+
+    public void playSE(int i) {
+        sound.setFile(i);
+        sound.play();
     }
 
 }

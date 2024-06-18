@@ -9,6 +9,7 @@ module tech.makers.demo {
     requires com.almasb.fxgl.all;
     requires junit;
     requires jcommander;
+    requires java.desktop;
 
     opens tech.makers.demo to javafx.fxml;
     exports tech.makers.demo;
