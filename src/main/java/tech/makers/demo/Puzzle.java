@@ -1,6 +1,6 @@
 package tech.makers.demo;
 
-import com.beust.ah.A;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
@@ -13,7 +13,7 @@ public class Puzzle {
     private double y;
     private String question;
     private String answer;
-    private boolean solved;
+    boolean solved;
     private boolean interacting;
     private boolean inRange;
 
@@ -104,6 +104,8 @@ public class Puzzle {
     public String getAnswer() {
         return answer;
     }
+
+
 }
 
 
