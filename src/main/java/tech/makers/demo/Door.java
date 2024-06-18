@@ -8,7 +8,7 @@ public class Door {
     private double x;
     private double y;
     private boolean locked;
-    public boolean inRange;
+    private boolean inRange;
 
     public Door(double x, double y) {
         this.x = x;
@@ -30,7 +30,7 @@ public class Door {
         }
     }
 
-    public void showLockedMessage() {
+    private void showLockedMessage() {
         if (inRange) {
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -42,7 +42,7 @@ public class Door {
         }
     }
 
-    public void showGameCompleteMessage(LevelManager levelManager) {
+    private void showGameCompleteMessage(LevelManager levelManager) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Door Unlocked");
@@ -66,5 +66,9 @@ public class Door {
 
     public boolean intersects(Double playerX, double playerY) {
         return playerX < x + 100 && playerX + 50 > x && playerY < y + 100;
+    }
+
+    public boolean isInRange() {
+        return inRange;
     }
 }
