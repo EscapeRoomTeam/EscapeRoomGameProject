@@ -13,9 +13,9 @@ public class Puzzle {
     private double y;
     private String question;
     private String answer;
-    private boolean solved;
+    boolean solved;
     private boolean interacting;
-    private boolean inRange;
+    boolean inRange;
     Sound sound = new Sound();
 
     //Constructor to initialize the position, question, and answer of the puzzle

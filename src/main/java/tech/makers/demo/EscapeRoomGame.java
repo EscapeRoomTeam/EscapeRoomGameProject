@@ -8,8 +8,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import tech.makers.demo.levels.Level;
 
 public class EscapeRoomGame extends Application {
+    private LevelManager levelManager;
+
     private Player player;
     private Puzzle puzzle;
     private Door door;
@@ -19,13 +22,14 @@ public class EscapeRoomGame extends Application {
         launch(args);
     }
 
-    //Starts the game window
+    // Starts the game window
     @Override
     public void start(Stage primaryStage) {
         // Create the canvas/window
         Canvas canvas = new Canvas(800, 600);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
+        levelManager = new LevelManager(gc);
         // Starts music
         playMusic(0);
 
@@ -39,17 +43,18 @@ public class EscapeRoomGame extends Application {
 
         Scene scene = new Scene(root);
         scene.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.UP) player.moveUp(puzzle, door);
-            if (event.getCode() == KeyCode.W) player.moveUp(puzzle, door);
-            if (event.getCode() == KeyCode.DOWN) player.moveDown(puzzle, door);
-            if (event.getCode() == KeyCode.S) player.moveDown(puzzle, door);
-            if (event.getCode() == KeyCode.LEFT) player.moveLeft(puzzle, door);
-            if (event.getCode() == KeyCode.A) player.moveLeft(puzzle, door);
-            if (event.getCode() == KeyCode.RIGHT) player.moveRight(puzzle, door);
-            if (event.getCode() == KeyCode.D) player.moveRight(puzzle, door);
+            Level currentLevel = levelManager.getCurrentLevel();
+            Player player = currentLevel.getPlayer();
+            Puzzle puzzle = currentLevel.getPuzzle();
+            Door door = currentLevel.getDoor();
+
+            if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) player.moveUp(puzzle, door);
+            if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) player.moveDown(puzzle, door);
+            if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) player.moveLeft(puzzle, door);
+            if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) player.moveRight(puzzle, door);
             if (event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.E) {
                 puzzle.interact();
-                door.interact(puzzle);
+                door.interact(puzzle, levelManager);
             }
         });
 
@@ -61,12 +66,8 @@ public class EscapeRoomGame extends Application {
             @Override
             public void handle(long now) {
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                player.render(gc);
-                puzzle.render(gc);
-                door.render(gc);
-                puzzle.checkPlayerInRange(player);
-                door.checkPlayerInRange(player);
-                door.checkUnlock(puzzle);
+                levelManager.render();
+                levelManager.update();
             }
         }.start();
     }
