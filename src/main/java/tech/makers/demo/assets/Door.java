@@ -1,14 +1,17 @@
-package tech.makers.demo;
+package tech.makers.demo.assets;
 
 import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
+import tech.makers.demo.levels.LevelManager;
+import tech.makers.demo.player.Player;
+import tech.makers.demo.levels.Puzzle;
 
 public class Door {
     private double x;
     private double y;
-    boolean locked;
-    boolean inRange;
+    public boolean locked;
+    public boolean inRange;
     Sound sound = new Sound();
 
     public Door(double x, double y) {

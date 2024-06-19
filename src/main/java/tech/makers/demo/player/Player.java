@@ -1,9 +1,11 @@
-package tech.makers.demo;
+package tech.makers.demo.player;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
+import tech.makers.demo.levels.Puzzle;
+import tech.makers.demo.assets.Door;
+import tech.makers.demo.assets.Sound;
 
 public class Player {
     private double x;
@@ -19,6 +21,7 @@ public class Player {
     private static final int FRAME_DURATION = 150; // Frame duration in milliseconds
     Sound sound = new Sound();
 
+    // Player constructor, sets the player's starting position
     public Player(double x, double y) {
         this.x = x;
         this.y = y;
@@ -50,42 +53,51 @@ public class Player {
         return frames;
     }
 
+    // Method to move the player up
     public void moveUp(Puzzle puzzle, Door door) {
+        // Check for collisions with puzzle or door before moving
         if (!checkPuzzleCollision(x, y - 20, puzzle) && !checkDoorCollision(x, y - 20, door)) {
             y -= 20;
             direction = "up";
         }
     }
 
+    // Method to move the player down
     public void moveDown(Puzzle puzzle, Door door) {
+        // Check for collisions with puzzle or door before moving
         if (!checkPuzzleCollision(x, y + 20, puzzle) && !checkDoorCollision(x, y + 20, door)) {
             y += 20;
             direction = "down";
         }
     }
 
+    // Method to move the player left
     public void moveLeft(Puzzle puzzle, Door door) {
+        // Check for collisions with puzzle or door before moving
         if (!checkPuzzleCollision(x - 20, y, puzzle) && !checkDoorCollision(x - 20, y, door)) {
             x -= 20;
             direction = "left";
         }
     }
 
+    // Method to move the player right
     public void moveRight(Puzzle puzzle, Door door) {
+        // Check for collisions with puzzle or door before moving
         if (!checkPuzzleCollision(x + 20, y, puzzle) && !checkDoorCollision(x + 20, y, door)) {
             x += 20;
             direction = "right";
         }
     }
 
-    boolean checkPuzzleCollision(double newX, double newY, Puzzle puzzle) {
+    public boolean checkPuzzleCollision(double newX, double newY, Puzzle puzzle) {
         return puzzle.intersects(newX, newY);
     }
 
-    boolean checkDoorCollision(double newX, double newY, Door door) {
+    public boolean checkDoorCollision(double newX, double newY, Door door) {
         return door.intersects(newX, newY);
     }
 
+    // Method to render the player on the screen
     public void render(GraphicsContext gc) {
         updateFrame();
         Image currentImage;
@@ -120,6 +132,7 @@ public class Player {
         return x;
     }
 
+    // Getter for the player's Y-coordinate
     public double getY() {
         return y;
     }
