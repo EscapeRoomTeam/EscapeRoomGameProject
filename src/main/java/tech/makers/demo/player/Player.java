@@ -7,6 +7,8 @@ import tech.makers.demo.levels.Puzzle;
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Sound;
 
+import java.util.Random;
+
 public class Player {
     private double x;
     private double y;
@@ -25,7 +27,13 @@ public class Player {
     private int currentFrame = 0;
     private long lastFrameTime = 0;
     private static final int FRAME_DURATION = 150; // Frame duration in milliseconds
+    // Sound stuff
     Sound sound = new Sound();
+    private int stepCounter = 0;
+    private Random random = new Random();
+    private int lastSoundIndex = -1;
+    private int[] footstepSounds = {3, 4, 5, 6};
+
 
     public Player(double x, double y) {
         this.x = x;
@@ -65,6 +73,7 @@ public class Player {
         return frames;
     }
 
+    // Method to move the player up
     public void moveUp(Puzzle puzzle, Door door) {
         double newY = y - 20;
         System.out.println("Trying to move up to: " + x + ", " + newY);
@@ -72,6 +81,18 @@ public class Player {
             y = newY;
             direction = "up";
             state = "run";
+            // Play sound every other step
+            stepCounter++;
+            if (stepCounter % 4 == 0) {
+                int soundIndex;
+                do {
+                    soundIndex = random.nextInt(footstepSounds.length);
+                } while (soundIndex == lastSoundIndex);
+                lastSoundIndex = soundIndex;
+                sound.setFile(footstepSounds[soundIndex]);
+                sound.setVolume(-27.0f);
+                sound.play();
+            }
         }
     }
 
@@ -82,9 +103,21 @@ public class Player {
             y = newY;
             direction = "down";
             state = "run";
+            stepCounter++;
+            if (stepCounter % 4 == 0) {
+                int soundIndex;
+                do {
+                    soundIndex = random.nextInt(footstepSounds.length);
+                } while (soundIndex == lastSoundIndex);
+                lastSoundIndex = soundIndex;
+                sound.setFile(footstepSounds[soundIndex]);
+                sound.setVolume(-27.0f);
+                sound.play();
+            }
         }
     }
 
+    // Method to move the player left
     public void moveLeft(Puzzle puzzle, Door door) {
         double newX = x - 20;
         System.out.println("Trying to move left to: " + newX + ", " + y);
@@ -92,9 +125,21 @@ public class Player {
             x = newX;
             direction = "left";
             state = "run";
+            stepCounter++;
+            if (stepCounter % 4 == 0) {
+                int soundIndex;
+                do {
+                    soundIndex = random.nextInt(footstepSounds.length);
+                } while (soundIndex == lastSoundIndex);
+                lastSoundIndex = soundIndex;
+                sound.setFile(footstepSounds[soundIndex]);
+                sound.setVolume(-27.0f);
+                sound.play();
+            }
         }
     }
 
+    // Method to move the player right
     public void moveRight(Puzzle puzzle, Door door) {
         double newX = x + 20;
         System.out.println("Trying to move right to: " + newX + ", " + y);
@@ -102,6 +147,17 @@ public class Player {
             x = newX;
             direction = "right";
             state = "run";
+            stepCounter++;
+            if (stepCounter % 4 == 0) {
+                int soundIndex;
+                do {
+                    soundIndex = random.nextInt(footstepSounds.length);
+                } while (soundIndex == lastSoundIndex);
+                lastSoundIndex = soundIndex;
+                sound.setFile(footstepSounds[soundIndex]);
+                sound.setVolume(-27.0f);
+                sound.play();
+            }
         }
     }
 
@@ -121,6 +177,7 @@ public class Player {
         return collision;
     }
 
+    // Method to render the player on the screen
     public void render(GraphicsContext gc) {
         updateFrame();
         Image currentImage;
@@ -176,6 +233,7 @@ public class Player {
         return x;
     }
 
+    // Getter for the player's Y-coordinate
     public double getY() {
         return y;
     }
@@ -188,5 +246,3 @@ public class Player {
         this.state = "idle";
     }
 }
-
-
