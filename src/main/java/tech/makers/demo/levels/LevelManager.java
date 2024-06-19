@@ -1,7 +1,8 @@
-package tech.makers.demo;
+package tech.makers.demo.levels;
 
 import javafx.scene.canvas.GraphicsContext;
-import tech.makers.demo.levels.Level;
+import tech.makers.demo.player.Player;
+import tech.makers.demo.assets.Door;
 
 public class LevelManager {
     private Level[] levels;

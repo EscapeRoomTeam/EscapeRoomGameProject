@@ -2,6 +2,9 @@ package tech.makers.demo;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tech.makers.demo.assets.Door;
+import tech.makers.demo.levels.Puzzle;
+import tech.makers.demo.player.Player;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

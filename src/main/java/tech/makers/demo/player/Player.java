@@ -1,9 +1,11 @@
-package tech.makers.demo;
+package tech.makers.demo.player;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
+import tech.makers.demo.levels.Puzzle;
+import tech.makers.demo.assets.Door;
+import tech.makers.demo.assets.Sound;
 
 public class Player {
     private double x; // X-coordinate of the player's position
@@ -67,12 +69,12 @@ public class Player {
     }
 
     // Method to check for collision with a puzzle
-    boolean checkPuzzleCollision(double newX, double newY, Puzzle puzzle) {
+    public boolean checkPuzzleCollision(double newX, double newY, Puzzle puzzle) {
         return puzzle.intersects(newX, newY); // Return true if the player intersects with the puzzle at the new position
     }
 
     // Method to check for collision with a door
-    boolean checkDoorCollision(double newX, double newY, Door door) {
+    public boolean checkDoorCollision(double newX, double newY, Door door) {
         return door.intersects(newX, newY); // Return true if the player intersects with the door at the new position
     }
 
