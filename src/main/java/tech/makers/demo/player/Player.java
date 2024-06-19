@@ -10,40 +10,52 @@ import tech.makers.demo.assets.Sound;
 public class Player {
     private double x;
     private double y;
-    private Image spriteSheet;
+    private Image idleSpriteSheet;
+    private Image runSpriteSheet;
     private Image[] idleRightFrames;
     private Image[] idleUpFrames;
     private Image[] idleLeftFrames;
     private Image[] idleDownFrames;
+    private Image[] runRightFrames;
+    private Image[] runUpFrames;
+    private Image[] runLeftFrames;
+    private Image[] runDownFrames;
     private String direction = "down";
+    private String state = "idle";
     private int currentFrame = 0;
     private long lastFrameTime = 0;
     private static final int FRAME_DURATION = 150; // Frame duration in milliseconds
     Sound sound = new Sound();
 
-    // Player constructor, sets the player's starting position
     public Player(double x, double y) {
         this.x = x;
         this.y = y;
-        this.spriteSheet = new Image(getClass().getResource("/sprites/Bob_idle_anim.png").toString());
+        this.idleSpriteSheet = new Image(getClass().getResource("/sprites/Bob_idle_anim.png").toString());
+        this.runSpriteSheet = new Image(getClass().getResource("/sprites/Bob_run.png").toString());
 
-        // Print the dimensions of the loaded sprite sheet
-        System.out.println("Sprite Sheet Width: " + spriteSheet.getWidth());
-        System.out.println("Sprite Sheet Height: " + spriteSheet.getHeight());
+        // Print the dimensions of the loaded sprite sheets
+        System.out.println("Idle Sprite Sheet Width: " + idleSpriteSheet.getWidth());
+        System.out.println("Idle Sprite Sheet Height: " + idleSpriteSheet.getHeight());
+        System.out.println("Run Sprite Sheet Width: " + runSpriteSheet.getWidth());
+        System.out.println("Run Sprite Sheet Height: " + runSpriteSheet.getHeight());
 
-        this.idleRightFrames = loadFrames(0, 0);
-        this.idleUpFrames = loadFrames(6, 0);
-        this.idleLeftFrames = loadFrames(12, 0);
-        this.idleDownFrames = loadFrames(18, 0);
+        this.idleRightFrames = loadFrames(idleSpriteSheet, 0);
+        this.idleUpFrames = loadFrames(idleSpriteSheet, 6);
+        this.idleLeftFrames = loadFrames(idleSpriteSheet, 12);
+        this.idleDownFrames = loadFrames(idleSpriteSheet, 18);
+        this.runRightFrames = loadFrames(runSpriteSheet, 0);
+        this.runUpFrames = loadFrames(runSpriteSheet, 6);
+        this.runLeftFrames = loadFrames(runSpriteSheet, 12);
+        this.runDownFrames = loadFrames(runSpriteSheet, 18);
     }
 
-    private Image[] loadFrames(int startFrame, int row) {
+    private Image[] loadFrames(Image spriteSheet, int startFrame) {
         Image[] frames = new Image[6];
         int spriteWidth = 16;
         int spriteHeight = 32;
         for (int i = 0; i < 6; i++) {
             int x = (startFrame + i) * spriteWidth;
-            int y = row * spriteHeight;
+            int y = 0; // Since the image is a single row
             if (x + spriteWidth <= spriteSheet.getWidth() && y + spriteHeight <= spriteSheet.getHeight()) {
                 frames[i] = new WritableImage(spriteSheet.getPixelReader(), x, y, spriteWidth, spriteHeight);
             } else {
@@ -53,70 +65,102 @@ public class Player {
         return frames;
     }
 
-    // Method to move the player up
     public void moveUp(Puzzle puzzle, Door door) {
-        // Check for collisions with puzzle or door before moving
-        if (!checkPuzzleCollision(x, y - 20, puzzle) && !checkDoorCollision(x, y - 20, door)) {
-            y -= 20;
+        double newY = y - 20;
+        System.out.println("Trying to move up to: " + x + ", " + newY);
+        if (!checkPuzzleCollision(x, newY, puzzle) && !checkDoorCollision(x, newY, door)) {
+            y = newY;
             direction = "up";
+            state = "run";
         }
     }
 
-    // Method to move the player down
     public void moveDown(Puzzle puzzle, Door door) {
-        // Check for collisions with puzzle or door before moving
-        if (!checkPuzzleCollision(x, y + 20, puzzle) && !checkDoorCollision(x, y + 20, door)) {
-            y += 20;
+        double newY = y + 20;
+        System.out.println("Trying to move down to: " + x + ", " + newY);
+        if (!checkPuzzleCollision(x, newY, puzzle) && !checkDoorCollision(x, newY, door)) {
+            y = newY;
             direction = "down";
+            state = "run";
         }
     }
 
-    // Method to move the player left
     public void moveLeft(Puzzle puzzle, Door door) {
-        // Check for collisions with puzzle or door before moving
-        if (!checkPuzzleCollision(x - 20, y, puzzle) && !checkDoorCollision(x - 20, y, door)) {
-            x -= 20;
+        double newX = x - 20;
+        System.out.println("Trying to move left to: " + newX + ", " + y);
+        if (!checkPuzzleCollision(newX, y, puzzle) && !checkDoorCollision(newX, y, door)) {
+            x = newX;
             direction = "left";
+            state = "run";
         }
     }
 
-    // Method to move the player right
     public void moveRight(Puzzle puzzle, Door door) {
-        // Check for collisions with puzzle or door before moving
-        if (!checkPuzzleCollision(x + 20, y, puzzle) && !checkDoorCollision(x + 20, y, door)) {
-            x += 20;
+        double newX = x + 20;
+        System.out.println("Trying to move right to: " + newX + ", " + y);
+        if (!checkPuzzleCollision(newX, y, puzzle) && !checkDoorCollision(newX, y, door)) {
+            x = newX;
             direction = "right";
+            state = "run";
         }
     }
 
-    public boolean checkPuzzleCollision(double newX, double newY, Puzzle puzzle) {
-        return puzzle.intersects(newX, newY);
+    boolean checkPuzzleCollision(double newX, double newY, Puzzle puzzle) {
+        boolean collision = puzzle.intersects(newX, newY);
+        if (collision) {
+            System.out.println("Collision with puzzle at: " + newX + ", " + newY);
+        }
+        return collision;
     }
 
-    public boolean checkDoorCollision(double newX, double newY, Door door) {
-        return door.intersects(newX, newY);
+    boolean checkDoorCollision(double newX, double newY, Door door) {
+        boolean collision = door.intersects(newX, newY);
+        if (collision) {
+            System.out.println("Collision with door at: " + newX + ", " + newY);
+        }
+        return collision;
     }
 
-    // Method to render the player on the screen
     public void render(GraphicsContext gc) {
         updateFrame();
         Image currentImage;
-        switch (direction) {
-            case "up":
-                currentImage = idleUpFrames[currentFrame];
-                break;
-            case "down":
-                currentImage = idleDownFrames[currentFrame];
-                break;
-            case "left":
-                currentImage = idleLeftFrames[currentFrame];
-                break;
-            case "right":
-                currentImage = idleRightFrames[currentFrame];
-                break;
-            default:
-                currentImage = idleDownFrames[currentFrame];
+        Image[] currentFrames;
+        if (state.equals("run")) {
+            switch (direction) {
+                case "up":
+                    currentFrames = runUpFrames;
+                    break;
+                case "down":
+                    currentFrames = runDownFrames;
+                    break;
+                case "left":
+                    currentFrames = runLeftFrames;
+                    break;
+                case "right":
+                    currentFrames = runRightFrames;
+                    break;
+                default:
+                    currentFrames = runDownFrames;
+            }
+        } else {
+            switch (direction) {
+                case "up":
+                    currentFrames = idleUpFrames;
+                    break;
+                case "down":
+                    currentFrames = idleDownFrames;
+                    break;
+                case "left":
+                    currentFrames = idleLeftFrames;
+                    break;
+                case "right":
+                    currentFrames = idleRightFrames;
+                    break;
+                default:
+                    currentFrames = idleDownFrames;
+            }
         }
+        currentImage = currentFrames[currentFrame];
         gc.drawImage(currentImage, x, y, 25, 50);
     }
 
@@ -132,8 +176,17 @@ public class Player {
         return x;
     }
 
-    // Getter for the player's Y-coordinate
     public double getY() {
         return y;
     }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void stopMoving() {
+        this.state = "idle";
+    }
 }
+
+
