@@ -15,7 +15,7 @@ public class LevelManager {
         initializeLevels();
     }
 
-    private void initializeLevels() {
+    protected void initializeLevels() {
         // Create players, puzzles, and doors for each level
         Player player1 = new Player(100, 100);
         Puzzle puzzle1 = new Puzzle(300, 300, "What is 2 + 2?", "4");
@@ -50,4 +50,9 @@ public class LevelManager {
     public void update() {
         getCurrentLevel().update();
     }
+
+    protected void setLevels(Level[] levels) {
+        this.levels = levels;
+    }
+
 }
