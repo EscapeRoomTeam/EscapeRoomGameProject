@@ -3,7 +3,10 @@ package tech.makers.demo;
 import javafx.scene.canvas.GraphicsContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tech.makers.demo.assets.Door;
 import tech.makers.demo.levels.Level;
+import tech.makers.demo.levels.Puzzle;
+import tech.makers.demo.player.Player;
 
 
 import static org.junit.jupiter.api.Assertions.*;

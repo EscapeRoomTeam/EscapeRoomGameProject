@@ -4,6 +4,9 @@ import javafx.scene.canvas.GraphicsContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import javafx.scene.paint.Color;
+import tech.makers.demo.levels.Puzzle;
+import tech.makers.demo.player.Player;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 

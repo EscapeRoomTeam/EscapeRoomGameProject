@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tech.makers.demo.levels.Level;
+import tech.makers.demo.levels.LevelManager;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

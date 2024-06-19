@@ -4,6 +4,10 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import org.junit.Test;
+import tech.makers.demo.assets.Door;
+import tech.makers.demo.levels.Puzzle;
+import tech.makers.demo.player.Player;
+
 import static org.junit.Assert.*;
 
 public class PlayerTest {

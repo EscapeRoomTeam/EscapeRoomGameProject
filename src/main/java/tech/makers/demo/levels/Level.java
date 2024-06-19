@@ -1,9 +1,9 @@
 package tech.makers.demo.levels;
 
 import javafx.scene.canvas.GraphicsContext;
-import tech.makers.demo.Door;
-import tech.makers.demo.Player;
-import tech.makers.demo.Puzzle;
+import tech.makers.demo.levels.Puzzle;
+import tech.makers.demo.assets.Door;
+import tech.makers.demo.player.Player;
 
 public class Level {
     private Player player;
