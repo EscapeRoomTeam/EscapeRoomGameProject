@@ -34,7 +34,7 @@ public class HomeScreen {
 
         // Create and add buttons
         Button startButton = new Button("Start Game");
-        startButton.setOnAction(e -> startGame());
+        startButton.setOnAction(e -> showIntroScreen());
 
         Button helpButton = new Button("Help");
         helpButton.setOnAction(e -> showHelp());
@@ -49,6 +49,11 @@ public class HomeScreen {
 
     public Scene getScene() {
         return scene;
+    }
+
+    private void showIntroScreen() {
+        IntroScreen introScreen = new IntroScreen(primaryStage, game);
+        introScreen.show();
     }
 
     private void startGame() {
