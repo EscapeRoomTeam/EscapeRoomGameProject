@@ -3,6 +3,7 @@ package tech.makers.demo.assets;
 import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import tech.makers.demo.levels.LevelManager;
 import tech.makers.demo.player.Player;
 import tech.makers.demo.levels.Puzzle;
@@ -12,6 +13,7 @@ public class Door {
     private double y;
     public boolean locked;
     public boolean inRange;
+    private Image doorImage; // Image representing the door
     Sound sound = new Sound();
 
     public Door(double x, double y) {
@@ -19,11 +21,11 @@ public class Door {
         this.y = y;
         this.locked = true;
         this.inRange = false;
+        this.doorImage = new Image(getClass().getResource("/sprites/door.png").toExternalForm()); // Load the door image
     }
 
     public void render(GraphicsContext gc) {
-        gc.setFill(locked ? javafx.scene.paint.Color.RED : javafx.scene.paint.Color.GREEN);
-        gc.fillRect(x, y, 100, 100);
+        gc.drawImage(doorImage, x, y, 96, 144); // Draw the door image at the specified position with size 96x96
     }
 
     public void interact(Puzzle puzzle, LevelManager levelManager) {
