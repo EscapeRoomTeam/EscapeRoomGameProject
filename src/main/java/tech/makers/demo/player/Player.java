@@ -105,7 +105,7 @@ public class Player {
         }
     }
 
-    boolean checkPuzzleCollision(double newX, double newY, Puzzle puzzle) {
+    public boolean checkPuzzleCollision(double newX, double newY, Puzzle puzzle) {
         boolean collision = puzzle.intersects(newX, newY);
         if (collision) {
             System.out.println("Collision with puzzle at: " + newX + ", " + newY);
@@ -113,7 +113,7 @@ public class Player {
         return collision;
     }
 
-    boolean checkDoorCollision(double newX, double newY, Door door) {
+    public boolean checkDoorCollision(double newX, double newY, Door door) {
         boolean collision = door.intersects(newX, newY);
         if (collision) {
             System.out.println("Collision with door at: " + newX + ", " + newY);
