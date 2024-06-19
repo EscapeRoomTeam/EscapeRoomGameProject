@@ -15,9 +15,9 @@ public class Puzzle {
     double y; // Y-coordinate of the puzzle's position
     String question; // Question for the puzzle
     String answer; // Answer for the puzzle
-    boolean solved; // Flag to indicate if the puzzle is solved
+    public boolean solved; // Flag to indicate if the puzzle is solved
     boolean interacting; // Flag to indicate if the player is currently interacting with the puzzle
-    boolean inRange; // Flag to indicate if the player is within range of the puzzle
+    public boolean inRange; // Flag to indicate if the player is within range of the puzzle
     Image image; // Image representing the puzzle
     Sound sound = new Sound(); // Sound object for managing puzzle sounds
 
