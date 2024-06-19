@@ -1,116 +1,111 @@
 package tech.makers.demo;
 
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
-import javafx.scene.paint.Color;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
 import javafx.application.Platform;
+
 import java.util.Optional;
 
 public class Puzzle {
-    private double x;
-    private double y;
-    private String question;
-    private String answer;
-    private boolean solved;
-    private boolean interacting;
-    private boolean inRange;
-    Sound sound = new Sound();
+    private double x; // X-coordinate of the puzzle's position
+    private double y; // Y-coordinate of the puzzle's position
+    private String question; // Question for the puzzle
+    private String answer; // Answer for the puzzle
+    private boolean solved; // Flag to indicate if the puzzle is solved
+    private boolean interacting; // Flag to indicate if the player is currently interacting with the puzzle
+    private boolean inRange; // Flag to indicate if the player is within range of the puzzle
+    private Image image; // Image representing the puzzle
+    Sound sound = new Sound(); // Sound object for managing puzzle sounds
 
-    //Constructor to initialize the position, question, and answer of the puzzle
+    // Constructor to initialize the position, question, and answer of the puzzle
     public Puzzle(double x, double y, String question, String answer) {
-        this.x = x;
-        this.y = y;
-        this.question = question;
-        this.answer = answer;
-        this.solved = false;
-        this.interacting = false;
-        this.inRange = false;
+        this.x = x; // Set the initial X-coordinate
+        this.y = y; // Set the initial Y-coordinate
+        this.question = question; // Set the puzzle question
+        this.answer = answer; // Set the puzzle answer
+        this.solved = false; // Initialize the puzzle as unsolved
+        this.interacting = false; // Initialize interacting flag as false
+        this.inRange = false; // Initialize inRange flag as false
+        this.image = new Image(getClass().getResource("/sprites/computer.png").toExternalForm()); // Load the puzzle image
     }
 
-    //Method to render the puzzle on the screen
+    // Method to render the puzzle on the screen
     public void render(GraphicsContext gc) {
-        gc.setFill(solved ? Color.GREEN : Color.RED);
-        gc.fillRect(x, y, 50, 50);
+        gc.drawImage(image, x, y, 48, 48); // Draw the puzzle image at the specified position with size 48x48
     }
 
-    //method that handles the interaction between player and puzzle
+    // Method that handles the interaction between player and puzzle
     public void interact() {
-        if (inRange && !solved && !interacting) {  //checks if puzzle is not solved and player is not interacting
-            interacting = true; //sets flag to true to stop puzzle spamming
-            // Plays sfx
+        if (inRange && !solved && !interacting) { // Check if the puzzle is in range, unsolved, and not currently interacting
+            interacting = true; // Set interacting flag to true to prevent multiple interactions
+            // Play sound effect
             sound.setFile(2);
             sound.play();
-            Platform.runLater(() -> { //run the following code on the JavaFX thread
-                TextInputDialog dialog = new TextInputDialog();
-                dialog.setTitle("Puzzle");
-                dialog.setHeaderText(question);
-                dialog.setContentText("Answer:");
+            Platform.runLater(() -> { // Run the following code on the JavaFX thread
+                TextInputDialog dialog = new TextInputDialog(); // Create a new input dialog
+                dialog.setTitle("Puzzle"); // Set the dialog title
+                dialog.setHeaderText(question); // Set the dialog header text to the puzzle question
+                dialog.setContentText("Answer:"); // Set the dialog content text
 
-                Optional<String> result = dialog.showAndWait(); //show the dialog and wait for the user's answer
-                result.ifPresent(answerText -> {
-                    if (answerText.equals(answer)) {
-                        solved = true;
-                        System.out.println("Puzzle solved!");
+                Optional<String> result = dialog.showAndWait(); // Show the dialog and wait for the user's input
+                result.ifPresent(answerText -> { // Process the user's input
+                    if (answerText.equals(answer)) { // Check if the input matches the answer
+                        solved = true; // Set the puzzle as solved
+                        System.out.println("Puzzle solved!"); // Print a message indicating the puzzle is solved
                     } else {
-                        showIncorrectMessage();
-
-
+                        showIncorrectMessage(); // Show an incorrect answer message
                     }
                 });
-                interacting = false;
+                interacting = false; // Reset the interacting flag
             });
         }
     }
 
+    // Method to show an incorrect answer message
     private void showIncorrectMessage() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Incorrect!");
-        alert.setHeaderText(null);
-        alert.setContentText("YOU SUCK");
-        alert.showAndWait();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION); // Create a new information alert
+        alert.setTitle("Incorrect!"); // Set the alert title
+        alert.setHeaderText(null); // Set the alert header text to null
+        alert.setContentText("YOU SUCK"); // Set the alert content text
+        alert.showAndWait(); // Show the alert and wait for the user to close it
     }
 
+    // Method to check if the player is within range of the puzzle
     public void checkPlayerInRange(Player player) {
-        double distance = Math.sqrt(Math.pow(player.getX() - x, 2) + Math.pow(player.getY() - y, 2));
-        if (distance < 70) {
-            inRange = true;
-        } else {
-            inRange = false;
-
-        }
+        double distance = Math.sqrt(Math.pow(player.getX() - x, 2) + Math.pow(player.getY() - y, 2)); // Calculate the distance between player and puzzle
+        inRange = distance < 70; // Set the inRange flag if the distance is less than 70
     }
 
-    //Getter method to check if the puzzle is solved
+    // Getter method to check if the puzzle is solved
     public boolean isSolved() {
-        return solved;
+        return solved; // Return the solved status
     }
 
-    //method to check if the player intersects with the puzzle
+    // Method to check if the player intersects with the puzzle
     public boolean intersects(double playerX, double playerY) {
-        return playerX < x + 50 && playerX + 50 > x && playerY < y + 50 && playerY + 50 > y;
+        // Return true if the player's position intersects with the puzzle's position
+        return playerX < x + 48 && playerX + 48 > x && playerY < y + 48 && playerY + 48 > y;
     }
 
-
+    // Getter method for the X-coordinate
     public double getX() {
-        return x;
+        return x; // Return the X-coordinate
     }
 
+    // Getter method for the Y-coordinate
     public double getY() {
-        return y;
+        return y; // Return the Y-coordinate
     }
 
+    // Getter method for the puzzle question
     public String getQuestion() {
-        return question;
+        return question; // Return the puzzle question
     }
 
+    // Getter method for the puzzle answer
     public String getAnswer() {
-        return answer;
+        return answer; // Return the puzzle answer
     }
-
-
 }
-
-
-
