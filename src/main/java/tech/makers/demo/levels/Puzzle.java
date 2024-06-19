@@ -35,7 +35,7 @@ public class Puzzle {
 
     // Method to render the puzzle on the screen
     public void render(GraphicsContext gc) {
-        gc.drawImage(image, x, y, 48, 48); // Draw the puzzle image at the specified position with size 48x48
+        gc.drawImage(image, x, y, 96, 144); // Draw the puzzle image at the specified position with size 48x48
     }
 
     // Method that handles the interaction between player and puzzle
