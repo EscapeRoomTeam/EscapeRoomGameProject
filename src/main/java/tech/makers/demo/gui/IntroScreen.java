@@ -20,7 +20,11 @@ public class IntroScreen {
     private Scene scene;
     private Stage primaryStage;
     private EscapeRoomGame game;
-    private Button startButton;
+    private ImageView characterView;
+    private Image[] mouthImages;
+    private int currentMouthImageIndex = 0;
+    private Timeline mouthAnimationTimeline;
+    private Timeline textTimeline;
 
     public IntroScreen(Stage primaryStage, EscapeRoomGame game) {
         this.primaryStage = primaryStage;
@@ -35,9 +39,15 @@ public class IntroScreen {
         VBox layout = new VBox(20);
         layout.setStyle("-fx-alignment: center; -fx-padding: 20;");
 
-        // Load character image
-        Image characterImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/tech/makers/demo/images/eddie.png")));
-        ImageView characterView = new ImageView(characterImage);
+        // Load character images with different mouth positions
+        mouthImages = new Image[]{
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/tech/makers/demo/images/eddie.png"))),
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/tech/makers/demo/images/eddie2.png"))),
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/tech/makers/demo/images/eddie3.png")))
+        };
+
+        // Initialize character view with the first image
+        characterView = new ImageView(mouthImages[0]);
         characterView.setFitWidth(150);
         characterView.setPreserveRatio(true);
 
@@ -47,13 +57,8 @@ public class IntroScreen {
         speechBubble.setWrapText(true);
         speechBubble.setMaxWidth(300);
 
-        // Create start button and make it initially invisible
-        startButton = new Button("Start Game");
-        startButton.setVisible(false);
-        startButton.setOnAction(e -> game.startGame(primaryStage));
-
         // Add elements to layout
-        layout.getChildren().addAll(characterView, speechBubble, startButton);
+        layout.getChildren().addAll(characterView, speechBubble);
         root.getChildren().add(layout);
 
         // Create scene
@@ -62,26 +67,51 @@ public class IntroScreen {
         // Start text animation
         String instructions = "Welcome to the Escape Room Game! Use the arrow keys to move, and press Enter to interact with objects.";
         animateText(speechBubble, instructions);
+
+        // Add start button
+        Button startButton = new Button("Start Game");
+        startButton.setOnAction(e -> game.startGame(primaryStage));
+        layout.getChildren().add(startButton);
     }
 
     private void animateText(Label label, String text) {
         final int[] index = {0};
-        final Timeline[] timeline = {new Timeline()};
-        timeline[0] = new Timeline(new KeyFrame(Duration.millis(50), event -> {
+        textTimeline = new Timeline(new KeyFrame(Duration.millis(50), event -> {
             if (index[0] < text.length()) {
                 label.setText(label.getText() + text.charAt(index[0]));
                 index[0]++;
-            } else {
-                timeline[0].stop();
-                startButton.setVisible(true); // Show the start button when the animation finishes
             }
         }));
-        timeline[0].setCycleCount(Timeline.INDEFINITE);
-        timeline[0].play();
+        textTimeline.setCycleCount(text.length());
+        textTimeline.setOnFinished(event -> stopMouthAnimation());
+        textTimeline.play();
+
+        startMouthAnimation();
+    }
+
+    private void startMouthAnimation() {
+        mouthAnimationTimeline = new Timeline(new KeyFrame(Duration.millis(100), event -> {
+            currentMouthImageIndex = (currentMouthImageIndex + 1) % mouthImages.length;
+            characterView.setImage(mouthImages[currentMouthImageIndex]);
+        }));
+        mouthAnimationTimeline.setCycleCount(Timeline.INDEFINITE);
+        mouthAnimationTimeline.play();
+    }
+
+    private void stopMouthAnimation() {
+        if (mouthAnimationTimeline != null) {
+            mouthAnimationTimeline.stop();
+            characterView.setImage(mouthImages[0]); // Reset to the first image with mouth closed
+        }
     }
 
     public void show() {
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    // Add this method to get the scene
+    public Scene getScene() {
+        return scene;
     }
 }

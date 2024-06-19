@@ -2,6 +2,7 @@ module tech.makers.demo {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
+    requires javafx.media;
 
     requires org.controlsfx.controls;
     requires net.synedra.validatorfx;
@@ -11,6 +12,7 @@ module tech.makers.demo {
     requires jcommander;
     requires java.desktop;
     requires org.mockito;
+    requires org.testfx.junit5;  // Ensure TestFX is required
 
     opens tech.makers.demo to javafx.fxml;
     exports tech.makers.demo;
@@ -20,4 +22,7 @@ module tech.makers.demo {
     opens tech.makers.demo.assets to javafx.fxml;
     exports tech.makers.demo.player;
     opens tech.makers.demo.player to javafx.fxml;
+
+    exports tech.makers.demo.gui;  // Ensure the gui package is exported
+    opens tech.makers.demo.gui to javafx.fxml;
 }
