@@ -1,6 +1,8 @@
 package tech.makers.demo;
 
 import org.junit.Test;
+import tech.makers.demo.assets.Sound;
+
 import static org.junit.Assert.*;
 
 import javax.sound.sampled.Clip;
