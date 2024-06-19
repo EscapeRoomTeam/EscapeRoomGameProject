@@ -7,18 +7,18 @@ import javafx.scene.image.Image;
 import javafx.application.Platform;
 import tech.makers.demo.assets.Sound;
 import tech.makers.demo.player.Player;
-
 import java.util.Optional;
 
+
 public class Puzzle {
-    private double x; // X-coordinate of the puzzle's position
-    private double y; // Y-coordinate of the puzzle's position
-    private String question; // Question for the puzzle
-    private String answer; // Answer for the puzzle
+    double x; // X-coordinate of the puzzle's position
+    double y; // Y-coordinate of the puzzle's position
+    String question; // Question for the puzzle
+    String answer; // Answer for the puzzle
     public boolean solved; // Flag to indicate if the puzzle is solved
-    private boolean interacting; // Flag to indicate if the player is currently interacting with the puzzle
+    boolean interacting; // Flag to indicate if the player is currently interacting with the puzzle
     public boolean inRange; // Flag to indicate if the player is within range of the puzzle
-    private Image image; // Image representing the puzzle
+    Image image; // Image representing the puzzle
     Sound sound = new Sound(); // Sound object for managing puzzle sounds
 
     // Constructor to initialize the position, question, and answer of the puzzle
@@ -35,7 +35,7 @@ public class Puzzle {
 
     // Method to render the puzzle on the screen
     public void render(GraphicsContext gc) {
-        gc.drawImage(image, x, y, 48, 48); // Draw the puzzle image at the specified position with size 48x48
+        gc.drawImage(image, x, y, 96, 144); // Draw the puzzle image at the specified position with size 48x48
     }
 
     // Method that handles the interaction between player and puzzle
@@ -88,8 +88,9 @@ public class Puzzle {
 
     // Method to check if the player intersects with the puzzle
     public boolean intersects(double playerX, double playerY) {
-        // Return true if the player's position intersects with the puzzle's position
-        return playerX < x + 48 && playerX + 48 > x && playerY < y + 48 && playerY + 48 > y;
+        boolean collision = playerX < x + 48 && playerX + 48 > x && playerY < y + 48 && playerY + 48 > y;
+        System.out.println("Puzzle intersects at " + playerX + ", " + playerY + ": " + collision);
+        return collision;
     }
 
     // Getter method for the X-coordinate
