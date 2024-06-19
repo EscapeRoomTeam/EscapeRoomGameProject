@@ -11,14 +11,14 @@ import java.util.Optional;
 
 
 public class Puzzle {
-    private double x; // X-coordinate of the puzzle's position
-    private double y; // Y-coordinate of the puzzle's position
-    private String question; // Question for the puzzle
-    private String answer; // Answer for the puzzle
+    double x; // X-coordinate of the puzzle's position
+    double y; // Y-coordinate of the puzzle's position
+    String question; // Question for the puzzle
+    String answer; // Answer for the puzzle
     public boolean solved; // Flag to indicate if the puzzle is solved
-    private boolean interacting; // Flag to indicate if the player is currently interacting with the puzzle
+    boolean interacting; // Flag to indicate if the player is currently interacting with the puzzle
     public boolean inRange; // Flag to indicate if the player is within range of the puzzle
-    private Image image; // Image representing the puzzle
+    Image image; // Image representing the puzzle
     Sound sound = new Sound(); // Sound object for managing puzzle sounds
 
     // Constructor to initialize the position, question, and answer of the puzzle
