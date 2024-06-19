@@ -7,6 +7,8 @@ import tech.makers.demo.levels.Puzzle;
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Sound;
 
+import java.util.Random;
+
 public class Player {
     private double x;
     private double y;
@@ -19,7 +21,13 @@ public class Player {
     private int currentFrame = 0;
     private long lastFrameTime = 0;
     private static final int FRAME_DURATION = 150; // Frame duration in milliseconds
+    // Sound stuff
     Sound sound = new Sound();
+    private int stepCounter = 0;
+    private Random random = new Random();
+    private int lastSoundIndex = -1;
+    private int[] footstepSounds = {3, 4, 5, 6};
+
 
     // Player constructor, sets the player's starting position
     public Player(double x, double y) {
@@ -59,7 +67,20 @@ public class Player {
         if (!checkPuzzleCollision(x, y - 20, puzzle) && !checkDoorCollision(x, y - 20, door)) {
             y -= 20;
             direction = "up";
+            // Play sound every other step
+            stepCounter++;
+            if (stepCounter % 4 == 0) {
+                int soundIndex;
+                do {
+                    soundIndex = random.nextInt(footstepSounds.length);
+                } while (soundIndex == lastSoundIndex);
+                lastSoundIndex = soundIndex;
+                sound.setFile(footstepSounds[soundIndex]);
+                sound.setVolume(-27.0f);
+                sound.play();
+            }
         }
+
     }
 
     // Method to move the player down
@@ -68,6 +89,17 @@ public class Player {
         if (!checkPuzzleCollision(x, y + 20, puzzle) && !checkDoorCollision(x, y + 20, door)) {
             y += 20;
             direction = "down";
+            stepCounter++;
+            if (stepCounter % 4 == 0) {
+                int soundIndex;
+                do {
+                    soundIndex = random.nextInt(footstepSounds.length);
+                } while (soundIndex == lastSoundIndex);
+                lastSoundIndex = soundIndex;
+                sound.setFile(footstepSounds[soundIndex]);
+                sound.setVolume(-27.0f);
+                sound.play();
+            }
         }
     }
 
@@ -77,6 +109,17 @@ public class Player {
         if (!checkPuzzleCollision(x - 20, y, puzzle) && !checkDoorCollision(x - 20, y, door)) {
             x -= 20;
             direction = "left";
+            stepCounter++;
+            if (stepCounter % 4 == 0) {
+                int soundIndex;
+                do {
+                    soundIndex = random.nextInt(footstepSounds.length);
+                } while (soundIndex == lastSoundIndex);
+                lastSoundIndex = soundIndex;
+                sound.setFile(footstepSounds[soundIndex]);
+                sound.setVolume(-27.0f);
+                sound.play();
+            }
         }
     }
 
@@ -86,6 +129,17 @@ public class Player {
         if (!checkPuzzleCollision(x + 20, y, puzzle) && !checkDoorCollision(x + 20, y, door)) {
             x += 20;
             direction = "right";
+            stepCounter++;
+            if (stepCounter % 4 == 0) {
+                int soundIndex;
+                do {
+                    soundIndex = random.nextInt(footstepSounds.length);
+                } while (soundIndex == lastSoundIndex);
+                lastSoundIndex = soundIndex;
+                sound.setFile(footstepSounds[soundIndex]);
+                sound.setVolume(-27.0f);
+                sound.play();
+            }
         }
     }
 

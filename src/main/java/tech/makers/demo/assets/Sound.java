@@ -1,9 +1,6 @@
 package tech.makers.demo.assets;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 import java.io.IOException;
 import java.net.URL;
 
@@ -16,6 +13,10 @@ public class Sound {
         soundURL[0] = getClass().getResource("/tech/makers/demo/Sound/TempMainScore.wav");
         soundURL[1] = getClass().getResource("/tech/makers/demo/Sound/SE_DoorOpen.wav");
         soundURL[2] = getClass().getResource("/tech/makers/demo/Sound/SE_Computer.wav");
+        soundURL[3] = getClass().getResource("/tech/makers/demo/Sound/SE_Footstep2.wav");
+        soundURL[4] = getClass().getResource("/tech/makers/demo/Sound/SE_Footstep3.wav");
+        soundURL[5] = getClass().getResource("/tech/makers/demo/Sound/SE_Footstep4.wav");
+        soundURL[6] = getClass().getResource("/tech/makers/demo/Sound/SE_Footstep5.wav");
 
         // Log to verify URLs
         for (int i = 0; i < soundURL.length; i++) {
@@ -48,6 +49,7 @@ public class Sound {
 
     public void play() {
         if (clip != null) {
+            clip.setFramePosition(0);
             clip.start();
         } else {
             System.err.println("Clip is null, cannot play sound.");
@@ -69,4 +71,11 @@ public class Sound {
             System.err.println("Clip is null, cannot stop sound.");
         }
     }
+    public void setVolume(float volume) {
+        if (clip != null) {
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(volume); // Reduce volume by a number of decibels.
+        }
+    }
+
 }

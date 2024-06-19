@@ -33,6 +33,7 @@ public class Door {
             showGameCompleteMessage(levelManager);
             // play sfx
             sound.setFile(1);
+            sound.setVolume(-20.0f);
             sound.play();
         }
     }

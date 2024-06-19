@@ -44,6 +44,7 @@ public class Puzzle {
             interacting = true; // Set interacting flag to true to prevent multiple interactions
             // Play sound effect
             sound.setFile(2);
+            sound.setVolume(-25.0f);
             sound.play();
             Platform.runLater(() -> { // Run the following code on the JavaFX thread
                 TextInputDialog dialog = new TextInputDialog(); // Create a new input dialog
