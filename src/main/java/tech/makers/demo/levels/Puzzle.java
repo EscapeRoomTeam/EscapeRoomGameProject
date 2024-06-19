@@ -7,8 +7,8 @@ import javafx.scene.image.Image;
 import javafx.application.Platform;
 import tech.makers.demo.assets.Sound;
 import tech.makers.demo.player.Player;
-
 import java.util.Optional;
+
 
 public class Puzzle {
     private double x; // X-coordinate of the puzzle's position
@@ -87,8 +87,9 @@ public class Puzzle {
 
     // Method to check if the player intersects with the puzzle
     public boolean intersects(double playerX, double playerY) {
-        // Return true if the player's position intersects with the puzzle's position
-        return playerX < x + 48 && playerX + 48 > x && playerY < y + 48 && playerY + 48 > y;
+        boolean collision = playerX < x + 48 && playerX + 48 > x && playerY < y + 48 && playerY + 48 > y;
+        System.out.println("Puzzle intersects at " + playerX + ", " + playerY + ": " + collision);
+        return collision;
     }
 
     // Getter method for the X-coordinate
