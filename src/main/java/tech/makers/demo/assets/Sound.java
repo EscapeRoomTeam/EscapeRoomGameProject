@@ -9,7 +9,7 @@ import java.net.URL;
 
 public class Sound {
 
-    private Clip clip;
+    public Clip clip;
     private final URL[] soundURL = new URL[30];
 
     public Sound() {
