@@ -15,6 +15,7 @@ public class Player {
     private Image bobRight; // Image for the player facing right
     private String direction = "down"; // Default direction the player is facing
     Sound sound = new Sound(); // Sound object for managing player sounds
+    private int stepCounter = 0;
 
     // Player constructor, sets the player's starting position
     public Player(double x, double y) {
@@ -34,8 +35,13 @@ public class Player {
         if (!checkPuzzleCollision(x, y - 20, puzzle) && !checkDoorCollision(x, y - 20, door)) {
             y -= 20; // Move the player up by 20 units
             direction = "up"; // Set the direction to up
-            // sound.setFile(1);
-            // sound.play();
+            stepCounter++; // Increment the step counter
+
+            // Play sound every other step
+            if (stepCounter % 3 == 0) {
+                sound.setFile(3);
+                sound.play();
+            }
         }
     }
 
