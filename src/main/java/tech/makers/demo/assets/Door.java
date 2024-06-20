@@ -16,12 +16,12 @@ public class Door {
     private final Image doorImage;
     Sound sound = new Sound();
 
-    public Door(double x, double y) {
+    public Door(double x, double y, String imagePath) {
         this.x = x;
         this.y = y;
         this.locked = true;
         this.inRange = false;
-        this.doorImage = new Image(getClass().getResource("/sprites/door.png").toExternalForm()); // Load the door image
+        this.doorImage = new Image(getClass().getResource(imagePath).toExternalForm()); // Load the door image
     }
 
     public void render(GraphicsContext gc) {
