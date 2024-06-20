@@ -1,7 +1,6 @@
 package tech.makers.demo.levels;
 
 import javafx.scene.canvas.GraphicsContext;
-import tech.makers.demo.levels.Puzzle;
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.player.Player;
 
@@ -9,11 +8,13 @@ public class Level {
     private Player player;
     private Puzzle puzzle;
     private Door door;
+    private boolean completed;
 
     public Level(Player player, Puzzle puzzle, Door door) {
         this.player = player;
         this.puzzle = puzzle;
         this.door = door;
+        this.completed = false;
     }
 
     public void render(GraphicsContext gc) {
@@ -28,6 +29,10 @@ public class Level {
         door.checkUnlock(puzzle);
     }
 
+    public boolean isCompleted() {
+        return completed;
+    }
+
     public Player getPlayer() {
         return player;
     }
@@ -38,5 +43,9 @@ public class Level {
 
     public Door getDoor() {
         return door;
+    }
+
+    public void completeLevel() {
+        this.completed = true;
     }
 }

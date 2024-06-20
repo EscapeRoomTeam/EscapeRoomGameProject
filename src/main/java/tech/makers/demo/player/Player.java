@@ -237,7 +237,10 @@ public class Player {
     public double getY() {
         return y;
     }
-
+    public boolean isInRange(Door door) {
+        double distance = Math.sqrt(Math.pow(door.getX() - x, 2) + Math.pow(door.getY() - y, 2));
+        return distance < 100;
+    }
     public void setState(String state) {
         this.state = state;
     }
@@ -245,4 +248,6 @@ public class Player {
     public void stopMoving() {
         this.state = "idle";
     }
+
+
 }

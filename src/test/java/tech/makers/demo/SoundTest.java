@@ -1,6 +1,7 @@
 package tech.makers.demo;
 
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import tech.makers.demo.assets.Sound;
 
 import static org.junit.Assert.*;
@@ -10,6 +11,10 @@ import java.net.URL;
 
 public class SoundTest {
 
+    @BeforeAll // starting the Test App before all tests
+    public static void initJfx() {
+        TestApp.launchApp();
+    }
     @Test
     public void testSetFile() {
         Sound sound = new Sound();

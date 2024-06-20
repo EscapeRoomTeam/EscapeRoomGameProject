@@ -9,11 +9,11 @@ import tech.makers.demo.player.Player;
 import tech.makers.demo.levels.Puzzle;
 
 public class Door {
-    private double x;
-    private double y;
-    public boolean locked;
-    public boolean inRange;
-    private Image doorImage; // Image representing the door
+    private final double x;
+    private final double y;
+    private boolean locked;
+    private boolean inRange;
+    private final Image doorImage;
     Sound sound = new Sound();
 
     public Door(double x, double y) {
@@ -25,22 +25,22 @@ public class Door {
     }
 
     public void render(GraphicsContext gc) {
-        gc.drawImage(doorImage, x, y, 96, 144); // Draw the door image at the specified position with size 96x96
+        gc.drawImage(doorImage, x, y, 96, 144); // Draw the door image at the specified position with size 96x144
     }
 
     public void interact(Puzzle puzzle, LevelManager levelManager) {
         if (locked) {
             showLockedMessage();
-        } else {
-            showGameCompleteMessage(levelManager);
-            // play sfx
+        } else if (inRange) {
+            levelManager.completeLevel(); // Directly call the completeLevel method in LevelManager
+            // Play sound effect
             sound.setFile(1);
             sound.setVolume(-20.0f);
             sound.play();
         }
     }
 
-    public void showLockedMessage() {
+    private void showLockedMessage() {
         if (inRange) {
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -50,17 +50,6 @@ public class Door {
                 alert.showAndWait();
             });
         }
-    }
-
-    public void showGameCompleteMessage(LevelManager levelManager) {
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Door Unlocked");
-            alert.setHeaderText(null);
-            alert.setContentText("You have completed the level!");
-            alert.showAndWait();
-            levelManager.loadNextLevel();
-        });
     }
 
     public void checkUnlock(Puzzle puzzle) {
@@ -74,11 +63,23 @@ public class Door {
         inRange = distance < 100;
     }
 
-    public boolean intersects(Double playerX, double playerY) {
+    public boolean intersects(double playerX, double playerY) {
         return playerX < x + 100 && playerX + 50 > x && playerY < y + 100;
+    }
+
+    public boolean isLocked() {
+        return locked;
     }
 
     public boolean isInRange() {
         return inRange;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
     }
 }

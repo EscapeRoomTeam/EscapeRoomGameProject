@@ -1,16 +1,19 @@
 package tech.makers.demo.levels;
 
 import javafx.scene.canvas.GraphicsContext;
-import tech.makers.demo.player.Player;
+import tech.makers.demo.EscapeRoomGame;
 import tech.makers.demo.assets.Door;
+import tech.makers.demo.player.Player;
 
 public class LevelManager {
     private Level[] levels;
     private int currentLevelIndex;
     private GraphicsContext gc;
+    private EscapeRoomGame game;
 
-    public LevelManager(GraphicsContext gc) {
+    public LevelManager(GraphicsContext gc, EscapeRoomGame game) {
         this.gc = gc;
+        this.game = game;
         this.currentLevelIndex = 0;
         initializeLevels();
     }
@@ -27,7 +30,7 @@ public class LevelManager {
         Door door2 = new Door(600, 400);
         Level level2 = new Level(player2, puzzle2, door2);
 
-        levels = new Level[] { level1, level2 };
+        levels = new Level[]{level1, level2};
     }
 
     public Level getCurrentLevel() {
@@ -37,6 +40,7 @@ public class LevelManager {
     public void loadNextLevel() {
         if (currentLevelIndex < levels.length - 1) {
             currentLevelIndex++;
+            game.setupNextLevel(); // Ensure the game setup for the next level
         } else {
             // Handle the end of the game
             System.out.println("You have completed all levels!");
@@ -48,11 +52,18 @@ public class LevelManager {
     }
 
     public void update() {
-        getCurrentLevel().update();
+        Level currentLevel = getCurrentLevel();
+        currentLevel.update();
+        if (currentLevel.isCompleted()) {
+            game.completeLevel();
+        }
+    }
+
+    public void completeLevel() {
+        game.completeLevel();
     }
 
     protected void setLevels(Level[] levels) {
         this.levels = levels;
     }
-
 }

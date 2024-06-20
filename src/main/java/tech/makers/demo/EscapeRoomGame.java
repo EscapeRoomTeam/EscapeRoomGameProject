@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Sound;
 import tech.makers.demo.gui.HomeScreen;
+import tech.makers.demo.gui.LevelCompletionScreen;
 import tech.makers.demo.levels.Level;
 import tech.makers.demo.Tile.TileManager;
 import tech.makers.demo.levels.LevelManager;
@@ -25,13 +26,14 @@ import java.util.Random;
 public class EscapeRoomGame extends Application {
     private LevelManager levelManager;
     private TileManager tileManager;
-    private Player player;
-    private Puzzle puzzle;
-    private Door door;
     private Image[] moneyImages;
     private List<ImagePosition> moneyPositions;
-    Sound sound = new Sound();
+    private Sound sound = new Sound();
     private Random random = new Random();
+    private Stage primaryStage;
+    private AnimationTimer gameLoop;
+    private Canvas canvas;
+    private GraphicsContext gc;
 
     public static void main(String[] args) {
         launch(args);
@@ -39,6 +41,7 @@ public class EscapeRoomGame extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
         HomeScreen homeScreen = new HomeScreen(primaryStage, this);
         primaryStage.setTitle("Escape Room Game");
         primaryStage.setScene(homeScreen.getScene());
@@ -46,17 +49,13 @@ public class EscapeRoomGame extends Application {
     }
 
     public void startGame(Stage primaryStage) {
-        Canvas canvas = new Canvas(768, 576);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+        canvas = new Canvas(768, 576);
+        gc = canvas.getGraphicsContext2D();
 
-        levelManager = new LevelManager(gc);
+        levelManager = new LevelManager(gc, this);
         tileManager = new TileManager();
 
-        player = new Player(100, 100);
-        puzzle = new Puzzle(300, 300, "What is 2 + 2?", "4");
-        door = new Door(600, 400);
-
-        moneyImages = new Image[] {
+        moneyImages = new Image[]{
                 new Image(getClass().getResource("/sprites/money 1.png").toString()),
                 new Image(getClass().getResource("/sprites/money 2.png").toString()),
                 new Image(getClass().getResource("/sprites/money 3.png").toString())
@@ -68,6 +67,20 @@ public class EscapeRoomGame extends Application {
         root.getChildren().add(canvas);
 
         Scene scene = new Scene(root);
+        setSceneControls(scene);
+
+        primaryStage.setTitle("Escape Room Game");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        sound.setFile(0);
+        sound.setVolume(-10.0f);
+        sound.play();
+
+        startGameLoop();
+    }
+
+    private void setSceneControls(Scene scene) {
         scene.setOnKeyPressed(event -> {
             Level currentLevel = levelManager.getCurrentLevel();
             Player player = currentLevel.getPlayer();
@@ -79,8 +92,13 @@ public class EscapeRoomGame extends Application {
             if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) player.moveLeft(puzzle, door);
             if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) player.moveRight(puzzle, door);
             if (event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.E) {
-                puzzle.interact();
-                door.interact(puzzle, levelManager);
+                if (door.isInRange() && !door.isLocked()) {
+                    door.interact(puzzle, levelManager);
+                    currentLevel.completeLevel();
+                } else {
+                    puzzle.interact();
+                    door.interact(puzzle, levelManager);
+                }
             }
         });
 
@@ -96,17 +114,10 @@ public class EscapeRoomGame extends Application {
                 player.stopMoving();
             }
         });
+    }
 
-        primaryStage.setTitle("Escape Room Game");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-        sound.setFile(0);
-        sound.setVolume(-10.0f);
-        sound.play();
-
-
-        new AnimationTimer() {
+    private void startGameLoop() {
+        gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -115,7 +126,8 @@ public class EscapeRoomGame extends Application {
                 levelManager.update();
                 renderMoney(gc);
             }
-        }.start();
+        };
+        gameLoop.start();
     }
 
     private List<ImagePosition> initializeMoneyPositions(Canvas canvas) {
@@ -163,6 +175,40 @@ public class EscapeRoomGame extends Application {
     public void playSE(int i) {
         sound.setFile(i);
         sound.play();
+    }
+
+    public void completeLevel() {
+        gameLoop.stop(); // Stop the game loop before showing the level completion screen
+        showLevelCompletionScreen();
+    }
+
+    public void showLevelCompletionScreen() {
+        LevelCompletionScreen levelCompletionScreen = new LevelCompletionScreen(primaryStage, this);
+        levelCompletionScreen.show();
+    }
+
+    public void startNextLevel() {
+        levelManager.loadNextLevel();
+        setupNextLevel(); // Initialize the game for the next level
+        gameLoop.start();
+    }
+
+    public void setupNextLevel() {
+        Level currentLevel = levelManager.getCurrentLevel();
+        Player player = currentLevel.getPlayer();
+        Puzzle puzzle = currentLevel.getPuzzle();
+        Door door = currentLevel.getDoor();
+
+        moneyPositions = initializeMoneyPositions(canvas);
+
+        StackPane root = new StackPane();
+        root.getChildren().add(canvas);
+
+        Scene scene = new Scene(root);
+        setSceneControls(scene);
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     private static class ImagePosition {
