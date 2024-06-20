@@ -25,20 +25,21 @@ public class LevelManager {
     protected void initializeLevels() {
         // Create players, puzzles, and doors for each level
         Player player1 = new Player(100, 100);
-        Door door1 = new Door(600, 400);
-
         List<Puzzle> puzzleList1 =  new ArrayList<>();
-        Puzzle puzzle1 = new Puzzle(300, 300, "What is 2 + 2?", "4");
+
+        Puzzle puzzle1 = new Puzzle(300, 300, "What is 2 + 2?", "4", "/sprites/Computer.png");
+        Door door1 = new Door(600, 400, "/sprites/door.png");
+
         puzzleList1.add(puzzle1);
         Level level1 = new Level(player1, puzzleList1, door1);
 
 
         Player player2 = new Player(100, 100);
-        Door door2 = new Door(600, 400);
 
         List<Puzzle> puzzleList2 =  new ArrayList<>();
-        Puzzle puzzle2 = new Puzzle(300, 300, "What is the capital of France?", "Paris");
-        Puzzle puzzle3 = new Puzzle(400, 150, "Say Hi", "Hi");
+        Puzzle puzzle2 = new Puzzle(300, 300, "What is the capital of France?", "Paris", "/sprites/Computer 2.png");
+        Puzzle puzzle3 = new Puzzle(400, 150, "Say Hi", "Hi","/sprites/Computer.png");
+        Door door2 = new Door(600, 400, "/sprites/Door 2.png");
         puzzleList2.add(puzzle2);
         puzzleList2.add(puzzle3);
         Level level2 = new Level(player2, puzzleList2, door2);
@@ -48,6 +49,10 @@ public class LevelManager {
 
     public Level getCurrentLevel() {
         return levels[currentLevelIndex];
+    }
+
+    public int getCurrentLevelNumber() {
+        return currentLevelIndex + 1; // Assuming level numbers start from 1
     }
 
     public void loadNextLevel() {

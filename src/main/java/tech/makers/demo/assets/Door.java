@@ -16,12 +16,12 @@ public class Door {
     private final Image doorImage;
     Sound sound = new Sound();
 
-    public Door(double x, double y) {
+    public Door(double x, double y, String imagePath) {
         this.x = x;
         this.y = y;
         this.locked = true;
         this.inRange = false;
-        this.doorImage = new Image(getClass().getResource("/sprites/door.png").toExternalForm()); // Load the door image
+        this.doorImage = new Image(getClass().getResource(imagePath).toExternalForm()); // Load the door image
     }
 
     public void render(GraphicsContext gc) {
@@ -62,7 +62,14 @@ public class Door {
     }
 
     public boolean intersects(double playerX, double playerY) {
-        return playerX < x + 100 && playerX + 50 > x && playerY < y + 100;
+        double doorWidth = 96;
+        double doorHeight = 144;
+        double playerWidth = 48;
+        double playerHeight = 48;
+
+        boolean collision = playerX < x + doorWidth && playerX + playerWidth > x && playerY < y + doorHeight && playerY + playerHeight > y;
+        System.out.println("Door intersects at " + playerX + ", " + playerY + ": " + collision);
+        return collision;
     }
 
     public boolean isLocked() {

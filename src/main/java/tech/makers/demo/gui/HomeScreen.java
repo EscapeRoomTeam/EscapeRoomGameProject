@@ -26,7 +26,7 @@ public class HomeScreen {
         layout.setStyle("-fx-padding: 20; -fx-alignment: center; -fx-background-color: white;");
 
         // Load and add the logo image
-        Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/tech/makers/demo/images/Journey.png")));
+        Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/tech/makers/demo/images/logo.png")));
         ImageView logoView = new ImageView(logo);
         logoView.setFitWidth(300);
         logoView.setPreserveRatio(true);
