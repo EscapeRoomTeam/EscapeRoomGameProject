@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import tech.makers.demo.EscapeRoomGame;
+import tech.makers.demo.assets.Sound;
 
 import java.util.Objects;
 
@@ -14,6 +15,7 @@ public class HomeScreen {
     private Scene scene;
     private Stage primaryStage;
     private EscapeRoomGame game;
+    Sound sound = new Sound();
 
     public HomeScreen(Stage primaryStage, EscapeRoomGame game) {
         this.primaryStage = primaryStage;
@@ -59,6 +61,7 @@ public class HomeScreen {
     private void startGame() {
         game.startGame(primaryStage);
     }
+
 
     private void showHelp() {
         // Display help information (e.g., a new scene or dialog with instructions)
