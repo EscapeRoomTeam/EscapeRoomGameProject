@@ -20,6 +20,8 @@ public class Puzzle {
     public boolean inRange; // Flag to indicate if the player is within range of the puzzle
     Image image; // Image representing the puzzle
     Sound sound = new Sound(); // Sound object for managing puzzle sounds
+    private boolean solvedSoundPlayed = false; // Flag to indicate if the solved sound has been played
+
 
     // Constructor to initialize the position, question, and answer of the puzzle
     public Puzzle(double x, double y, String question, String answer) {
@@ -54,9 +56,13 @@ public class Puzzle {
 
                 Optional<String> result = dialog.showAndWait(); // Show the dialog and wait for the user's input
                 result.ifPresent(answerText -> { // Process the user's input
-                    if (answerText.equals(answer)) { // Check if the input matches the answer
+                    if (answerText.equals(answer) && !solvedSoundPlayed) { // Check if the input matches the answer
                         solved = true; // Set the puzzle as solved
                         System.out.println("Puzzle solved!"); // Print a message indicating the puzzle is solved
+                        sound.setFile(14);
+                        sound.setVolume(-30.0f); // Set volume as needed
+                        sound.play();
+                        solvedSoundPlayed = true;
                     } else {
                         showIncorrectMessage(); // Show an incorrect answer message
                     }
@@ -70,6 +76,9 @@ public class Puzzle {
     private void showIncorrectMessage() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION); // Create a new information alert
         alert.setTitle("Incorrect!"); // Set the alert title
+        sound.setFile(15); // Assuming 3 is the sound file index for the solved message
+        sound.setVolume(-10.0f); // Set volume as needed
+        sound.play();
         alert.setHeaderText(null); // Set the alert header text to null
         alert.setContentText("YOU SUCK"); // Set the alert content text
         alert.showAndWait(); // Show the alert and wait for the user to close it
@@ -83,8 +92,12 @@ public class Puzzle {
 
     // Getter method to check if the puzzle is solved
     public boolean isSolved() {
-        return solved; // Return the solved status
-    }
+
+    // Return the solved status
+    return solved;
+
+}
+
 
     // Method to check if the player intersects with the puzzle
     public boolean intersects(double playerX, double playerY) {
