@@ -56,6 +56,7 @@ public class Puzzle {
                     if (answerText.equals(answer)) { // Check if the input matches the answer
                         solved = true; // Set the puzzle as solved
                         System.out.println("Puzzle solved!"); // Print a message indicating the puzzle is solved
+                        showSuccessMessage(); // Show success message
                     } else {
                         showIncorrectMessage(); // Show an incorrect answer message
                     }
@@ -71,6 +72,15 @@ public class Puzzle {
         alert.setTitle("Incorrect!"); // Set the alert title
         alert.setHeaderText(null); // Set the alert header text to null
         alert.setContentText("YOU SUCK"); // Set the alert content text
+        alert.showAndWait(); // Show the alert and wait for the user to close it
+    }
+
+    // Method to show a success message
+    private void showSuccessMessage() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION); // Create a new information alert
+        alert.setTitle("Correct!"); // Set the alert title
+        alert.setHeaderText(null); // Set the alert header text to null
+        alert.setContentText("Correct!"); // Set the alert content text
         alert.showAndWait(); // Show the alert and wait for the user to close it
     }
 
