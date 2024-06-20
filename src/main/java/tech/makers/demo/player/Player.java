@@ -7,6 +7,7 @@ import tech.makers.demo.levels.Puzzle;
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Sound;
 
+import java.util.List;
 import java.util.Random;
 
 public class Player {
@@ -74,10 +75,10 @@ public class Player {
     }
 
     // Method to move the player up
-    public void moveUp(Puzzle puzzle, Door door) {
+    public void moveUp(List<Puzzle> puzzles, Door door) {
         double newY = y - 20;
         System.out.println("Trying to move up to: " + x + ", " + newY);
-        if (!checkPuzzleCollision(x, newY, puzzle) && !checkDoorCollision(x, newY, door)) {
+        if (!checkPuzzleCollision(x, newY, puzzles) && !checkDoorCollision(x, newY, door)) {
             y = newY;
             direction = "up";
             state = "run";
@@ -96,10 +97,10 @@ public class Player {
         }
     }
 
-    public void moveDown(Puzzle puzzle, Door door) {
+    public void moveDown(List<Puzzle> puzzles, Door door) {
         double newY = y + 20;
         System.out.println("Trying to move down to: " + x + ", " + newY);
-        if (!checkPuzzleCollision(x, newY, puzzle) && !checkDoorCollision(x, newY, door)) {
+        if (!checkPuzzleCollision(x, newY, puzzles) && !checkDoorCollision(x, newY, door)) {
             y = newY;
             direction = "down";
             state = "run";
@@ -118,10 +119,10 @@ public class Player {
     }
 
     // Method to move the player left
-    public void moveLeft(Puzzle puzzle, Door door) {
+    public void moveLeft(List<Puzzle> puzzles, Door door) {
         double newX = x - 20;
         System.out.println("Trying to move left to: " + newX + ", " + y);
-        if (!checkPuzzleCollision(newX, y, puzzle) && !checkDoorCollision(newX, y, door)) {
+        if (!checkPuzzleCollision(newX, y, puzzles) && !checkDoorCollision(newX, y, door)) {
             x = newX;
             direction = "left";
             state = "run";
@@ -140,10 +141,10 @@ public class Player {
     }
 
     // Method to move the player right
-    public void moveRight(Puzzle puzzle, Door door) {
+    public void moveRight(List<Puzzle> puzzles, Door door) {
         double newX = x + 20;
         System.out.println("Trying to move right to: " + newX + ", " + y);
-        if (!checkPuzzleCollision(newX, y, puzzle) && !checkDoorCollision(newX, y, door)) {
+        if (!checkPuzzleCollision(newX, y, puzzles) && !checkDoorCollision(newX, y, door)) {
             x = newX;
             direction = "right";
             state = "run";
@@ -161,13 +162,17 @@ public class Player {
         }
     }
 
-    public boolean checkPuzzleCollision(double newX, double newY, Puzzle puzzle) {
-        boolean collision = puzzle.intersects(newX, newY);
-        if (collision) {
-            System.out.println("Collision with puzzle at: " + newX + ", " + newY);
+    public boolean checkPuzzleCollision(double newX, double newY, List<Puzzle> puzzles) {
+        for (Puzzle puzzle : puzzles) {
+            boolean collision = puzzle.intersects(newX, newY);
+            if (collision) {
+                System.out.println("Collision with puzzle at: " + newX + ", " + newY);
+                return true; // Return true immediately if collision detected
+            }
         }
-        return collision;
+        return false; // Return false if no collision detected with any puzzle
     }
+
 
     public boolean checkDoorCollision(double newX, double newY, Door door) {
         boolean collision = door.intersects(newX, newY);

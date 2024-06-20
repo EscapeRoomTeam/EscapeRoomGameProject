@@ -28,7 +28,7 @@ public class Door {
         gc.drawImage(doorImage, x, y, 96, 144); // Draw the door image at the specified position with size 96x144
     }
 
-    public void interact(Puzzle puzzle, LevelManager levelManager) {
+    public void interact(LevelManager levelManager) {
         if (locked) {
             showLockedMessage();
         } else if (inRange) {
@@ -52,10 +52,8 @@ public class Door {
         }
     }
 
-    public void checkUnlock(Puzzle puzzle) {
-        if (puzzle.isSolved()) {
-            locked = false;
-        }
+    public void checkUnlock() {
+        locked = false;
     }
 
     public void checkPlayerInRange(Player player) {
@@ -73,6 +71,10 @@ public class Door {
 
     public boolean isInRange() {
         return inRange;
+    }
+
+    public boolean isOpen() {
+        return !locked;
     }
 
     public double getX() {

@@ -84,20 +84,23 @@ public class EscapeRoomGame extends Application {
         scene.setOnKeyPressed(event -> {
             Level currentLevel = levelManager.getCurrentLevel();
             Player player = currentLevel.getPlayer();
-            Puzzle puzzle = currentLevel.getPuzzle();
+            List<Puzzle> puzzles = currentLevel.getPuzzles();
             Door door = currentLevel.getDoor();
 
-            if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) player.moveUp(puzzle, door);
-            if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) player.moveDown(puzzle, door);
-            if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) player.moveLeft(puzzle, door);
-            if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) player.moveRight(puzzle, door);
+            if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) player.moveUp(puzzles, door);
+            if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) player.moveDown(puzzles, door);
+            if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) player.moveLeft(puzzles, door);
+            if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) player.moveRight(puzzles, door);
             if (event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.E) {
                 if (door.isInRange() && !door.isLocked()) {
-                    door.interact(puzzle, levelManager);
-                    currentLevel.completeLevel();
+                    door.interact(levelManager);
+                    currentLevel.isCompleted();
                 } else {
-                    puzzle.interact();
-                    door.interact(puzzle, levelManager);
+                    for (Puzzle puzzle: puzzles){
+                        puzzle.interact();
+                    }
+
+                    door.interact(levelManager);
                 }
             }
         });
@@ -196,7 +199,7 @@ public class EscapeRoomGame extends Application {
     public void setupNextLevel() {
         Level currentLevel = levelManager.getCurrentLevel();
         Player player = currentLevel.getPlayer();
-        Puzzle puzzle = currentLevel.getPuzzle();
+        List<Puzzle> puzzle = currentLevel.getPuzzles();
         Door door = currentLevel.getDoor();
 
         moneyPositions = initializeMoneyPositions(canvas);
