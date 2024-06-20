@@ -1,5 +1,6 @@
 package tech.makers.demo;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tech.makers.demo.assets.Door;
@@ -14,6 +15,10 @@ public class DoorTest {
     private Player player;
     private Puzzle puzzle;
 
+    @BeforeAll // starting the Test App before all tests
+    public static void initJfx() {
+        TestApp.launchApp();
+    }
     @BeforeEach
     public void setUp() {
         door = new Door(600, 400);
@@ -25,7 +30,7 @@ public class DoorTest {
     public void testCheckUnlock() {
         when(puzzle.isSolved()).thenReturn(true);
         door.checkUnlock(puzzle);
-        assertFalse(door.locked);
+        assertFalse(door.isLocked());
     }
 
     @Test
@@ -33,7 +38,7 @@ public class DoorTest {
         when(player.getX()).thenReturn(590.0);
         when(player.getY()).thenReturn(390.0);
         door.checkPlayerInRange(player);
-        assertTrue(door.inRange);
+        assertTrue(door.isInRange());
     }
 
     @Test

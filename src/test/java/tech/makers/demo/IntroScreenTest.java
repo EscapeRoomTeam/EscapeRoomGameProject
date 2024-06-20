@@ -3,6 +3,7 @@ package tech.makers.demo;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +28,7 @@ public class IntroScreenTest extends org.testfx.framework.junit5.ApplicationTest
     private Stage primaryStage;
     private EscapeRoomGame game;
     private IntroScreen introScreen;
+
 
     @Start
     public void start(Stage stage) {

@@ -34,7 +34,6 @@ public class Player {
     private int lastSoundIndex = -1;
     private int[] footstepSounds = {3, 4, 5, 6};
 
-
     public Player(double x, double y) {
         this.x = x;
         this.y = y;
@@ -161,7 +160,7 @@ public class Player {
         }
     }
 
-    boolean checkPuzzleCollision(double newX, double newY, Puzzle puzzle) {
+    public boolean checkPuzzleCollision(double newX, double newY, Puzzle puzzle) {
         boolean collision = puzzle.intersects(newX, newY);
         if (collision) {
             System.out.println("Collision with puzzle at: " + newX + ", " + newY);
@@ -169,7 +168,7 @@ public class Player {
         return collision;
     }
 
-    boolean checkDoorCollision(double newX, double newY, Door door) {
+    public boolean checkDoorCollision(double newX, double newY, Door door) {
         boolean collision = door.intersects(newX, newY);
         if (collision) {
             System.out.println("Collision with door at: " + newX + ", " + newY);
@@ -236,6 +235,11 @@ public class Player {
     // Getter for the player's Y-coordinate
     public double getY() {
         return y;
+    }
+
+    public boolean isInRange(Door door) {
+        double distance = Math.sqrt(Math.pow(door.getX() - x, 2) + Math.pow(door.getY() - y, 2));
+        return distance < 100;
     }
 
     public void setState(String state) {

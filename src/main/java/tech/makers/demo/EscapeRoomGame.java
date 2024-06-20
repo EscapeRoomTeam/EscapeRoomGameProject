@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Sound;
 import tech.makers.demo.gui.HomeScreen;
+import tech.makers.demo.gui.LevelCompletionScreen;
 import tech.makers.demo.levels.Level;
 import tech.makers.demo.Tile.TileManager;
 import tech.makers.demo.levels.LevelManager;
@@ -25,13 +26,15 @@ import java.util.Random;
 public class EscapeRoomGame extends Application {
     private LevelManager levelManager;
     private TileManager tileManager;
-    private Player player;
-    private Puzzle puzzle;
-    private Door door;
     private Image[] moneyImages;
-    private List<ImagePosition> moneyPositions;
-    Sound sound = new Sound();
+    private Image[] plantImages;
+    private List<ImagePosition> objectPositions;
+    private Sound sound = new Sound();
     private Random random = new Random();
+    private Stage primaryStage;
+    private AnimationTimer gameLoop;
+    private Canvas canvas;
+    private GraphicsContext gc;
 
     public static void main(String[] args) {
         launch(args);
@@ -39,6 +42,7 @@ public class EscapeRoomGame extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
         HomeScreen homeScreen = new HomeScreen(primaryStage, this);
         primaryStage.setTitle("Escape Room Game");
         primaryStage.setScene(homeScreen.getScene());
@@ -46,28 +50,44 @@ public class EscapeRoomGame extends Application {
     }
 
     public void startGame(Stage primaryStage) {
-        Canvas canvas = new Canvas(768, 576);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+        canvas = new Canvas(768, 576);
+        gc = canvas.getGraphicsContext2D();
 
-        levelManager = new LevelManager(gc);
-        tileManager = new TileManager();
+        levelManager = new LevelManager(gc, this);
 
-        player = new Player(100, 100);
-        puzzle = new Puzzle(300, 300, "What is 2 + 2?", "4");
-        door = new Door(600, 400);
-
-        moneyImages = new Image[] {
+        // Initialize the images before loading the level
+        moneyImages = new Image[]{
                 new Image(getClass().getResource("/sprites/money 1.png").toString()),
                 new Image(getClass().getResource("/sprites/money 2.png").toString()),
                 new Image(getClass().getResource("/sprites/money 3.png").toString())
         };
 
-        moneyPositions = initializeMoneyPositions(canvas);
+        plantImages = new Image[]{
+                new Image(getClass().getResource("/sprites/Plant 1.png").toString()),
+                new Image(getClass().getResource("/sprites/Plant 2.png").toString()),
+                new Image(getClass().getResource("/sprites/Plant 3.png").toString())
+        };
+
+        loadLevel(1); // Start with level 1
 
         StackPane root = new StackPane();
         root.getChildren().add(canvas);
 
         Scene scene = new Scene(root);
+        setSceneControls(scene);
+
+        primaryStage.setTitle("Escape Room Game");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        sound.setFile(0);
+        sound.setVolume(-10.0f);
+        sound.play();
+
+        startGameLoop();
+    }
+
+    private void setSceneControls(Scene scene) {
         scene.setOnKeyPressed(event -> {
             Level currentLevel = levelManager.getCurrentLevel();
             Player player = currentLevel.getPlayer();
@@ -79,8 +99,13 @@ public class EscapeRoomGame extends Application {
             if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) player.moveLeft(puzzle, door);
             if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) player.moveRight(puzzle, door);
             if (event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.E) {
-                puzzle.interact();
-                door.interact(puzzle, levelManager);
+                if (door.isInRange() && !door.isLocked()) {
+                    door.interact(puzzle, levelManager);
+                    currentLevel.completeLevel();
+                } else {
+                    puzzle.interact();
+                    door.interact(puzzle, levelManager);
+                }
             }
         });
 
@@ -96,56 +121,71 @@ public class EscapeRoomGame extends Application {
                 player.stopMoving();
             }
         });
+    }
 
-        primaryStage.setTitle("Escape Room Game");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-        sound.setFile(0);
-        sound.setVolume(-10.0f);
-        sound.play();
-        sound.loop();
-
-
-        new AnimationTimer() {
+    private void startGameLoop() {
+        gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 tileManager.renderTiles(gc);
                 levelManager.render();
                 levelManager.update();
-                renderMoney(gc);
+                renderObjects(gc);
             }
-        }.start();
+        };
+        gameLoop.start();
     }
 
-    private List<ImagePosition> initializeMoneyPositions(Canvas canvas) {
+    private List<ImagePosition> initializeObjectPositions(Canvas canvas, int levelNumber) {
         double canvasWidth = canvas.getWidth();
         double canvasHeight = canvas.getHeight();
         double tileSize = 48;
         List<ImagePosition> positions = new ArrayList<>();
 
-        // Top and bottom edges
-        for (int i = 0; i < canvasWidth; i += tileSize) {
-            // Top edge
-            positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], i, 0));
-            // Bottom edge
-            positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], i, canvasHeight - tileSize));
-        }
+        if (levelNumber == 1) {
+            // Top and bottom edges
+            for (int i = 0; i < canvasWidth; i += tileSize) {
+                // Top edge
+                positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], i, 0));
+                // Bottom edge
+                positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], i, canvasHeight - tileSize));
+            }
 
-        // Left and right edges
-        for (int i = 0; i < canvasHeight; i += tileSize) {
-            // Left edge
-            positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], 0, i));
-            // Right edge
-            positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], canvasWidth - tileSize, i));
+            // Left and right edges
+            for (int i = 0; i < canvasHeight; i += tileSize) {
+                // Left edge
+                positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], 0, i));
+                // Right edge
+                positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], canvasWidth - tileSize, i));
+            }
+        } else if (levelNumber == 2) {
+            // Top row (Plants)
+            for (int i = 0; i < canvasWidth; i += tileSize) {
+                positions.add(new ImagePosition(plantImages[random.nextInt(plantImages.length)], i, 0));
+            }
+
+            // Bottom row (Plants)
+            for (int i = 0; i < canvasWidth; i += tileSize) {
+                positions.add(new ImagePosition(plantImages[random.nextInt(plantImages.length)], i, canvasHeight - tileSize));
+            }
+
+            // Left column (Plants)
+            for (int i = 0; i < canvasHeight; i += tileSize) {
+                positions.add(new ImagePosition(plantImages[random.nextInt(plantImages.length)], 0, i));
+            }
+
+            // Right column (Plants)
+            for (int i = 0; i < canvasHeight; i += tileSize) {
+                positions.add(new ImagePosition(plantImages[random.nextInt(plantImages.length)], canvasWidth - tileSize, i));
+            }
         }
 
         return positions;
     }
 
-    private void renderMoney(GraphicsContext gc) {
-        for (ImagePosition position : moneyPositions) {
+    private void renderObjects(GraphicsContext gc) {
+        for (ImagePosition position : objectPositions) {
             gc.drawImage(position.image, position.x, position.y, 48, 48);
         }
     }
@@ -164,6 +204,55 @@ public class EscapeRoomGame extends Application {
     public void playSE(int i) {
         sound.setFile(i);
         sound.play();
+    }
+
+    public void completeLevel() {
+        gameLoop.stop(); // Stop the game loop before showing the level completion screen
+        showLevelCompletionScreen();
+    }
+
+    public void showLevelCompletionScreen() {
+        LevelCompletionScreen levelCompletionScreen = new LevelCompletionScreen(primaryStage, this);
+        levelCompletionScreen.show();
+    }
+
+    public void startNextLevel() {
+        levelManager.loadNextLevel();
+        loadLevel(levelManager.getCurrentLevelNumber());
+        setupNextLevel(); // Initialize the game for the next level
+        gameLoop.start();
+    }
+
+    public void loadLevel(int levelNumber) {
+        switch (levelNumber) {
+            case 1:
+                tileManager = new TileManager("/tiles/StoneTile.png");
+                objectPositions = initializeObjectPositions(canvas, 1);
+                break;
+            case 2:
+                tileManager = new TileManager("/tiles/RedTile.png");
+                objectPositions = initializeObjectPositions(canvas, 2);
+                break;
+            // Add more cases for additional levels
+        }
+    }
+
+    public void setupNextLevel() {
+        Level currentLevel = levelManager.getCurrentLevel();
+        Player player = currentLevel.getPlayer();
+        Puzzle puzzle = currentLevel.getPuzzle();
+        Door door = currentLevel.getDoor();
+
+        objectPositions = initializeObjectPositions(canvas, levelManager.getCurrentLevelNumber());
+
+        StackPane root = new StackPane();
+        root.getChildren().add(canvas);
+
+        Scene scene = new Scene(root);
+        setSceneControls(scene);
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     private static class ImagePosition {
