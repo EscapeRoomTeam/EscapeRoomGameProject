@@ -10,10 +10,10 @@ public class TileManager {
     private List<Tile> tiles; // List to store all tiles
     private Image tileImage;  // Image object to hold the tile image
 
-    public TileManager() {
+    public TileManager(String tileImagePath) {
         tiles = new ArrayList<>(); // Initialize the list of tiles
         // Load the tile image with a specified width and height of 48 pixels
-        tileImage = new Image(getClass().getResource("/tiles/StoneTile.png").toExternalForm(), 48, 48, false, true);
+        tileImage = new Image(getClass().getResource(tileImagePath).toExternalForm(), 48, 48, false, true);
         loadTiles(); // Load all tiles onto the canvas
     }
 

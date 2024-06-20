@@ -9,7 +9,6 @@ import tech.makers.demo.assets.Sound;
 import tech.makers.demo.player.Player;
 import java.util.Optional;
 
-
 public class Puzzle {
     double x; // X-coordinate of the puzzle's position
     double y; // Y-coordinate of the puzzle's position
@@ -21,8 +20,8 @@ public class Puzzle {
     Image image; // Image representing the puzzle
     Sound sound = new Sound(); // Sound object for managing puzzle sounds
 
-    // Constructor to initialize the position, question, and answer of the puzzle
-    public Puzzle(double x, double y, String question, String answer) {
+    // Constructor to initialize the position, question, answer, and image of the puzzle
+    public Puzzle(double x, double y, String question, String answer, String imagePath) {
         this.x = x; // Set the initial X-coordinate
         this.y = y; // Set the initial Y-coordinate
         this.question = question; // Set the puzzle question
@@ -30,7 +29,7 @@ public class Puzzle {
         this.solved = false; // Initialize the puzzle as unsolved
         this.interacting = false; // Initialize interacting flag as false
         this.inRange = false; // Initialize inRange flag as false
-        this.image = new Image(getClass().getResource("/sprites/computer.png").toExternalForm()); // Load the puzzle image
+        this.image = new Image(getClass().getResource(imagePath).toExternalForm()); // Load the puzzle image
     }
 
     // Method to render the puzzle on the screen
