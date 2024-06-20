@@ -1,9 +1,9 @@
 package tech.makers.demo;
 
 import javafx.scene.canvas.GraphicsContext;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import javafx.scene.paint.Color;
 import tech.makers.demo.levels.Puzzle;
 import tech.makers.demo.player.Player;
 
@@ -13,6 +13,11 @@ import static org.mockito.Mockito.*;
 public class PuzzleTest {
     private Puzzle puzzle;
     private Player player;
+
+    @BeforeAll
+    public static void initJfx() {
+        TestApp.launchApp();
+    }
 
     @BeforeEach
     public void setUp() {
@@ -35,24 +40,24 @@ public class PuzzleTest {
     }
 
     @Test
-    public void testRender_notSolved_isRed() {
-        Puzzle puzzle = new Puzzle(300, 300, "What is 2 + 2?", "4");
+    public void testRender_notSolved() {
         GraphicsContext mockContext = mock(GraphicsContext.class); // Mock the GraphicsContext
 
         puzzle.render(mockContext);
 
-        // Verify that setFill was called with Color.RED
-        verify(mockContext).setFill(Color.RED);
+        // Verify that drawImage was called with the correct parameters
+        verify(mockContext).drawImage(any(), eq(300.0), eq(300.0), eq(96.0), eq(144.0));
     }
 
     @Test
-    public void testRender_solved_isGreen() {
-        Puzzle puzzle = new Puzzle(300, 300, "What is 2 + 2?", "4");
-        puzzle.solved=true;
+    public void testRender_solved() {
+        puzzle.solved = true;
         GraphicsContext mockContext = mock(GraphicsContext.class); // Mock the GraphicsContext
+
         puzzle.render(mockContext);
-        // Verify the colour is Green
-        verify(mockContext).setFill(Color.GREEN);
+
+        // Verify that drawImage was called with the correct parameters
+        verify(mockContext).drawImage(any(), eq(300.0), eq(300.0), eq(96.0), eq(144.0));
     }
 
     @Test
@@ -69,15 +74,3 @@ public class PuzzleTest {
         assertFalse(puzzle.intersects(400, 400));
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

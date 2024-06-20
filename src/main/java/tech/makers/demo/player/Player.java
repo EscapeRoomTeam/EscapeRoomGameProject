@@ -161,7 +161,7 @@ public class Player {
         }
     }
 
-    boolean checkPuzzleCollision(double newX, double newY, Puzzle puzzle) {
+    public boolean checkPuzzleCollision(double newX, double newY, Puzzle puzzle) {
         boolean collision = puzzle.intersects(newX, newY);
         if (collision) {
             System.out.println("Collision with puzzle at: " + newX + ", " + newY);
@@ -169,7 +169,7 @@ public class Player {
         return collision;
     }
 
-    boolean checkDoorCollision(double newX, double newY, Door door) {
+    public boolean checkDoorCollision(double newX, double newY, Door door) {
         boolean collision = door.intersects(newX, newY);
         if (collision) {
             System.out.println("Collision with door at: " + newX + ", " + newY);
@@ -237,7 +237,10 @@ public class Player {
     public double getY() {
         return y;
     }
-
+    public boolean isInRange(Door door) {
+        double distance = Math.sqrt(Math.pow(door.getX() - x, 2) + Math.pow(door.getY() - y, 2));
+        return distance < 100;
+    }
     public void setState(String state) {
         this.state = state;
     }
@@ -245,4 +248,6 @@ public class Player {
     public void stopMoving() {
         this.state = "idle";
     }
+
+
 }

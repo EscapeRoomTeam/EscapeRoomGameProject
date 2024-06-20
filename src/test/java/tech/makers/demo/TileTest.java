@@ -2,6 +2,7 @@ package tech.makers.demo;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tech.makers.demo.Tile.Tile;
@@ -15,6 +16,10 @@ public class TileTest {
     private GraphicsContext mockGc;
     private Image mockImage;
 
+    @BeforeAll // starting the Test App before all tests
+    public static void initJfx() {
+        TestApp.launchApp();
+    }
     @BeforeEach
     public void setUp() { // Create a new instance of the Tile class before each test
         mockGc = mock(GraphicsContext.class);
