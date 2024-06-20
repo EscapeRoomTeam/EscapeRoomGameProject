@@ -64,7 +64,14 @@ public class Door {
     }
 
     public boolean intersects(double playerX, double playerY) {
-        return playerX < x + 100 && playerX + 50 > x && playerY < y + 100;
+        double doorWidth = 96;
+        double doorHeight = 144;
+        double playerWidth = 48;
+        double playerHeight = 48;
+
+        boolean collision = playerX < x + doorWidth && playerX + playerWidth > x && playerY < y + doorHeight && playerY + playerHeight > y;
+        System.out.println("Door intersects at " + playerX + ", " + playerY + ": " + collision);
+        return collision;
     }
 
     public boolean isLocked() {
