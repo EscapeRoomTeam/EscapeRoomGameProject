@@ -1,19 +1,16 @@
 package tech.makers.demo;
 
 
-import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testfx.framework.junit5.ApplicationTest;
 import tech.makers.demo.assets.Door;
-import tech.makers.demo.levels.LevelManager;
-import tech.makers.demo.levels.Puzzle;
+import tech.makers.demo.levelManagement.LevelManager;
+import tech.makers.demo.levelManagement.Puzzle;
 import tech.makers.demo.player.Player;
 
 import java.util.Optional;

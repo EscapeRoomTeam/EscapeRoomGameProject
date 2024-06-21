@@ -5,11 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import tech.makers.demo.EscapeRoomGame;
-import tech.makers.demo.assets.Door;
-import tech.makers.demo.levels.Level;
-import tech.makers.demo.levels.LevelManager;
-import tech.makers.demo.player.Player;
+import tech.makers.demo.levelManagement.Level;
+import tech.makers.demo.levelManagement.LevelManager;
 import javafx.scene.canvas.GraphicsContext;
 
 import static org.junit.jupiter.api.Assertions.*;
