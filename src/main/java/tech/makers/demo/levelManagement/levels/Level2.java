@@ -1,11 +1,13 @@
 package tech.makers.demo.levelManagement.levels;
 
 import tech.makers.demo.assets.Door;
+import tech.makers.demo.assets.Eddie;
 import tech.makers.demo.levelManagement.Level;
 import tech.makers.demo.player.Player;
 import tech.makers.demo.levelManagement.Puzzle;
 
 import java.util.Arrays;
+
 
 public class Level2 extends Level {
 
@@ -29,7 +31,8 @@ public class Level2 extends Level {
                         Arrays.asList("Compilation error", "Runtime error", "Test failed", "Test passed"),
                         "/sprites/Computer 2.png"
                 ),
-                new Door(600, 400, "/sprites/Door 2.png")
+                new Door(600, 400, "/sprites/Door 2.png"),
+                new Eddie(700, 50, "/sprites/Eddie_idle_anim.png", "Remember to check your syntax!")
         );
     }
 }

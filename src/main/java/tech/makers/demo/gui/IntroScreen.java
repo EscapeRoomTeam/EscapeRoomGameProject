@@ -79,6 +79,9 @@ public class IntroScreen {
         Button startButton = new Button("Start Game");
         startButton.setOnAction(e -> {
             stopAudio(); // Stop audio and animations before starting the game
+            sound.setFile(17);
+            sound.setVolume(-5.0f);
+            sound.play();
             game.startGame(primaryStage);
         });
         layout.getChildren().add(startButton);

@@ -2,6 +2,7 @@ package tech.makers.demo.levelManagement;
 
 import javafx.scene.canvas.GraphicsContext;
 import tech.makers.demo.EscapeRoomGame;
+import tech.makers.demo.assets.Eddie;
 import tech.makers.demo.levelManagement.levels.Level1;
 import tech.makers.demo.levelManagement.levels.Level2;
 
@@ -61,5 +62,9 @@ public class LevelManager {
 
     public void setLevels(Level[] levels) {
         this.levels = levels;
+    }
+
+    public Eddie getHelperCharacter() {
+        return getCurrentLevel().getHelperCharacter();
     }
 }
