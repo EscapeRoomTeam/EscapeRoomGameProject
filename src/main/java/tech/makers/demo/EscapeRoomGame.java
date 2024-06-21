@@ -83,6 +83,7 @@ public class EscapeRoomGame extends Application {
         sound.setFile(0);
         sound.setVolume(-10.0f);
         sound.play();
+        sound.loop();
 
         startGameLoop();
     }
