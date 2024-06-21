@@ -1,76 +1,170 @@
 package tech.makers.demo;
 
 import javafx.scene.canvas.GraphicsContext;
-import org.junit.jupiter.api.BeforeAll;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextInputDialog;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InOrder;
+import org.mockito.Mockito;
+import org.testfx.framework.junit5.ApplicationTest;
 import tech.makers.demo.levels.Puzzle;
 import tech.makers.demo.player.Player;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class PuzzleTest {
-    private Puzzle puzzle;
-    private Player player;
+public class PuzzleTest extends ApplicationTest {
 
-    @BeforeAll
-    public static void initJfx() {
-        TestApp.launchApp();
+    private Puzzle puzzle;
+    private Player mockPlayer;
+    private TextInputDialog mockDialog;
+
+    @Override
+    public void start(javafx.stage.Stage stage) {
+        // This method is required by ApplicationTest, but we don't need to set up a stage for these tests.
     }
 
     @BeforeEach
     public void setUp() {
-        puzzle = new Puzzle(300, 300, "What is 2 + 2?", "4");
-        player = mock(Player.class);
+        puzzle = new Puzzle(300, 300, "What is the capital of France?", "Paris", "/tech/makers/demo/assets/door.png");
+        mockPlayer = mock(Player.class);
+        mockDialog = mock(TextInputDialog.class);
     }
 
     @Test
     public void testConstructor() {
-        double x = 10.0;
-        double y = 20.0;
-        String question = "What is the answer to life, the universe, and everything?";
-        String answer = "42";
-        Puzzle puzzle = new Puzzle(x, y, question, answer);
-        assertEquals(x, puzzle.getX(), 0.0);
-        assertEquals(y, puzzle.getY(), 0.0);
-        assertEquals(question, puzzle.getQuestion());
-        assertEquals(answer, puzzle.getAnswer());
+        assertEquals(null, puzzle.image); // Image should not be loaded yet
+    }
+
+    @Test
+    public void testRender() {
+        GraphicsContext mockContext = mock(GraphicsContext.class);
+        puzzle.render(mockContext);
+        verify(mockContext).drawImage(eq(puzzle.image), eq(300.0), eq(300.0), eq(96.0), eq(144.0));
+    }
+
+    @Test
+    public void testInteract_playerInRange_correctAnswer() {
+        when(mockPlayer.getX()).thenReturn(300.0);
+        when(mockPlayer.getY()).thenReturn(300.0);
+        when(mockDialog.showAndWait()).thenReturn(Optional.of("Paris"));
+
+        puzzle.interact();
+
+        assertTrue(puzzle.isSolved());
+        InOrder inOrder = inOrder(mockDialog);
+        inOrder.verify(mockDialog).setTitle("Puzzle");
+        inOrder.verify(mockDialog).setHeaderText("What is the capital of France?");
+        inOrder.verify(mockDialog).showAndWait();
+    }
+
+    @Test
+    public void testInteract_playerInRange_incorrectAnswer() {
+        when(mockPlayer.getX()).thenReturn(300.0);
+        when(mockPlayer.getY()).thenReturn(300.0);
+        when(mockDialog.showAndWait()).thenReturn(Optional.of("London"));
+
+        puzzle.interact();
+
+        assertFalse(puzzle.isSolved());
+        verify(mockDialog).showAndWait();
+    }
+
+    @Test
+    public void testInteract_playerNotInRange() {
+        when(mockPlayer.getX()).thenReturn(400.0);
+        when(mockPlayer.getY()).thenReturn(400.0);
+
+        puzzle.interact();
+
         assertFalse(puzzle.isSolved());
     }
 
     @Test
-    public void testRender_notSolved() {
-        GraphicsContext mockContext = mock(GraphicsContext.class); // Mock the GraphicsContext
+    public void testCheckPlayerInRange_withinRange() {
+        when(mockPlayer.getX()).thenReturn(290.0);
+        when(mockPlayer.getY()).thenReturn(290.0);
 
-        puzzle.render(mockContext);
+        puzzle.checkPlayerInRange(mockPlayer);
 
-        // Verify that drawImage was called with the correct parameters
-        verify(mockContext).drawImage(any(), eq(300.0), eq(300.0), eq(96.0), eq(144.0));
-    }
-
-    @Test
-    public void testRender_solved() {
-        puzzle.solved = true;
-        GraphicsContext mockContext = mock(GraphicsContext.class); // Mock the GraphicsContext
-
-        puzzle.render(mockContext);
-
-        // Verify that drawImage was called with the correct parameters
-        verify(mockContext).drawImage(any(), eq(300.0), eq(300.0), eq(96.0), eq(144.0));
-    }
-
-    @Test
-    public void testCheckPlayerInRange() {
-        when(player.getX()).thenReturn(290.0);
-        when(player.getY()).thenReturn(290.0);
-        puzzle.checkPlayerInRange(player);
         assertTrue(puzzle.inRange);
     }
 
     @Test
-    public void testIntersects() {
-        assertTrue(puzzle.intersects(310, 310));
-        assertFalse(puzzle.intersects(400, 400));
+    public void testCheckPlayerInRange_outsideRange() {
+        when(mockPlayer.getX()).thenReturn(400.0);
+        when(mockPlayer.getY()).thenReturn(400.0);
+
+        puzzle.checkPlayerInRange(mockPlayer);
+
+        assertFalse(puzzle.inRange);
     }
+
+    @Test
+    public void testIntersects_playerInsidePuzzle() {
+        assertTrue(puzzle.intersects(310.0, 310.0));
+    }
+
+    @Test
+    public void testIntersects_playerOutsidePuzzle() {
+        assertFalse(puzzle.intersects(400.0, 400.0));
+    }
+
+    @Test
+    public void testShowIncorrectMessage() {
+
+        Alert alert = mock(Alert.class);
+        puzzle.showIncorrectMessage();
+        verify(alert).setContentText("YOU SUCK"); // Example verification
+    }
+
+    @Test
+    public void testGetX() {
+        Puzzle puzzle = new Puzzle(100.0, 200.0, "What is the capital of France?", "Paris", "/tech/makers/demo/assets/door.png");
+        double expectedX = 100.0;
+
+        assertEquals(expectedX, puzzle.getX(), 0.001); // Verify X-coordinate with a tolerance of 0.001
+    }
+
+    @Test
+    public void testGetY() {
+        Puzzle puzzle = new Puzzle(100.0, 200.0, "What is the capital of France?", "Paris", "/tech/makers/demo/assets/door.png");
+        double expectedY = 200.0;
+        assertEquals(expectedY, puzzle.getY(), 0.01);
+    }
+
+    @Test
+    public void testGetQuestion() {
+        Puzzle puzzle = new Puzzle(100.0, 200.0, "What is the capital of France?", "Paris", "/tech/makers/demo/assets/door.png");
+        String expectedQuestion = "What is the capital of France?";
+
+        assertEquals(expectedQuestion, puzzle.getQuestion());
+    }
+
+    @Test
+    public void testGetAnswer() {
+        Puzzle puzzle = new Puzzle(100.0, 200.0, "What is the capital of France?", "Paris", "/tech/makers/demo/assets/door.png");
+        String expectedAnswer = "Paris";
+
+        assertEquals(expectedAnswer, puzzle.getAnswer());
+    }
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+

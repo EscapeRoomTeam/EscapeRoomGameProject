@@ -22,12 +22,13 @@ import tech.makers.demo.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import tech.makers.demo.assets.Eddie;
+
 
 public class EscapeRoomGame extends Application {
     private LevelManager levelManager;
     private TileManager tileManager;
     private Image[] moneyImages;
-    private Image[] plantImages;
     private List<ImagePosition> objectPositions;
     private Sound sound = new Sound();
     private Random random = new Random();
@@ -62,12 +63,6 @@ public class EscapeRoomGame extends Application {
                 new Image(getClass().getResource("/sprites/money 3.png").toString())
         };
 
-        plantImages = new Image[]{
-                new Image(getClass().getResource("/sprites/Plant 1.png").toString()),
-                new Image(getClass().getResource("/sprites/Plant 2.png").toString()),
-                new Image(getClass().getResource("/sprites/Plant 3.png").toString())
-        };
-
         loadLevel(1); // Start with level 1
 
         StackPane root = new StackPane();
@@ -94,6 +89,7 @@ public class EscapeRoomGame extends Application {
             Player player = currentLevel.getPlayer();
             Puzzle puzzle = currentLevel.getPuzzle();
             Door door = currentLevel.getDoor();
+            Eddie helperCharacter = levelManager.getHelperCharacter();
 
             if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) player.moveUp(puzzle, door);
             if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) player.moveDown(puzzle, door);
@@ -106,6 +102,9 @@ public class EscapeRoomGame extends Application {
                 } else {
                     puzzle.interact();
                     door.interact(puzzle, levelManager);
+                }
+                if (helperCharacter.isInRange(player.getX(), player.getY())) {
+                    helperCharacter.interact();
                 }
             }
         });
@@ -161,24 +160,24 @@ public class EscapeRoomGame extends Application {
                 positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], canvasWidth - tileSize, i));
             }
         } else if (levelNumber == 2) {
-            // Top row (Plants)
+            // Top row (ChairDown)
             for (int i = 0; i < canvasWidth; i += tileSize) {
-                positions.add(new ImagePosition(plantImages[random.nextInt(plantImages.length)], i, 0));
+                positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], i, 0));
             }
 
-            // Bottom row (Plants)
+            // Bottom row (ChairUp)
             for (int i = 0; i < canvasWidth; i += tileSize) {
-                positions.add(new ImagePosition(plantImages[random.nextInt(plantImages.length)], i, canvasHeight - tileSize));
+                positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], i, canvasHeight - tileSize));
             }
 
-            // Left column (Plants)
+            // Left column (ChairRight)
             for (int i = 0; i < canvasHeight; i += tileSize) {
-                positions.add(new ImagePosition(plantImages[random.nextInt(plantImages.length)], 0, i));
+                positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], 0, i));
             }
 
-            // Right column (Plants)
+            // Right column (ChairLeft)
             for (int i = 0; i < canvasHeight; i += tileSize) {
-                positions.add(new ImagePosition(plantImages[random.nextInt(plantImages.length)], canvasWidth - tileSize, i));
+                positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], canvasWidth - tileSize, i));
             }
         }
 

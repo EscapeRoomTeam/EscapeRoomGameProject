@@ -11,9 +11,9 @@ import tech.makers.demo.levels.Puzzle;
 public class Door {
     private final double x;
     private final double y;
-    private boolean locked;
+    public boolean locked;
     private boolean inRange;
-    private final Image doorImage;
+    public Image doorImage;
     Sound sound = new Sound();
 
     public Door(double x, double y, String imagePath) {
@@ -40,7 +40,7 @@ public class Door {
         }
     }
 
-    private void showLockedMessage() {
+    public void showLockedMessage() {
         if (inRange) {
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -93,4 +93,6 @@ public class Door {
     public double getY() {
         return y;
     }
+
+
 }
