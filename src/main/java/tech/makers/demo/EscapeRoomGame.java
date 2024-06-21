@@ -13,10 +13,10 @@ import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Sound;
 import tech.makers.demo.gui.HomeScreen;
 import tech.makers.demo.gui.LevelCompletionScreen;
-import tech.makers.demo.levels.Level;
+import tech.makers.demo.levelManagement.Level;
 import tech.makers.demo.Tile.TileManager;
-import tech.makers.demo.levels.LevelManager;
-import tech.makers.demo.levels.Puzzle;
+import tech.makers.demo.levelManagement.LevelManager;
+import tech.makers.demo.levelManagement.Puzzle;
 import tech.makers.demo.player.Player;
 
 import java.util.ArrayList;

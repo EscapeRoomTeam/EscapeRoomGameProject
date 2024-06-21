@@ -49,7 +49,6 @@ public class Eddie {
     }
 
     public void render(GraphicsContext gc) {
-        updateFrame();
         Image currentImage;
         Image[] currentFrames;
         switch (direction) {
@@ -72,7 +71,7 @@ public class Eddie {
         gc.drawImage(currentImage, x, y, 25, 50);
     }
 
-    private void updateFrame() {
+    public void update() {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastFrameTime >= FRAME_DURATION) {
             currentFrame = (currentFrame + 1) % 6;
