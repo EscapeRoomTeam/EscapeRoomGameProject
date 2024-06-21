@@ -110,4 +110,5 @@ public class LevelManager {
     public Eddie getHelperCharacter() {
         return helperCharacter;
     }
-}
+
+    }
