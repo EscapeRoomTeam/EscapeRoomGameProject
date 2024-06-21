@@ -13,8 +13,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import tech.makers.demo.EscapeRoomGame;
+import tech.makers.demo.assets.Sound;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class LevelCompletionScreen {
 
@@ -26,6 +28,12 @@ public class LevelCompletionScreen {
     private int currentMouthImageIndex = 0;
     private Timeline mouthAnimationTimeline;
     private Timeline textTimeline;
+    Sound sound = new Sound();
+    private int stepCounter = 0;
+    private Random random = new Random();
+    private int lastSoundIndex = -1;
+    private int[] voxSounds = {7, 8, 9, 10, 11, 12};
+
 
     public LevelCompletionScreen(Stage primaryStage, EscapeRoomGame game) {
         this.primaryStage = primaryStage;
@@ -71,7 +79,11 @@ public class LevelCompletionScreen {
 
         // Add next level button
         Button nextLevelButton = new Button("Next Level");
-        nextLevelButton.setOnAction(e -> game.startNextLevel());
+        nextLevelButton.setOnAction(e -> {game.startNextLevel();stopAudio();
+        sound.setFile(17);
+        sound.setVolume(-5.0f);
+        sound.play();
+        });
         layout.getChildren().add(nextLevelButton);
     }
 
@@ -81,6 +93,17 @@ public class LevelCompletionScreen {
             if (index[0] < text.length()) {
                 label.setText(label.getText() + text.charAt(index[0]));
                 index[0]++;
+                stepCounter++;
+                if (stepCounter % 3 == 0) {
+                    int soundIndex;
+                    do {
+                        soundIndex = random.nextInt(voxSounds.length);
+                    } while (soundIndex == lastSoundIndex);
+                    lastSoundIndex = soundIndex;
+                    sound.setFile(voxSounds[soundIndex]);
+                    sound.setVolume(-10.0f);
+                    sound.play();
+                }
             }
         }));
         textTimeline.setCycleCount(text.length());
@@ -103,6 +126,15 @@ public class LevelCompletionScreen {
         if (mouthAnimationTimeline != null) {
             mouthAnimationTimeline.stop();
             characterView.setImage(mouthImages[0]); // Reset to the first image with mouth closed
+        }
+    }
+
+    private void stopAudio() {
+        if (textTimeline != null) {
+            textTimeline.stop();
+        }
+        if (sound != null) {
+            sound.stop();
         }
     }
 
