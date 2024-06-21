@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TileManager {
-    private List<Tile> tiles; // List to store all tiles
-    private Image tileImage;  // Image object to hold the tile image
+    public List<Tile> tiles; // List to store all tiles
+    public Image tileImage;  // Image object to hold the tile image
 
     public TileManager(String tileImagePath) {
         tiles = new ArrayList<>(); // Initialize the list of tiles
@@ -17,7 +17,7 @@ public class TileManager {
         loadTiles(); // Load all tiles onto the canvas
     }
 
-    private void loadTiles() {
+    public void loadTiles() {
         int tileSize = 48; // Each tile's width and height in pixels
 
         int canvasWidth = 768;  // Width of the canvas, adjusted to be divisible by tileSize
