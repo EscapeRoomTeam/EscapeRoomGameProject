@@ -7,7 +7,7 @@ import tech.makers.demo.levelManagement.levels.Level1;
 import tech.makers.demo.levelManagement.levels.Level2;
 
 public class LevelManager {
-    private Level[] levels;
+    public Level[] levels;
     private int currentLevelIndex;
     private GraphicsContext gc;
     private EscapeRoomGame game;
