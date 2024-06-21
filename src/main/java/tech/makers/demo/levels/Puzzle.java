@@ -2,12 +2,11 @@ package tech.makers.demo.levels;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.application.Platform;
 import tech.makers.demo.assets.Sound;
 import tech.makers.demo.player.Player;
-import java.util.List;
 import java.util.Optional;
 
 public class Puzzle {
@@ -15,20 +14,20 @@ public class Puzzle {
     double y; // Y-coordinate of the puzzle's position
     String question; // Question for the puzzle
     String answer; // Answer for the puzzle
-    List<String> choices; // List of multiple choice answers
     public boolean solved; // Flag to indicate if the puzzle is solved
     boolean interacting; // Flag to indicate if the player is currently interacting with the puzzle
     public boolean inRange; // Flag to indicate if the player is within range of the puzzle
-    public Image image; // Image representing the puzzle
+    Image image; // Image representing the puzzle
     Sound sound = new Sound(); // Sound object for managing puzzle sounds
+    private boolean solvedSoundPlayed = false; // Flag to indicate if the solved sound has been played
 
-    // Constructor to initialize the position, question, answer, choices, and image of the puzzle
-    public Puzzle(double x, double y, String question, String answer, List<String> choices, String imagePath) {
+
+    // Constructor to initialize the position, question, answer, and image of the puzzle
+    public Puzzle(double x, double y, String question, String answer, String imagePath) {
         this.x = x; // Set the initial X-coordinate
         this.y = y; // Set the initial Y-coordinate
         this.question = question; // Set the puzzle question
         this.answer = answer; // Set the puzzle answer
-        this.choices = choices; // Set the multiple choice answers
         this.solved = false; // Initialize the puzzle as unsolved
         this.interacting = false; // Initialize interacting flag as false
         this.inRange = false; // Initialize inRange flag as false
@@ -49,17 +48,20 @@ public class Puzzle {
             sound.setVolume(-25.0f);
             sound.play();
             Platform.runLater(() -> { // Run the following code on the JavaFX thread
-                ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices); // Create a new choice dialog
+                TextInputDialog dialog = new TextInputDialog(); // Create a new input dialog
                 dialog.setTitle("Puzzle"); // Set the dialog title
                 dialog.setHeaderText(question); // Set the dialog header text to the puzzle question
-                dialog.setContentText("Choose your answer:"); // Set the dialog content text
+                dialog.setContentText("Answer:"); // Set the dialog content text
 
                 Optional<String> result = dialog.showAndWait(); // Show the dialog and wait for the user's input
-                result.ifPresent(choice -> { // Process the user's input
-                    if (choice.equals(answer)) { // Check if the input matches the answer
+                result.ifPresent(answerText -> { // Process the user's input
+                    if (answerText.equals(answer) && !solvedSoundPlayed) { // Check if the input matches the answer
                         solved = true; // Set the puzzle as solved
                         System.out.println("Puzzle solved!"); // Print a message indicating the puzzle is solved
-                        showSuccessMessage(); // Show success message
+                        sound.setFile(14);
+                        sound.setVolume(-30.0f); // Set volume as needed
+                        sound.play();
+                        solvedSoundPlayed = true;
                     } else {
                         showIncorrectMessage(); // Show an incorrect answer message
                     }
@@ -70,9 +72,12 @@ public class Puzzle {
     }
 
     // Method to show an incorrect answer message
-    public void showIncorrectMessage() {
+    private void showIncorrectMessage() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION); // Create a new information alert
         alert.setTitle("Incorrect!"); // Set the alert title
+        sound.setFile(15);
+        sound.setVolume(-10.0f); // Set volume as needed
+        sound.play();
         alert.setHeaderText(null); // Set the alert header text to null
         alert.setContentText("YOU SUCK"); // Set the alert content text
         alert.showAndWait(); // Show the alert and wait for the user to close it
@@ -95,8 +100,12 @@ public class Puzzle {
 
     // Getter method to check if the puzzle is solved
     public boolean isSolved() {
-        return solved; // Return the solved status
-    }
+
+    // Return the solved status
+    return solved;
+
+}
+
 
     // Method to check if the player intersects with the puzzle
     public boolean intersects(double playerX, double playerY) {
@@ -124,6 +133,4 @@ public class Puzzle {
     public String getAnswer() {
         return answer; // Return the puzzle answer
     }
-
-
 }

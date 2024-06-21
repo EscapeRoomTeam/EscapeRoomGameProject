@@ -45,9 +45,13 @@ public class Door {
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Door Locked");
+                sound.setFile(15);
+                sound.setVolume(-10.0f); // Set volume as needed
+                sound.play();
                 alert.setHeaderText(null);
                 alert.setContentText("The door is locked until the puzzle is completed.");
                 alert.showAndWait();
+
             });
         }
     }
