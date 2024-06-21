@@ -5,8 +5,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tech.makers.demo.assets.Door;
-import tech.makers.demo.levels.Level;
-import tech.makers.demo.levels.Puzzle;
+import tech.makers.demo.levelManagement.Level;
+import tech.makers.demo.levelManagement.Puzzle;
 import tech.makers.demo.player.Player;
 
 

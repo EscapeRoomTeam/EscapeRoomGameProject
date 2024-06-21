@@ -16,8 +16,8 @@ module tech.makers.demo {
 
     opens tech.makers.demo to javafx.fxml, org.testfx.junit5;  // Open to TestFX
     exports tech.makers.demo;
-    exports tech.makers.demo.levels;
-    opens tech.makers.demo.levels to javafx.fxml, org.testfx.junit5;  // Open to TestFX
+    exports tech.makers.demo.levelManagement;
+    opens tech.makers.demo.levelManagement to javafx.fxml, org.testfx.junit5;  // Open to TestFX
     exports tech.makers.demo.assets;
     opens tech.makers.demo.assets to javafx.fxml, org.testfx.junit5;  // Open to TestFX
     exports tech.makers.demo.player;

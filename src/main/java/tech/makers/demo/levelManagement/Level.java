@@ -1,4 +1,4 @@
-package tech.makers.demo.levels;
+package tech.makers.demo.levelManagement;
 
 import javafx.scene.canvas.GraphicsContext;
 import tech.makers.demo.assets.Door;
