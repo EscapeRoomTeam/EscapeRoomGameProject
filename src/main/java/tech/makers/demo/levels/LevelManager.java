@@ -6,8 +6,8 @@ import tech.makers.demo.assets.Door;
 import tech.makers.demo.player.Player;
 
 public class LevelManager {
-    private Level[] levels;
-    private int currentLevelIndex;
+    public Level[] levels;
+    public int currentLevelIndex;
     private GraphicsContext gc;
     private EscapeRoomGame game;
 
@@ -67,7 +67,7 @@ public class LevelManager {
         game.completeLevel();
     }
 
-    protected void setLevels(Level[] levels) {
+    public void setLevels(Level[] levels) {
         this.levels = levels;
     }
 }

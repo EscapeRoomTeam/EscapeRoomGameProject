@@ -17,7 +17,7 @@ public class Puzzle {
     public boolean solved; // Flag to indicate if the puzzle is solved
     boolean interacting; // Flag to indicate if the player is currently interacting with the puzzle
     public boolean inRange; // Flag to indicate if the player is within range of the puzzle
-    Image image; // Image representing the puzzle
+    public Image image; // Image representing the puzzle
     Sound sound = new Sound(); // Sound object for managing puzzle sounds
     private boolean solvedSoundPlayed = false; // Flag to indicate if the solved sound has been played
 
@@ -72,7 +72,7 @@ public class Puzzle {
     }
 
     // Method to show an incorrect answer message
-    private void showIncorrectMessage() {
+    public void showIncorrectMessage() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION); // Create a new information alert
         alert.setTitle("Incorrect!"); // Set the alert title
         sound.setFile(15);
@@ -133,4 +133,6 @@ public class Puzzle {
     public String getAnswer() {
         return answer; // Return the puzzle answer
     }
+
+
 }
