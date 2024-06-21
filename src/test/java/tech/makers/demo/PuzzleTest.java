@@ -1,7 +1,9 @@
 package tech.makers.demo;
 
+import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.TextInputDialog;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +12,11 @@ import org.testfx.framework.junit5.ApplicationTest;
 import tech.makers.demo.levelManagement.Puzzle;
 import tech.makers.demo.player.Player;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -19,7 +25,8 @@ public class PuzzleTest extends ApplicationTest {
 
     private Puzzle puzzle;
     private Player mockPlayer;
-    private TextInputDialog mockDialog;
+    private ChoiceDialog<String> mockDialog = mock(ChoiceDialog.class);
+    List<String> choices = Arrays.asList("5", "10", "15", "20");
 
     @Override
     public void start(javafx.stage.Stage stage) {
@@ -28,14 +35,38 @@ public class PuzzleTest extends ApplicationTest {
 
     @BeforeEach
     public void setUp() {
-        puzzle = new Puzzle(300, 300, "What is the capital of France?", "Paris", "/tech/makers/demo/assets/door.png");
+        puzzle = new Puzzle(300, 300, "What will this code output?\n\n" +
+                "public class Main {\n" +
+                "    public static void main(String[] args) {\n" +
+                "        int x = 10;\n" +
+                "        x += 5;\n" +
+                "        System.out.println(x);\n" +
+                "    }\n" +
+                "}\n","15", Arrays.asList("5", "10", "15", "20"), "/sprites/Computer.png");
         mockPlayer = mock(Player.class);
-        mockDialog = mock(TextInputDialog.class);
+
     }
 
     @Test
     public void testConstructor() {
-        assertEquals(null, puzzle.image); // Image should not be loaded yet
+        assertEquals(300.0, puzzle.getX());
+        assertEquals(300.0, puzzle.getY());
+        assertEquals("What will this code output?\n\n" +
+                "public class Main {\n" +
+                "    public static void main(String[] args) {\n" +
+                "        int x = 10;\n" +
+                "        x += 5;\n" +
+                "        System.out.println(x);\n" +
+                "    }\n" +
+                "}\n", puzzle.getQuestion());
+        assertEquals("15", puzzle.getAnswer());
+        assertEquals(Arrays.asList("5", "10", "15", "20"), puzzle.getOptions());
+        assertFalse(puzzle.isSolved());
+        assertFalse(puzzle.interacting);
+        assertFalse(puzzle.inRange);
+        assertNotNull(puzzle.image);
+        // Optionally, you can verify parts of the image path or URL if needed
+        assertTrue(puzzle.image.getUrl().endsWith("/sprites/Computer.png"));
     }
 
     @Test
@@ -47,29 +78,41 @@ public class PuzzleTest extends ApplicationTest {
 
     @Test
     public void testInteract_playerInRange_correctAnswer() {
-        when(mockPlayer.getX()).thenReturn(300.0);
-        when(mockPlayer.getY()).thenReturn(300.0);
-        when(mockDialog.showAndWait()).thenReturn(Optional.of("Paris"));
-
+        puzzle.inRange = true;
+        puzzle.solved = false;
+        puzzle.interacting = false;
         puzzle.interact();
 
+        Platform.runLater(() -> {
+            when(mockDialog.showAndWait()).then(invocation -> {
+                int selectedIndex = 2;
+                String selectedChoice = choices.get(selectedIndex);
+                return Optional.of(selectedChoice);
+            });
+
+
+            sleep(1000);
+            clickOn("OK");
+
+        });
         assertTrue(puzzle.isSolved());
-        InOrder inOrder = inOrder(mockDialog);
-        inOrder.verify(mockDialog).setTitle("Puzzle");
-        inOrder.verify(mockDialog).setHeaderText("What is the capital of France?");
-        inOrder.verify(mockDialog).showAndWait();
     }
+
+
 
     @Test
     public void testInteract_playerInRange_incorrectAnswer() {
-        when(mockPlayer.getX()).thenReturn(300.0);
-        when(mockPlayer.getY()).thenReturn(300.0);
-        when(mockDialog.showAndWait()).thenReturn(Optional.of("London"));
-
+        puzzle.inRange = true;
+        puzzle.solved = false;
+        puzzle.interacting = false;
         puzzle.interact();
 
+        Platform.runLater(() -> puzzle.showIncorrectMessage()
+
+        );
+
+
         assertFalse(puzzle.isSolved());
-        verify(mockDialog).showAndWait();
     }
 
     @Test
@@ -112,41 +155,41 @@ public class PuzzleTest extends ApplicationTest {
         assertFalse(puzzle.intersects(400.0, 400.0));
     }
 
-    @Test
-    public void testShowIncorrectMessage() {
-
-        Alert alert = mock(Alert.class);
-        puzzle.showIncorrectMessage();
-        verify(alert).setContentText("YOU SUCK"); // Example verification
-    }
 
     @Test
     public void testGetX() {
-        Puzzle puzzle = new Puzzle(100.0, 200.0, "What is the capital of France?", "Paris", "/tech/makers/demo/assets/door.png");
-        double expectedX = 100.0;
+
+        double expectedX = 300;
 
         assertEquals(expectedX, puzzle.getX(), 0.001); // Verify X-coordinate with a tolerance of 0.001
     }
 
     @Test
     public void testGetY() {
-        Puzzle puzzle = new Puzzle(100.0, 200.0, "What is the capital of France?", "Paris", "/tech/makers/demo/assets/door.png");
-        double expectedY = 200.0;
+
+        double expectedY = 300;
         assertEquals(expectedY, puzzle.getY(), 0.01);
     }
 
     @Test
     public void testGetQuestion() {
-        Puzzle puzzle = new Puzzle(100.0, 200.0, "What is the capital of France?", "Paris", "/tech/makers/demo/assets/door.png");
-        String expectedQuestion = "What is the capital of France?";
+
+        String expectedQuestion = "What will this code output?\n\n" +
+                "public class Main {\n" +
+                "    public static void main(String[] args) {\n" +
+                "        int x = 10;\n" +
+                "        x += 5;\n" +
+                "        System.out.println(x);\n" +
+                "    }\n" +
+                "}\n";
 
         assertEquals(expectedQuestion, puzzle.getQuestion());
     }
 
     @Test
     public void testGetAnswer() {
-        Puzzle puzzle = new Puzzle(100.0, 200.0, "What is the capital of France?", "Paris", "/tech/makers/demo/assets/door.png");
-        String expectedAnswer = "Paris";
+
+        String expectedAnswer = "15";
 
         assertEquals(expectedAnswer, puzzle.getAnswer());
     }

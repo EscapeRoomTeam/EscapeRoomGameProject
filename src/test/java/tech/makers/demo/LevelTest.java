@@ -8,7 +8,7 @@ import tech.makers.demo.assets.Door;
 import tech.makers.demo.levelManagement.Level;
 import tech.makers.demo.levelManagement.Puzzle;
 import tech.makers.demo.player.Player;
-
+import tech.makers.demo.assets.Eddie;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -18,6 +18,7 @@ public class LevelTest {
     private Player mockPlayer;
     private Puzzle mockPuzzle;
     private Door mockDoor;
+    private Eddie mockHelperCharacter;
     private GraphicsContext mockGc;
     private Level level;
 
@@ -31,7 +32,7 @@ public class LevelTest {
         mockPuzzle = mock(Puzzle.class);
         mockDoor = mock(Door.class);
         mockGc = mock(GraphicsContext.class);
-        level = new Level(mockPlayer, mockPuzzle, mockDoor);
+        level = new Level(mockPlayer, mockPuzzle, mockDoor, mockHelperCharacter);
     }
 
     @Test
