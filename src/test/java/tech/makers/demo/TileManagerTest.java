@@ -23,7 +23,7 @@ public class TileManagerTest {
     @BeforeEach
     public void setUp() {
         mockGc = mock(GraphicsContext.class);
-        tileManager = new TileManager();
+        tileManager = new TileManager("/tech/makers/demo/assets/door.png");
     }
 
     @Test
