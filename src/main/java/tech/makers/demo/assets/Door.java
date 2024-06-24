@@ -8,10 +8,12 @@ import tech.makers.demo.levelManagement.LevelManager;
 import tech.makers.demo.player.Player;
 import tech.makers.demo.levelManagement.Puzzle;
 
+import java.util.List;
+
 public class Door {
     private final double x;
     private final double y;
-    public boolean locked;
+    public static boolean locked;
     private boolean inRange;
     public Image doorImage;
     Sound sound = new Sound();
@@ -28,7 +30,7 @@ public class Door {
         gc.drawImage(doorImage, x, y, 96, 144); // Draw the door image at the specified position with size 96x144
     }
 
-    public void interact(Puzzle puzzle, LevelManager levelManager) {
+    public void interact(LevelManager levelManager) {
         if (locked) {
             showLockedMessage();
         } else if (inRange) {
@@ -55,12 +57,12 @@ public class Door {
             });
         }
     }
-
-    public void checkUnlock(Puzzle puzzle) {
-        if (puzzle.isSolved()) {
-            locked = false;
-        }
-    }
+//
+//    public void checkUnlock(List<Puzzle> Puzzles) {
+//        if (Puzzles.isSolved()) {
+//            locked = false;
+//        }
+//    }
 
     public void checkPlayerInRange(Player player) {
         double distance = Math.sqrt(Math.pow(player.getX() - x, 2) + Math.pow(player.getY() - y, 2));
@@ -84,6 +86,14 @@ public class Door {
 
     public boolean isInRange() {
         return inRange;
+    }
+
+    public static boolean unlock(){
+       return locked = false;
+    }
+
+    public boolean isOpen() {
+        return !locked;
     }
 
     public double getX() {

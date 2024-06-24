@@ -2,9 +2,14 @@ package tech.makers.demo.levelManagement;
 
 import javafx.scene.canvas.GraphicsContext;
 import tech.makers.demo.EscapeRoomGame;
+import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Eddie;
 import tech.makers.demo.levelManagement.levels.Level1;
 import tech.makers.demo.levelManagement.levels.Level2;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class LevelManager {
     public Level[] levels;
@@ -52,7 +57,8 @@ public class LevelManager {
         Level currentLevel = getCurrentLevel();
         currentLevel.update();
         if (currentLevel.isCompleted()) {
-            game.completeLevel();
+//            game.completeLevel();
+            Door.unlock();
         }
     }
 

@@ -4,19 +4,23 @@ import javafx.scene.canvas.GraphicsContext;
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Eddie;
 import tech.makers.demo.player.Player;
+
+
+import java.util.List;
 import tech.makers.demo.levelManagement.Puzzle;
 
 public class Level {
     private Player player;
-    private Puzzle puzzle;
+    private List<Puzzle> puzzles;
     private Door door;
     private Eddie helperCharacter;
 
     private boolean completed;
 
-    public Level(Player player, Puzzle puzzle, Door door, Eddie helperCharacter) {
+
+    public Level(Player player, List<Puzzle> puzzles, Door door, Eddie helperCharacter) {
         this.player = player;
-        this.puzzle = puzzle;
+        this.puzzles = puzzles;
         this.door = door;
         this.helperCharacter = helperCharacter;
 
@@ -25,7 +29,9 @@ public class Level {
 
     public void render(GraphicsContext gc) {
         player.render(gc);
-        puzzle.render(gc);
+        for (Puzzle puzzle : puzzles) {
+            puzzle.render(gc);
+        }
         door.render(gc);
         if (helperCharacter != null) {
             helperCharacter.render(gc);
@@ -33,24 +39,44 @@ public class Level {
     }
 
     public void update() {
-        puzzle.checkPlayerInRange(player);
+        for (Puzzle puzzle : puzzles) {
+            puzzle.checkPlayerInRange(player);
+        }
         door.checkPlayerInRange(player);
-        door.checkUnlock(puzzle);
+
         if (helperCharacter != null) {
             helperCharacter.update();
+        }
+
+        boolean allPuzzlesSolved = true;
+        for (Puzzle puzzle : puzzles) {
+            if (!puzzle.isSolved()) {
+                allPuzzlesSolved = false;
+                break;
+            }
+        }
+        if (allPuzzlesSolved) {
+            door.unlock();
         }
     }
 
     public boolean isCompleted() {
-        return completed;
+        boolean allPuzzlesSolved = true;
+        for (Puzzle puzzle : puzzles) {
+            if (!puzzle.isSolved()) {
+                allPuzzlesSolved = false;
+                break;
+            }
+        }
+        return allPuzzlesSolved && door.isOpen();
     }
 
     public Player getPlayer() {
         return player;
     }
 
-    public Puzzle getPuzzle() {
-        return puzzle;
+    public List<Puzzle> getPuzzles() {
+        return puzzles;
     }
 
     public Door getDoor() {
