@@ -4,16 +4,15 @@ import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
-import tech.makers.demo.levels.LevelManager;
+import tech.makers.demo.levelManagement.LevelManager;
 import tech.makers.demo.player.Player;
-import tech.makers.demo.levels.Puzzle;
 
 public class Door {
     private final double x;
     private final double y;
-    private boolean locked;
+    public static boolean locked;
     private boolean inRange;
-    private final Image doorImage;
+    public Image doorImage;
     Sound sound = new Sound();
 
     public Door(double x, double y, String imagePath) {
@@ -40,21 +39,27 @@ public class Door {
         }
     }
 
-    private void showLockedMessage() {
+    public void showLockedMessage() {
         if (inRange) {
             Platform.runLater(() -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Door Locked");
+                sound.setFile(15);
+                sound.setVolume(-10.0f); // Set volume as needed
+                sound.play();
                 alert.setHeaderText(null);
                 alert.setContentText("The door is locked until the puzzle is completed.");
                 alert.showAndWait();
+
             });
         }
     }
-
-    public void checkUnlock() {
-        locked = false;
-    }
+//
+//    public void checkUnlock(List<Puzzle> Puzzles) {
+//        if (Puzzles.isSolved()) {
+//            locked = false;
+//        }
+//    }
 
     public void checkPlayerInRange(Player player) {
         double distance = Math.sqrt(Math.pow(player.getX() - x, 2) + Math.pow(player.getY() - y, 2));
@@ -80,6 +85,10 @@ public class Door {
         return inRange;
     }
 
+    public static boolean unlock(){
+       return locked = false;
+    }
+
     public boolean isOpen() {
         return !locked;
     }
@@ -91,4 +100,6 @@ public class Door {
     public double getY() {
         return y;
     }
+
+
 }

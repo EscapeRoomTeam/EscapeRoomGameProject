@@ -12,8 +12,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import tech.makers.demo.EscapeRoomGame;
+import tech.makers.demo.assets.Sound;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class IntroScreen {
 
@@ -25,6 +27,11 @@ public class IntroScreen {
     private int currentMouthImageIndex = 0;
     private Timeline mouthAnimationTimeline;
     private Timeline textTimeline;
+    Sound sound = new Sound();
+    private int stepCounter = 0;
+    private Random random = new Random();
+    private int lastSoundIndex = -1;
+    private int[] voxSounds = {7, 8, 9, 10, 11, 12};
 
     public IntroScreen(Stage primaryStage, EscapeRoomGame game) {
         this.primaryStage = primaryStage;
@@ -70,7 +77,13 @@ public class IntroScreen {
 
         // Add start button
         Button startButton = new Button("Start Game");
-        startButton.setOnAction(e -> game.startGame(primaryStage));
+        startButton.setOnAction(e -> {
+            stopAudio(); // Stop audio and animations before starting the game
+            sound.setFile(17);
+            sound.setVolume(-5.0f);
+            sound.play();
+            game.startGame(primaryStage);
+        });
         layout.getChildren().add(startButton);
     }
 
@@ -80,11 +93,24 @@ public class IntroScreen {
             if (index[0] < text.length()) {
                 label.setText(label.getText() + text.charAt(index[0]));
                 index[0]++;
+
+                stepCounter++;
+                if (stepCounter % 3 == 0) {
+                    int soundIndex;
+                    do {
+                        soundIndex = random.nextInt(voxSounds.length);
+                    } while (soundIndex == lastSoundIndex);
+                    lastSoundIndex = soundIndex;
+                    sound.setFile(voxSounds[soundIndex]);
+                    sound.setVolume(-10.0f);
+                    sound.play();
+                }
             }
         }));
         textTimeline.setCycleCount(text.length());
         textTimeline.setOnFinished(event -> stopMouthAnimation());
         textTimeline.play();
+
 
         startMouthAnimation();
     }
@@ -102,6 +128,16 @@ public class IntroScreen {
         if (mouthAnimationTimeline != null) {
             mouthAnimationTimeline.stop();
             characterView.setImage(mouthImages[0]); // Reset to the first image with mouth closed
+            sound.stop();
+        }
+    }
+
+    private void stopAudio() {
+        if (textTimeline != null) {
+            textTimeline.stop();
+        }
+        if (sound != null) {
+            sound.stop();
         }
     }
 
@@ -114,4 +150,6 @@ public class IntroScreen {
     public Scene getScene() {
         return scene;
     }
+
+
 }

@@ -3,7 +3,7 @@ package tech.makers.demo.player;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
-import tech.makers.demo.levels.Puzzle;
+import tech.makers.demo.levelManagement.Puzzle;
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Sound;
 
@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Random;
 
 public class Player {
-    private double x;
-    private double y;
+    public double x;
+    public double y;
     private Image idleSpriteSheet;
     private Image runSpriteSheet;
     private Image[] idleRightFrames;

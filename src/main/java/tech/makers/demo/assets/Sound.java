@@ -17,6 +17,20 @@ public class Sound {
         soundURL[4] = getClass().getResource("/tech/makers/demo/Sound/SE_Footstep3.wav");
         soundURL[5] = getClass().getResource("/tech/makers/demo/Sound/SE_Footstep4.wav");
         soundURL[6] = getClass().getResource("/tech/makers/demo/Sound/SE_Footstep5.wav");
+        soundURL[7] = getClass().getResource("/tech/makers/demo/Sound/Vox1.wav");
+        soundURL[8] = getClass().getResource("/tech/makers/demo/Sound/Vox2.wav");
+        soundURL[9] = getClass().getResource("/tech/makers/demo/Sound/Vox5.wav");
+        soundURL[10] = getClass().getResource("/tech/makers/demo/Sound/Vox6.wav");
+        soundURL[11] = getClass().getResource("/tech/makers/demo/Sound/Vox7.wav");
+        soundURL[12] = getClass().getResource("/tech/makers/demo/Sound/Vox8.wav");
+        soundURL[13] = getClass().getResource("/tech/makers/demo/Sound/SE_Correct.wav");
+        soundURL[14] = getClass().getResource("/tech/makers/demo/Sound/SE_Correct2.wav");
+        soundURL[15] = getClass().getResource("/tech/makers/demo/Sound/SE_Wrong.wav");
+        soundURL[16] = getClass().getResource("/tech/makers/demo/Sound/AmbientMenuMusic.wav");
+        soundURL[17] = getClass().getResource("/tech/makers/demo/Sound/SE_ClickBassy.wav");
+        soundURL[18] = getClass().getResource("/tech/makers/demo/Sound/SE_ClickBright.wav");
+        soundURL[19] = getClass().getResource("/tech/makers/demo/Sound/TEST_CLICK.wav");
+
 
         // Log to verify URLs
         for (int i = 0; i < soundURL.length; i++) {
