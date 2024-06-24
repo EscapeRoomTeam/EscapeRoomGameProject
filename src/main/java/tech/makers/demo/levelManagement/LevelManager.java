@@ -14,8 +14,8 @@ import java.util.List;
 public class LevelManager {
     public Level[] levels;
     private int currentLevelIndex;
-    private GraphicsContext gc;
-    private EscapeRoomGame game;
+    private final GraphicsContext gc;
+    private final EscapeRoomGame game;
 
     public LevelManager(GraphicsContext gc, EscapeRoomGame game) {
         this.gc = gc;
@@ -58,6 +58,7 @@ public class LevelManager {
         currentLevel.update();
         if (currentLevel.isCompleted()) {
 //            game.completeLevel();
+
             Door.unlock();
         }
     }
