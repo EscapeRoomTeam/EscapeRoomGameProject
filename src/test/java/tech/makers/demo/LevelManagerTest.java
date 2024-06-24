@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import tech.makers.demo.levelManagement.Level;
-import tech.makers.demo.levelManagement.LevelManager;
 import javafx.scene.canvas.GraphicsContext;
 
 import static org.junit.jupiter.api.Assertions.*;
