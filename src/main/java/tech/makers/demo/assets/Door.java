@@ -88,7 +88,9 @@ public class Door {
     public static boolean unlock(){
        return locked = false;
     }
-
+    public static boolean lock(){
+        return locked = true;
+    }
     public boolean isOpen() {
         return !locked;
     }

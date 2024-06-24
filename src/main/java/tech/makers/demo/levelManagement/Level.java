@@ -52,11 +52,12 @@ public class Level {
         for (Puzzle puzzle : puzzles) {
             if (!puzzle.isSolved()) {
                 allPuzzlesSolved = false;
+                Door.lock();
                 break;
             }
         }
         if (allPuzzlesSolved) {
-            door.unlock();
+            Door.unlock();
         }
     }
 
