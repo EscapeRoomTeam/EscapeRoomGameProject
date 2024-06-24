@@ -10,12 +10,15 @@ import tech.makers.demo.assets.Door;
 import tech.makers.demo.levelManagement.Puzzle;
 import tech.makers.demo.player.Player;
 
+import java.util.Collections;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class PlayerTest extends ApplicationTest {
 
-    private Puzzle mockPuzzle;
+    private List<Puzzle> mockPuzzle;
     private Door mockDoor;
     private Player player;
 
@@ -26,7 +29,7 @@ public class PlayerTest extends ApplicationTest {
 
     @BeforeEach
     public void setUp() {
-        mockPuzzle = mock(Puzzle.class);
+        mockPuzzle = Collections.singletonList(mock(Puzzle.class));
         mockDoor = mock(Door.class);
         player = new Player(100, 200);
     }
@@ -63,8 +66,8 @@ public class PlayerTest extends ApplicationTest {
 
     @Test
     public void testCheckPuzzleCollision() {
-        when(mockPuzzle.intersects(eq(100.0), eq(200.0))).thenReturn(false);
-        when(mockPuzzle.intersects(eq(300.0), eq(300.0))).thenReturn(true);
+        when(mockPuzzle.get(0).intersects(eq(100.0), eq(200.0))).thenReturn(false);
+        when(mockPuzzle.get(0).intersects(eq(300.0), eq(300.0))).thenReturn(true);
 
         // Check for no collision
         assertFalse(player.checkPuzzleCollision(100, 200, mockPuzzle));

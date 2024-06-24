@@ -24,14 +24,6 @@ public class Tile {
         gc.drawImage(image, x, y, width, height); // Draw the tile image at the specified position with the specified size
     }
 
-    // Method to define interactions based on the type of the tile
-    public void interact() {
-        // Check the type of the tile and perform corresponding actions
-        if (type.equals("door")) {
-            System.out.println("Door interacted"); // Print a message when a door tile is interacted with
-        }
-    }
-
     // Getters to retrieve the properties of the tile
     public double getX() {
         return x; // Return the X-coordinate of the tile
