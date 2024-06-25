@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import tech.makers.demo.Tile.Tile;
+import tech.makers.demo.views.Tile.Tile;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

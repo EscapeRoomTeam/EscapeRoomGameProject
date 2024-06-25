@@ -1,11 +1,12 @@
-package tech.makers.demo.assets;
+package tech.makers.demo.models.assets;
 
 import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
-import tech.makers.demo.levelManagement.LevelManager;
-import tech.makers.demo.player.Player;
+import tech.makers.demo.controllers.LevelManager;
+import tech.makers.demo.models.Player;
+import tech.makers.demo.models.sound.Sound;
 
 public class Door {
     private final double x;

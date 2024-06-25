@@ -1,12 +1,11 @@
-package tech.makers.demo.levelManagement;
+package tech.makers.demo.models;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.image.Image;
 import javafx.application.Platform;
-import tech.makers.demo.assets.Sound;
-import tech.makers.demo.player.Player;
+import tech.makers.demo.models.sound.Sound;
 
 import java.util.List;
 import java.util.Optional;

@@ -2,21 +2,16 @@ package tech.makers.demo;
 
 import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceDialog;
-import javafx.scene.control.TextInputDialog;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InOrder;
 import org.testfx.framework.junit5.ApplicationTest;
-import tech.makers.demo.levelManagement.Puzzle;
-import tech.makers.demo.player.Player;
+import tech.makers.demo.models.Puzzle;
+import tech.makers.demo.models.Player;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

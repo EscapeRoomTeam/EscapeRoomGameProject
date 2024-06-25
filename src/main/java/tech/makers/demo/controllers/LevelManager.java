@@ -1,18 +1,15 @@
-package tech.makers.demo.levelManagement;
+package tech.makers.demo.controllers;
 
 import javafx.scene.canvas.GraphicsContext;
 import tech.makers.demo.EscapeRoomGame;
-import tech.makers.demo.assets.Door;
-import tech.makers.demo.assets.Eddie;
-import tech.makers.demo.levelManagement.levels.Level1;
-import tech.makers.demo.levelManagement.levels.Level2;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import tech.makers.demo.models.assets.Door;
+import tech.makers.demo.models.assets.Eddie;
+import tech.makers.demo.models.Player;
+import tech.makers.demo.models.levels.Level1;
+import tech.makers.demo.models.levels.Level2;
 
 public class LevelManager {
-    public Level[] levels;
+    public Player.Level[] levels;
     private int currentLevelIndex;
     private final GraphicsContext gc;
     private final EscapeRoomGame game;
@@ -25,13 +22,13 @@ public class LevelManager {
     }
 
     protected void initializeLevels() {
-        levels = new Level[] {
+        levels = new Player.Level[] {
                 new Level1(),
                 new Level2()
         };
     }
 
-    public Level getCurrentLevel() {
+    public Player.Level getCurrentLevel() {
         return levels[currentLevelIndex];
     }
 
@@ -54,11 +51,9 @@ public class LevelManager {
     }
 
     public void update() {
-        Level currentLevel = getCurrentLevel();
+        Player.Level currentLevel = getCurrentLevel();
         currentLevel.update();
         if (currentLevel.isCompleted()) {
-//            game.completeLevel();
-
             Door.unlock();
         }
     }
@@ -67,7 +62,7 @@ public class LevelManager {
         game.completeLevel();
     }
 
-    public void setLevels(Level[] levels) {
+    public void setLevels(Player.Level[] levels) {
         this.levels = levels;
     }
 

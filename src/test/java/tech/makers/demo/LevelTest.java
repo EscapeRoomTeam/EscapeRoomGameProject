@@ -4,11 +4,10 @@ import javafx.scene.canvas.GraphicsContext;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import tech.makers.demo.assets.Door;
-import tech.makers.demo.levelManagement.Level;
-import tech.makers.demo.levelManagement.Puzzle;
-import tech.makers.demo.player.Player;
-import tech.makers.demo.assets.Eddie;
+import tech.makers.demo.models.assets.Door;
+import tech.makers.demo.models.Puzzle;
+import tech.makers.demo.models.Player;
+import tech.makers.demo.models.assets.Eddie;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -20,7 +19,7 @@ public class LevelTest {
     private Door mockDoor;
     private Eddie mockHelperCharacter;
     private GraphicsContext mockGc;
-    private Level level;
+    private Player.Level level;
 
     @BeforeAll // starting the Test App before all tests
     public static void initJfx() {
@@ -32,7 +31,7 @@ public class LevelTest {
         mockPuzzle = mock(Puzzle.class);
         mockDoor = mock(Door.class);
         mockGc = mock(GraphicsContext.class);
-        level = new Level(mockPlayer, mockPuzzle, mockDoor, mockHelperCharacter);
+        level = new Player.Level(mockPlayer, mockPuzzle, mockDoor, mockHelperCharacter);
     }
 
     @Test

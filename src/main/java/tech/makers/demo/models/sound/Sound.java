@@ -1,4 +1,4 @@
-package tech.makers.demo.assets;
+package tech.makers.demo.models.sound;
 
 import javax.sound.sampled.*;
 import java.io.IOException;

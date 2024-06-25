@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import tech.makers.demo.levelManagement.Level;
+import tech.makers.demo.models.Player;
 import javafx.scene.canvas.GraphicsContext;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,9 +27,9 @@ public class LevelManagerTest {
         MockitoAnnotations.openMocks(this); // Initialize mocks
 
         // Mock levels array
-        Level level1 = mock(Level.class);
-        Level level2 = mock(Level.class);
-        levelManager.setLevels(new Level[]{level1, level2});
+        Player.Level level1 = mock(Player.Level.class);
+        Player.Level level2 = mock(Player.Level.class);
+        levelManager.setLevels(new Player.Level[]{level1, level2});
     }
 
     @Test
@@ -84,7 +84,7 @@ public class LevelManagerTest {
     @Test
     void testUpdate_LevelNotCompleted() {
         // Mock update method on current level
-        Level mockLevel = levelManager.getCurrentLevel();
+        Player.Level mockLevel = levelManager.getCurrentLevel();
         when(mockLevel.isCompleted()).thenReturn(false);
 
         // Call update method
@@ -97,7 +97,7 @@ public class LevelManagerTest {
     @Test
     void testUpdate_LevelCompleted() {
         // Mock update method on current level
-        Level mockLevel = levelManager.getCurrentLevel();
+        Player.Level mockLevel = levelManager.getCurrentLevel();
         when(mockLevel.isCompleted()).thenReturn(true);
 
         // Call update method
@@ -119,9 +119,9 @@ public class LevelManagerTest {
     @Test
     void testSetLevels() {
         // Create new levels array
-        Level newLevel1 = mock(Level.class);
-        Level newLevel2 = mock(Level.class);
-        Level[] newLevels = {newLevel1, newLevel2};
+        Player.Level newLevel1 = mock(Player.Level.class);
+        Player.Level newLevel2 = mock(Player.Level.class);
+        Player.Level[] newLevels = {newLevel1, newLevel2};
 
         // Set new levels array
         levelManager.setLevels(newLevels);

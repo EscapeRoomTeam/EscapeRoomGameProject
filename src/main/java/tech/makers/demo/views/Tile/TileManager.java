@@ -1,4 +1,4 @@
-package tech.makers.demo.Tile;
+package tech.makers.demo.views.Tile;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;

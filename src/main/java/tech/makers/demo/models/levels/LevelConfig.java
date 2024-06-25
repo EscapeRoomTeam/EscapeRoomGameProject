@@ -1,5 +1,5 @@
 // src/main/java/tech/makers/demo/levels/LevelConfig.java
-package tech.makers.demo.levelManagement;
+package tech.makers.demo.models.levels;
 
 public class LevelConfig {
     public static final int[][] LEVEL_1_LAYOUT = {

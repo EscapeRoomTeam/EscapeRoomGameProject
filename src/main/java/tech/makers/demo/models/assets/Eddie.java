@@ -1,4 +1,4 @@
-package tech.makers.demo.assets;
+package tech.makers.demo.models.assets;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;

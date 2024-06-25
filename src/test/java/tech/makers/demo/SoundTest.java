@@ -2,12 +2,9 @@ package tech.makers.demo;
 
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
-import tech.makers.demo.assets.Sound;
+import tech.makers.demo.models.sound.Sound;
 
 import static org.junit.Assert.*;
-
-import javax.sound.sampled.Clip;
-import java.net.URL;
 
 public class SoundTest {
 

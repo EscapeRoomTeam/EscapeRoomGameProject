@@ -1,4 +1,4 @@
-package tech.makers.demo.gui;
+package tech.makers.demo.views;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import tech.makers.demo.EscapeRoomGame;
-import tech.makers.demo.assets.Sound;
+import tech.makers.demo.models.sound.Sound;
 
 import java.util.Objects;
 import java.util.Random;

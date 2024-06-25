@@ -1,29 +1,32 @@
-package tech.makers.demo.levelManagement;
+package tech.makers.demo.models.levels;
+
 
 import javafx.scene.canvas.GraphicsContext;
-import tech.makers.demo.assets.Door;
-import tech.makers.demo.assets.Eddie;
-import tech.makers.demo.player.Player;
-
+import tech.makers.demo.models.Player;
+import tech.makers.demo.models.Puzzle;
+import tech.makers.demo.models.assets.Computer;
+import tech.makers.demo.models.assets.Door;
+import tech.makers.demo.models.assets.Eddie;
+import tech.makers.demo.models.assets.Safe;
 
 import java.util.List;
-import tech.makers.demo.levelManagement.Puzzle;
 
 public class Level {
     private Player player;
     private List<Puzzle> puzzles;
     private Door door;
     private Eddie helperCharacter;
-
+    private Computer computer;
+    private Safe safe;
     private boolean completed;
 
-
-    public Level(Player player, List<Puzzle> puzzles, Door door, Eddie helperCharacter) {
+    public Level(Player player, List<Puzzle> puzzles, Door door, Eddie helperCharacter, Computer computer, Safe safe) {
         this.player = player;
         this.puzzles = puzzles;
         this.door = door;
         this.helperCharacter = helperCharacter;
-
+        this.computer = computer;
+        this.safe = safe;
         this.completed = false;
     }
 
@@ -36,6 +39,12 @@ public class Level {
         if (helperCharacter != null) {
             helperCharacter.render(gc);
         }
+        if (computer != null) {
+            computer.render(gc);
+        }
+        if (safe != null) {
+            safe.render(gc);
+        }
     }
 
     public void update() {
@@ -43,9 +52,16 @@ public class Level {
             puzzle.checkPlayerInRange(player);
         }
         door.checkPlayerInRange(player);
-
         if (helperCharacter != null) {
             helperCharacter.update();
+        }
+
+        if (safe != null) {
+            safe.checkPlayerInRange(player);
+        }
+
+        if (computer != null) {
+            computer.checkPlayerInRange(player);
         }
 
         boolean allPuzzlesSolved = true;
@@ -72,6 +88,18 @@ public class Level {
         return allPuzzlesSolved && door.isOpen();
     }
 
+    public void handleInteraction() {
+        if (helperCharacter != null && helperCharacter.isInRange(player.getX(), player.getY())) {
+            helperCharacter.interact();
+        }
+        if (computer != null && computer.isInRange()) {
+            computer.interact(player);
+        }
+        if (safe != null && safe.isInRange()) {
+            safe.interact(player);
+        }
+    }
+
     public Player getPlayer() {
         return player;
     }
@@ -86,6 +114,14 @@ public class Level {
 
     public Eddie getHelperCharacter() {
         return helperCharacter;
+    }
+
+    public Computer getComputer() {
+        return computer;
+    }
+
+    public Safe getSafe() {
+        return safe;
     }
 
     public void completeLevel() {

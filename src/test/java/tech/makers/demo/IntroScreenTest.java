@@ -3,14 +3,12 @@ package tech.makers.demo;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 import org.testfx.util.WaitForAsyncUtils;
-import tech.makers.demo.gui.IntroScreen;
+import tech.makers.demo.views.IntroScreen;
 
 import java.util.concurrent.TimeUnit;
 

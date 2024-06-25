@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testfx.framework.junit5.ApplicationTest;
-import tech.makers.demo.assets.Door;
-import tech.makers.demo.levelManagement.Puzzle;
-import tech.makers.demo.player.Player;
+import tech.makers.demo.models.assets.Door;
+import tech.makers.demo.models.Puzzle;
+import tech.makers.demo.models.Player;
 
 import java.util.Optional;
 

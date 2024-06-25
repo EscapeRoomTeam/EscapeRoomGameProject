@@ -4,11 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javafx.scene.canvas.GraphicsContext;  // Might need to be mocked
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testfx.framework.junit5.ApplicationTest;
-import tech.makers.demo.Tile.Tile;
-import tech.makers.demo.Tile.TileManager;
+import tech.makers.demo.views.Tile.Tile;
+import tech.makers.demo.views.Tile.TileManager;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;

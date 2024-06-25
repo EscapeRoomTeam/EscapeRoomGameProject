@@ -1,18 +1,15 @@
 package tech.makers.demo;
 
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.testfx.api.FxAssert;
 import org.testfx.api.FxRobot;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.matcher.control.LabeledMatchers;
-import tech.makers.demo.EscapeRoomGame;
-import tech.makers.demo.gui.LevelCompletionScreen;
+import tech.makers.demo.views.LevelCompletionScreen;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
