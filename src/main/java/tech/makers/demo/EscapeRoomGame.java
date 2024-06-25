@@ -10,20 +10,20 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import tech.makers.demo.assets.Door;
+import tech.makers.demo.assets.Eddie;
 import tech.makers.demo.assets.Sound;
 import tech.makers.demo.gui.HomeScreen;
 import tech.makers.demo.gui.LevelCompletionScreen;
+import tech.makers.demo.levelManagement.Interaction;
 import tech.makers.demo.levelManagement.Level;
-import tech.makers.demo.Tile.TileManager;
 import tech.makers.demo.levelManagement.LevelManager;
 import tech.makers.demo.levelManagement.Puzzle;
 import tech.makers.demo.player.Player;
+import tech.makers.demo.Tile.TileManager;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import tech.makers.demo.assets.Eddie;
-
 
 public class EscapeRoomGame extends Application {
     private LevelManager levelManager;
@@ -89,7 +89,8 @@ public class EscapeRoomGame extends Application {
             Player player = currentLevel.getPlayer();
             List<Puzzle> puzzles = currentLevel.getPuzzles();
             Door door = currentLevel.getDoor();
-            Eddie helperCharacter = levelManager.getHelperCharacter();
+            Eddie helperCharacter = currentLevel.getHelperCharacter();
+            List<Interaction> interactions = currentLevel.getInteractions();
 
             if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) player.moveUp(puzzles, door);
             if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) player.moveDown(puzzles, door);
@@ -100,17 +101,21 @@ public class EscapeRoomGame extends Application {
                     door.interact(levelManager);
                     currentLevel.isCompleted();
                 } else {
-                    for (Puzzle puzzle: puzzles){
+                    for (Puzzle puzzle : puzzles) {
                         puzzle.interact();
+                        }
                     }
+                    for (Interaction interaction : interactions) {
+                        if (interaction.isInRange()) {
+                            interaction.interact();
+                        }
+                    }
+                    if (helperCharacter.isInRange(player.getX(), player.getY())) {
+                        helperCharacter.interact();
+                    }
+                }
+            });
 
-                    door.interact(levelManager);
-                }
-                if (helperCharacter.isInRange(player.getX(), player.getY())) {
-                    helperCharacter.interact();
-                }
-            }
-        });
 
         scene.setOnKeyReleased(event -> {
             Level currentLevel = levelManager.getCurrentLevel();

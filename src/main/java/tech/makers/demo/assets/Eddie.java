@@ -4,8 +4,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import tech.makers.demo.levelManagement.HelperCharacter;
 
-public class Eddie {
+public class Eddie implements HelperCharacter {
     private final double x;
     private final double y;
     private final Image idleSpriteSheet;
@@ -48,6 +49,7 @@ public class Eddie {
         return frames;
     }
 
+    @Override
     public void render(GraphicsContext gc) {
         Image currentImage;
         Image[] currentFrames;
@@ -71,6 +73,7 @@ public class Eddie {
         gc.drawImage(currentImage, x, y, 25, 50);
     }
 
+    @Override
     public void update() {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastFrameTime >= FRAME_DURATION) {
