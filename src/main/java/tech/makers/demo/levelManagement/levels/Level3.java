@@ -47,7 +47,7 @@ public class Level3 extends Level {
         MacbookInteraction macbookInteraction = new MacbookInteraction(300, 300, "/sprites/Router.png");
         CableInteraction cableInteraction = new CableInteraction(100, 200, "/sprites/hdmi.png");
         HDMIInteraction hdmiInteraction = new HDMIInteraction(350, 50, "/sprites/tvscreen.png", macbookInteraction, cableInteraction);
-        CrowdInteraction crowdInteraction = new CrowdInteraction(250, 100, "/sprites/crowd.png");
+        CrowdInteraction crowdInteraction = new CrowdInteraction(250, 150, "/sprites/crowd.png");
         interactions.add(macbookInteraction);
         interactions.add(cableInteraction);
         interactions.add(hdmiInteraction);
