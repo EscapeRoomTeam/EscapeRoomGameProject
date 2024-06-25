@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import tech.makers.demo.levelManagement.Level;
 import javafx.scene.canvas.GraphicsContext;
+import tech.makers.demo.levelManagement.LevelManager;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -61,12 +62,32 @@ public class LevelManagerTest {
         levelManager.loadNextLevel();
         levelManager.loadNextLevel();
 
-        // Mock System.out to capture printed output
+        final java.io.ByteArrayOutputStream outContent = new java.io.ByteArrayOutputStream();
         System.setOut(new java.io.PrintStream(outContent));
 
-        levelManager.loadNextLevel();
+        try {
+            // Load the next level, which should print the completion message
+            levelManager.loadNextLevel();
 
-        assertEquals("You have completed all levels!\n", outContent.toString()); // Check console output
+            // Flush the output stream to capture all output
+            System.out.flush();
+
+            // Capture and trim the actual output
+            String actualOutput = outContent.toString().trim();
+
+            // Expected output
+            String expectedOutput = "You have completed all levels!";
+
+            // Log both expected and actual output for debugging
+            System.out.println("Expected output: " + expectedOutput);
+            System.out.println("Actual output: " + actualOutput);
+
+            // Verify the console output
+            assertEquals(expectedOutput, actualOutput);
+        } finally {
+            // Reset System.out to its original state after the test
+            System.setOut(System.out);
+        }
     }
 
     @Test
@@ -98,7 +119,7 @@ public class LevelManagerTest {
     void testUpdate_LevelCompleted() {
         // Mock update method on current level
         Level mockLevel = levelManager.getCurrentLevel();
-        when(mockLevel.isCompleted()).thenReturn(true);
+        levelManager.completeLevel();
 
         // Call update method
         levelManager.update();

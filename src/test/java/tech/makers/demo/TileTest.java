@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tech.makers.demo.Tile.Tile;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -15,6 +14,8 @@ public class TileTest {
     private Tile tile;
     private GraphicsContext mockGc;
     private Image mockImage;
+
+
 
     @BeforeAll // starting the Test App before all tests
     public static void initJfx() {
@@ -39,19 +40,6 @@ public class TileTest {
     public void testRender() {
         tile.render(mockGc);
         verify(mockGc, times(1)).drawImage(mockImage, 100.0, 150.0, 50.0, 50.0);
-    }
-
-    @Test
-    public void testInteract_withDoor() {
-        Tile doorTile = new Tile(200.0, 250.0, "door", mockImage, 50.0, 50.0);
-        doorTile.interact();
-        // As there is no return value or state change, we can just manually check the output
-    }
-
-    @Test
-    public void testInteract_withNonDoor() {
-        tile.interact();  // Interacting with a "floor" tile should do nothing
-        // As there is no return value or state change, we can just manually check the output
     }
 
     @Test

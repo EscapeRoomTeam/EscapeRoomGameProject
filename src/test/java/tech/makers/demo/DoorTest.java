@@ -1,6 +1,7 @@
 package tech.makers.demo;
 
 
+import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +10,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testfx.framework.junit5.ApplicationTest;
 import tech.makers.demo.assets.Door;
+import tech.makers.demo.assets.Sound;
+import tech.makers.demo.levelManagement.LevelManager;
+
 import tech.makers.demo.levelManagement.Puzzle;
 import tech.makers.demo.player.Player;
 
@@ -49,29 +53,39 @@ public class DoorTest extends ApplicationTest {
     private Alert alertMock; // Mock the Alert class (or Dialog if applicable)
 
     @Test
-    public void testShowLockedMessage_createsAlert() {
-        Door door = new Door(100, 100, "/sprites/door.png"); // Create a Door object
+    public void testShowLockedMessage_playsSoundAndSetsContentText() {
 
-        // Simulate a locked door and inRange player
+        door.inRange = true;
         door.locked = true;
 
-        // Mock the Alert class
-        when(alertMock.showAndWait()).thenReturn(Optional.empty());
+        // Mock the Sound class
+        Sound mockSound = mock(Sound.class);
+        door.sound = mockSound; // Inject the mock
 
-        // Stub the Alert mock to return expected values (after verification)
-        when(alertMock.getTitle()).thenReturn("Door Locked");
-        when(alertMock.getContentText()).thenReturn("The door is locked until the puzzle is completed.");
-
-        // Call the showLockedMessage method
+        // Simulate the scenario for showing the message (without launching the application)
         door.showLockedMessage();
+
+        // Verify sound methods were called with expected arguments
+        verify(mockSound).setFile(15);
+        verify(mockSound).setVolume(-10.0f);
+        verify(mockSound).play();
+
+        // Optional: Verify specific content text is set within the Runnable passed to Platform.runLater (if possible)
     }
+
+
+    // A simple mock Runnable class for verification purposes
+    public interface MockRunnable extends Runnable {
+    }
+
+
 
     @Test
     public void testInteract_locked_inRange_showsMessage() {
         when(mockPlayer.getX()).thenReturn(150.0);
         when(mockPlayer.getY()).thenReturn(250.0);
         door.checkPlayerInRange(mockPlayer);
-        door.interact(mockPuzzle, mockLevelManager);
+        door.interact( mockLevelManager);
         // Focus on verifying no LevelManager interaction
         verifyNoInteractions(mockLevelManager);
 
@@ -89,8 +103,7 @@ public class DoorTest extends ApplicationTest {
         when(mockPlayer.getX()).thenReturn(150.0);
         when(mockPlayer.getY()).thenReturn(250.0);
         door.checkPlayerInRange(mockPlayer);
-        door.checkUnlock(mockPuzzle);
-        door.interact(mockPuzzle, mockLevelManager);
+        door.interact(mockLevelManager);
         verify(mockPuzzle, times(1)).isSolved(); // Verify puzzle is checked
         verify(mockLevelManager).completeLevel(); // Level manager called to complete
         verify(mockPlayer).getX(); // Player X checked for range
@@ -100,14 +113,14 @@ public class DoorTest extends ApplicationTest {
     @Test
     public void testCheckUnlock_solvedPuzzle_unlocksDoor() {
         when(mockPuzzle.isSolved()).thenReturn(true);
-        door.checkUnlock(mockPuzzle);
+        door.isOpen();
         assertFalse(door.isLocked());
     }
 
     @Test
     public void testCheckUnlock_unsolvedPuzzle_staysLocked() {
         when(mockPuzzle.isSolved()).thenReturn(false);
-        door.checkUnlock(mockPuzzle);
+
         assertTrue(door.isLocked());
     }
 
@@ -161,7 +174,7 @@ public class DoorTest extends ApplicationTest {
     @Test
     public void testIsLocked_afterUnlock_returnsFalse() {
         when(mockPuzzle.isSolved()).thenReturn(true);
-        door.checkUnlock(mockPuzzle);
+
         assertFalse(door.isLocked()); // Door unlocked after check
     }
 

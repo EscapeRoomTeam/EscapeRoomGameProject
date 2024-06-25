@@ -3,19 +3,14 @@ package tech.makers.demo.levelManagement;
 import javafx.scene.canvas.GraphicsContext;
 import tech.makers.demo.EscapeRoomGame;
 import tech.makers.demo.assets.Door;
-import tech.makers.demo.assets.Eddie;
 import tech.makers.demo.levelManagement.levels.Level1;
 import tech.makers.demo.levelManagement.levels.Level2;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class LevelManager {
     public Level[] levels;
     private int currentLevelIndex;
-    private GraphicsContext gc;
-    private EscapeRoomGame game;
+    private final GraphicsContext gc;
+    private final EscapeRoomGame game;
 
     public LevelManager(GraphicsContext gc, EscapeRoomGame game) {
         this.gc = gc;
@@ -57,7 +52,6 @@ public class LevelManager {
         Level currentLevel = getCurrentLevel();
         currentLevel.update();
         if (currentLevel.isCompleted()) {
-//            game.completeLevel();
             Door.unlock();
         }
     }
@@ -70,7 +64,7 @@ public class LevelManager {
         this.levels = levels;
     }
 
-    public Eddie getHelperCharacter() {
+    public HelperCharacter getHelperCharacter() {
         return getCurrentLevel().getHelperCharacter();
     }
 }

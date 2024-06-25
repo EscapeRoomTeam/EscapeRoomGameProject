@@ -11,9 +11,9 @@ public class Door {
     private final double x;
     private final double y;
     public static boolean locked;
-    private boolean inRange;
+    public boolean inRange;
     public Image doorImage;
-    Sound sound = new Sound();
+    public Sound sound = new Sound();
 
     public Door(double x, double y, String imagePath) {
         this.x = x;
@@ -88,7 +88,9 @@ public class Door {
     public static boolean unlock(){
        return locked = false;
     }
-
+    public static boolean lock(){
+        return locked = true;
+    }
     public boolean isOpen() {
         return !locked;
     }
