@@ -8,6 +8,7 @@ public class Sound {
 
     public Clip clip;
     private final URL[] soundURL = new URL[30];
+    private float volume = -10.0f;
 
     public Sound() {
         soundURL[0] = getClass().getResource("/tech/makers/demo/Sound/TempMainScore.wav");
@@ -86,10 +87,13 @@ public class Sound {
         }
     }
     public void setVolume(float volume) {
+        this.volume = volume;
         if (clip != null) {
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             gainControl.setValue(volume); // Reduce volume by a number of decibels.
         }
     }
-
+    public float getVolume() {
+        return volume;
+    }
 }

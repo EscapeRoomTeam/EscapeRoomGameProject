@@ -15,6 +15,7 @@ import tech.makers.demo.assets.Sound;
 import tech.makers.demo.gui.HomeScreen;
 import tech.makers.demo.gui.LevelCompletionScreen;
 import tech.makers.demo.levelManagement.Interaction;
+import tech.makers.demo.gui.OptionsScreen;
 import tech.makers.demo.levelManagement.Level;
 import tech.makers.demo.levelManagement.LevelManager;
 import tech.makers.demo.levelManagement.Puzzle;
@@ -36,6 +37,16 @@ public class EscapeRoomGame extends Application {
     private AnimationTimer gameLoop;
     private Canvas canvas;
     private GraphicsContext gc;
+    private OptionsScreen optionsScreen;
+    private boolean isOptionsMenuVisible = false;
+    private Scene Scene;
+    private Scene currentScene;
+    private Sound musicSound;
+    private Sound[] seSound;
+   private double musicVolume = 0.5;
+   private double seVolume = 0.5;
+    private final double DEFAULT_VOLUME_DB = -10.0;
+
 
     public static void main(String[] args) {
         launch(args);
@@ -43,11 +54,20 @@ public class EscapeRoomGame extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
         this.primaryStage = primaryStage;
         HomeScreen homeScreen = new HomeScreen(primaryStage, this);
         primaryStage.setTitle("Escape Room Game");
         primaryStage.setScene(homeScreen.getScene());
         primaryStage.show();
+
+        musicSound = new Sound();
+        seSound = new Sound[30]; // Adjust size based on your needs
+
+        for (int i = 0; i < seSound.length; i++) {
+            seSound[i] = new Sound();
+        }
+        optionsScreen = new OptionsScreen(primaryStage, this);
     }
 
     public void startGame(Stage primaryStage) {
@@ -76,9 +96,11 @@ public class EscapeRoomGame extends Application {
         primaryStage.show();
 
         sound.setFile(0);
-        sound.setVolume(-10.0f);
+        sound.setVolume((float)DEFAULT_VOLUME_DB);
         sound.play();
         sound.loop();
+
+        optionsScreen = new OptionsScreen(primaryStage, this);
 
         startGameLoop();
     }
@@ -92,17 +114,21 @@ public class EscapeRoomGame extends Application {
             Eddie helperCharacter = currentLevel.getHelperCharacter();
             List<Interaction> interactions = currentLevel.getInteractions();
 
-            if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) player.moveUp(puzzles, door);
-            if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) player.moveDown(puzzles, door);
-            if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) player.moveLeft(puzzles, door);
-            if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) player.moveRight(puzzles, door);
-            if (event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.E) {
-                if (door.isInRange() && !door.isLocked()) {
-                    door.interact(levelManager);
-                    currentLevel.isCompleted();
-                } else {
-                    for (Puzzle puzzle : puzzles) {
-                        puzzle.interact();
+
+            if (event.getCode() == KeyCode.ESCAPE) {
+                toggleOptionsMenu();
+            } else if (!isOptionsMenuVisible) {
+                if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) player.moveUp(puzzles, door);
+                if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) player.moveDown(puzzles, door);
+                if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) player.moveLeft(puzzles, door);
+                if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) player.moveRight(puzzles, door);
+                if (event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.E) {
+                    if (door.isInRange() && !door.isLocked()) {
+                        door.interact(levelManager);
+                        currentLevel.isCompleted();
+                    } else {
+                        for (Puzzle puzzle : puzzles) {
+                            puzzle.interact();
                         }
                     }
                     for (Interaction interaction : interactions) {
@@ -114,22 +140,26 @@ public class EscapeRoomGame extends Application {
                         helperCharacter.interact();
                     }
                 }
+            }
             });
 
 
         scene.setOnKeyReleased(event -> {
-            Level currentLevel = levelManager.getCurrentLevel();
-            Player player = currentLevel.getPlayer();
+            if (!isOptionsMenuVisible) {
+                Level currentLevel = levelManager.getCurrentLevel();
+                Player player = currentLevel.getPlayer();
 
-            // Reset player state to idle when movement keys are released
-            if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W ||
-                    event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S ||
-                    event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A ||
-                    event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) {
-                player.stopMoving();
+                // Reset player state to idle when movement keys are released
+                if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W ||
+                        event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S ||
+                        event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A ||
+                        event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) {
+                    player.stopMoving();
+                }
             }
         });
     }
+
 
     private void startGameLoop() {
         gameLoop = new AnimationTimer() {
@@ -214,6 +244,27 @@ public class EscapeRoomGame extends Application {
         sound.play();
     }
 
+    public void toggleOptionsMenu() {
+        if (isOptionsMenuVisible) {
+            resumeGame();
+        } else {
+            gameLoop.stop();
+            currentScene = primaryStage.getScene();
+            primaryStage.setScene(optionsScreen.getScene());
+            isOptionsMenuVisible = true;
+        }
+    }
+
+    public void resumeGame() {
+        if (isOptionsMenuVisible) {
+            primaryStage.setTitle("Escape Room Game");
+            primaryStage.setScene(currentScene);
+            primaryStage.show();
+            isOptionsMenuVisible = false;
+            gameLoop.start();
+        }
+    }
+
     public void completeLevel() {
         gameLoop.stop(); // Stop the game loop before showing the level completion screen
         showLevelCompletionScreen();
@@ -273,5 +324,50 @@ public class EscapeRoomGame extends Application {
             this.x = x;
             this.y = y;
         }
+    }
+
+
+
+    public double calculateAdjustedVolume(double volume) {
+        double minVolume = -80.0; // Minimum volume in dB (muted)
+        double maxVolume = 10.0;  // Maximum volume in dB (for illustration, you can adjust based on your requirements)
+        double defaultVolumeDB = -10.0; // Default volume in dB
+
+        if (volume <= 0.5) {
+            // Linear mapping from 0.0 to 0.5 on slider to minVolume to defaultVolumeDB
+            return minVolume + (volume * 2) * (defaultVolumeDB - minVolume);
+        } else {
+            // Linear mapping from 0.5 to 1.0 on slider to defaultVolumeDB to maxVolume
+            return defaultVolumeDB + ((volume - 0.5) * 2) * (maxVolume - defaultVolumeDB);
+        }
+    }
+
+    public void setMusicVolume(double volume) {
+        this.musicVolume = volume;
+        sound.setVolume((float) calculateAdjustedVolume(volume));
+    }
+
+    // Method to set sound effects volume
+    public void setSEVolume(double volume) {
+        this.seVolume = volume;
+        adjustSEVolume();
+    }
+
+    private void adjustMusicVolume() {
+        musicSound.setVolume((float) (-10.0f + 20.0f * musicVolume));
+    }
+
+    private void adjustSEVolume() {
+        for (Sound seSound : seSound) {
+            seSound.setVolume((float) (-10.0f + 20.0f * seVolume));
+        }
+    }
+
+    public double getMusicVolume() {
+        return musicVolume;
+    }
+
+    public double getSEVolume() {
+        return seVolume;
     }
 }
