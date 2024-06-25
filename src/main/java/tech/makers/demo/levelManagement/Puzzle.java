@@ -62,7 +62,7 @@ public class Puzzle {
                         solved = true; // Set the puzzle as solved
                         System.out.println("Puzzle solved!"); // Print a message indicating the puzzle is solved
                         sound.setFile(14);
-                        sound.setVolume(-30.0f); // Set volume as needed
+                        sound.setVolume(-30.0f);
                         sound.play();
                         solvedSoundPlayed = true;
                     } else {
