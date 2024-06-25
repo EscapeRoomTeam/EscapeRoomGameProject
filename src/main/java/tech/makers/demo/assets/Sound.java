@@ -33,6 +33,7 @@ public class Sound {
         soundURL[19] = getClass().getResource("/tech/makers/demo/Sound/TEST_CLICK.wav");
         soundURL[20] = getClass().getResource("/tech/makers/demo/Sound/SE_RouterOn.wav");
         soundURL[21] = getClass().getResource("/tech/makers/demo/Sound/SE_Typing.wav");
+        soundURL[22] = getClass().getResource("/tech/makers/demo/Sound/SE_Vault.wav");
 
 
         // Log to verify URLs

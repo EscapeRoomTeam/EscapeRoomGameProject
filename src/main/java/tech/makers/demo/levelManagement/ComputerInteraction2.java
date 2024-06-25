@@ -2,12 +2,14 @@ package tech.makers.demo.levelManagement;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
+import tech.makers.demo.assets.Sound;
 import tech.makers.demo.assets.Door;
 
 public class ComputerInteraction2 extends Interaction {
     private boolean hasUSB;
     private boolean osReinstalled;
     private Door door;
+    Sound sound = new Sound();
 
     public ComputerInteraction2(double x, double y, String imagePath, Door door) {
         super(x, y, imagePath);
@@ -28,11 +30,17 @@ public class ComputerInteraction2 extends Interaction {
     @Override
     public void interact() {
         if (!hasUSB) {
+            sound.setFile(15);
+            sound.setVolume(-10.0f);
+            sound.play();
             showAlert("You need to find the USB drive to reinstall the operating system.");
         } else if (!osReinstalled) {
             osReinstalled = true;
-            showAlert("Operating system reinstalled! You can pass into the final room!");
-            Door.unlock(); // Unlock the door when the OS is reinstalled
+            sound.setFile(2);
+            sound.setVolume(-25.0f);
+            sound.play();
+            showAlert("Operating system reinstalled! You can now do the coding challenge.");
+            Door.unlock();
         } else {
             showAlert("You have already reinstalled the operating system and completed the challenge.");
         }

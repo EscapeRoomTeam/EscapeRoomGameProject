@@ -44,7 +44,7 @@ public class ComputerInteraction extends Interaction { // ComputerInteraction cl
     public void interact() { // Override interact method
         if (!isRouterOn) { // Check if router is off
             sound.setFile(15);
-            sound.setVolume(-10.0f); // Set volume as needed
+            sound.setVolume(-10.0f);
             sound.play();
             showAlert("The WiFi is disconnected. Please connect to WiFi."); // Show alert to turn on the router
         } else if (!hasPassword) { // Check if password has not been entered

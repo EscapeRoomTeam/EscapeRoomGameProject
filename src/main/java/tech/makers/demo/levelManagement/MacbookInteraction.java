@@ -1,9 +1,11 @@
 package tech.makers.demo.levelManagement;
 
 import javafx.scene.control.Alert;
+import tech.makers.demo.assets.Sound;
 
 public class MacbookInteraction extends Interaction {
     private boolean hasMacbook;
+    Sound sound = new Sound();
 
     public MacbookInteraction(double x, double y, String imagePath) {
         super(x, y, imagePath);
@@ -14,6 +16,9 @@ public class MacbookInteraction extends Interaction {
     public void interact() {
         if (!hasMacbook) {
             hasMacbook = true;
+            sound.setFile(21);
+            sound.setVolume(-10.0f);
+            sound.play();
             showAlert("You picked up the Golden MacBook.");
         } else {
             showAlert("You already have the Golden MacBook.");
