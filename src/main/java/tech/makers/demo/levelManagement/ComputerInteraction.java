@@ -65,6 +65,9 @@ public class ComputerInteraction extends Interaction { // ComputerInteraction cl
 
                     showAlert("Password correct! The door is now unlocked."); // Show success alert
                 } else { // If password is incorrect
+                    sound.setFile(15);
+                    sound.setVolume(-10.0f); // Set volume as needed
+                    sound.play();
                     showAlert("Incorrect password. Try again."); // Show error alert
                 }
             });
