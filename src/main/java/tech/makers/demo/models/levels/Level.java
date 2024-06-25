@@ -127,4 +127,8 @@ public class Level {
     public void completeLevel() {
         this.completed = true;
     }
+
+    public void unlockDoor() {
+        Door.unlock();
+    }
 }

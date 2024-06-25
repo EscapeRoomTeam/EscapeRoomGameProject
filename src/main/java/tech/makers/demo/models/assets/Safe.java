@@ -35,7 +35,7 @@ public class Safe {
             if (correctCode.equals(userInput)) {
                 isUnlocked = true;
                 player.addItemToInventory("USB");
-                showAlert("Safe", "The safe is now unlocked.");
+                showAlert("Safe", "You opened the safe and found the USB!");
             } else {
                 showAlert("Safe", "Incorrect code. The safe remains locked.");
             }

@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import tech.makers.demo.models.Player;
+import tech.makers.demo.models.levels.Level;
 
 public class Computer {
     private final double x;
@@ -11,15 +12,17 @@ public class Computer {
     private final Image image;
     private boolean hasNewOS = false;
     private boolean inRange;
-    private boolean interacting;
+    private Level level;
 
     public Computer(double x, double y, String imagePath) {
         this.x = x;
         this.y = y;
         this.inRange = false;
-        this.interacting = false;
-        this.hasNewOS = false;
         this.image = new Image(getClass().getResource(imagePath).toExternalForm());
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
     }
 
     public void render(GraphicsContext gc) {
@@ -31,6 +34,9 @@ public class Computer {
             if (!hasNewOS) {
                 installNewOS(player);
                 hasNewOS = true;
+                if (level != null) {
+                    level.unlockDoor();
+                }
             } else {
                 showAlert("Computer", "The computer already has the new operating system installed.");
             }
@@ -42,7 +48,6 @@ public class Computer {
     public void checkPlayerInRange(Player player) {
         double distance = Math.sqrt(Math.pow(player.getX() - x, 2) + Math.pow(player.getY() - y, 2));
         inRange = distance < 70;
-        System.out.println("Player in range of computer: " + inRange + " (distance: " + distance + ")");
     }
 
     private void installNewOS(Player player) {
@@ -59,23 +64,11 @@ public class Computer {
         alert.showAndWait();
     }
 
-    public boolean intersects(double playerX, double playerY) {
-        return playerX < x + 96 && playerX + 96 > x && playerY < y + 144 && playerY + 144 > y; // Adjust size as needed
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
+    public boolean hasNewOS() {
+        return hasNewOS;
     }
 
     public boolean isInRange() {
         return inRange;
-    }
-
-    public boolean hasNewOS() {
-        return hasNewOS;
     }
 }
