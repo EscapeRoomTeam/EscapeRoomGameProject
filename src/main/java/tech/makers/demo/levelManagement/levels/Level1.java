@@ -30,15 +30,15 @@ public class Level1 extends Level {
 
     private static List<Puzzle> createPuzzles() {
         List<Puzzle> puzzles = new ArrayList<>();
-        puzzles.add(new Puzzle(200, 200, "What is the capital of France?", "Paris", Arrays.asList("Berlin", "Madrid", "Paris", "Rome"), "/sprites/Computer.png"));
+//        puzzles.add(new Puzzle(200, 200, "What is the capital of France?", "Paris", Arrays.asList("Berlin", "Madrid", "Paris", "Rome"), "/sprites/Computer.png"));
         return puzzles;
     }
 
-    private static EddieInteraction createEddieInteraction() {
-        Door door = new Door(600, 400, "/sprites/door.png");
-        ComputerInteraction computerInteraction = new ComputerInteraction(300, 300, "/sprites/Computer.png", door);
-        return new EddieInteraction(700, 50, "/sprites/transparent.png", computerInteraction);
-    }
+//    private static EddieInteraction createEddieInteraction() {
+//        Door door = new Door(600, 400, "/sprites/door.png");
+//        ComputerInteraction computerInteraction = new ComputerInteraction(300, 300, "/sprites/Computer.png", door);
+//        return new EddieInteraction(700, 50, "/sprites/transparent.png", computerInteraction);
+//    }
 
     private static List<Interaction> createInteractions() {
         List<Interaction> interactions = new ArrayList<>();

@@ -54,17 +54,19 @@ public class Level {
             interaction.checkPlayerInRange(player);
         }
 
-        boolean allPuzzlesSolved = false;
-        for (Puzzle puzzle : puzzles) {
-            if (!puzzle.isSolved()) {
-                allPuzzlesSolved = false;
-                Door.lock();
-                break;
-            }
-        }
-        if (allPuzzlesSolved) {
-            Door.unlock();
-        }
+
+
+//        boolean allPuzzlesSolved = false;
+//        for (Puzzle puzzle : puzzles) {
+//            if (!puzzle.isSolved()) {
+//                allPuzzlesSolved = false;
+//                Door.lock();
+//                break;
+//            }
+//        }
+//        if (allPuzzlesSolved) {
+//            Door.unlock();
+//        }
     }
 
     public boolean isCompleted() {

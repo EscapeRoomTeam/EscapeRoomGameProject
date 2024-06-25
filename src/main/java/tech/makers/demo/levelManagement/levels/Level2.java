@@ -28,9 +28,9 @@ public class Level2 extends Level {
         return puzzles;
     }
 
-    private static EddieInteraction2 createEddieInteraction() {
-        return new EddieInteraction2(700, 50, "/sprites/Eddie_idle_anim.png");
-    }
+//    private static EddieInteraction2 createEddieInteraction() {
+//        return new EddieInteraction2(700, 50, "/sprites/Eddie_idle_anim.png");
+//    }
 
     private static List<Interaction> createInteractions() {
         List<Interaction> interactions = new ArrayList<>();

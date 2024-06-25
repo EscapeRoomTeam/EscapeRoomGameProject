@@ -113,8 +113,6 @@ public class EscapeRoomGame extends Application {
             Door door = currentLevel.getDoor();
             Eddie helperCharacter = currentLevel.getHelperCharacter();
             List<Interaction> interactions = currentLevel.getInteractions();
-
-
             if (event.getCode() == KeyCode.ESCAPE) {
                 toggleOptionsMenu();
             } else if (!isOptionsMenuVisible) {
@@ -123,9 +121,8 @@ public class EscapeRoomGame extends Application {
                 if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) player.moveLeft(puzzles, door);
                 if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) player.moveRight(puzzles, door);
                 if (event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.E) {
-                    if (door.isInRange() && !door.isLocked()) {
+                    if (door.isInRange()) {
                         door.interact(levelManager);
-                        currentLevel.isCompleted();
                     } else {
                         for (Puzzle puzzle : puzzles) {
                             puzzle.interact();
@@ -142,13 +139,10 @@ public class EscapeRoomGame extends Application {
                 }
             }
         });
-
-
         scene.setOnKeyReleased(event -> {
             if (!isOptionsMenuVisible) {
                 Level currentLevel = levelManager.getCurrentLevel();
                 Player player = currentLevel.getPlayer();
-
                 // Reset player state to idle when movement keys are released
                 if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W ||
                         event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S ||

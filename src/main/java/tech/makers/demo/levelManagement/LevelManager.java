@@ -58,6 +58,7 @@ public class LevelManager {
 
     public void completeLevel() {
         game.completeLevel();
+        Door.lock();
     }
 
     public void setLevels(Level[] levels) {
