@@ -2,18 +2,17 @@ package tech.makers.demo.levelManagement;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 
 public class CrowdInteraction extends Interaction {
 
     private final double width;
     private final double height;
-    private final double collisionHeight;
 
     public CrowdInteraction(double x, double y, String imagePath) {
         super(x, y, imagePath);
         this.width = 250;  // Define the width of the crowd image
-        this.height = 250; // Define the height of the crowd image
-        this.collisionHeight = 150; // Define the reduced height for collision
+        this.height = 150; // Define the height of the crowd image
     }
 
     @Override
@@ -36,6 +35,6 @@ public class CrowdInteraction extends Interaction {
 
     public boolean collidesWith(double playerX, double playerY, double playerWidth, double playerHeight) {
         return playerX < x + width && playerX + playerWidth > x &&
-                playerY < y + collisionHeight && playerY + playerHeight > y;
+                playerY < y + height && playerY + playerHeight > y;
     }
 }
