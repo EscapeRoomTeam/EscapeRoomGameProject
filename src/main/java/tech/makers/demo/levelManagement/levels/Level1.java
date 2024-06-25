@@ -9,6 +9,7 @@ import tech.makers.demo.levelManagement.Interaction;
 import tech.makers.demo.levelManagement.Level;
 import tech.makers.demo.levelManagement.Puzzle;
 import tech.makers.demo.levelManagement.RouterInteraction;
+import tech.makers.demo.player.Inventory;
 import tech.makers.demo.player.Player;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class Level1 extends Level {
 
     public Level1() {
         super(
-                new Player(100, 100),
+                new Player(100, 100, new Inventory()),
                 createPuzzles(),
                 new Door(600, 400, "/sprites/door.png"),
                 new Eddie(700, 50, "/sprites/Eddie_idle_anim.png", "..."),

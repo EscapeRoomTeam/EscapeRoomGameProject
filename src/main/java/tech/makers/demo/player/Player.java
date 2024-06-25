@@ -13,6 +13,7 @@ import java.util.Random;
 public class Player {
     public double x;
     public double y;
+    private Inventory inventory;
     private Image idleSpriteSheet;
     private Image runSpriteSheet;
     private Image[] idleRightFrames;
@@ -35,9 +36,10 @@ public class Player {
     private int lastSoundIndex = -1;
     private int[] footstepSounds = {3, 4, 5, 6};
 
-    public Player(double x, double y) {
+    public Player(double x, double y, Inventory inventory) {
         this.x = x;
         this.y = y;
+        this.inventory = inventory;
         this.idleSpriteSheet = new Image(getClass().getResource("/sprites/Bob_idle_anim.png").toString());
         this.runSpriteSheet = new Image(getClass().getResource("/sprites/Bob_run.png").toString());
 
@@ -253,5 +255,22 @@ public class Player {
 
     public void stopMoving() {
         this.state = "idle";
+    }
+
+    // Inventory-related methods
+    public void addItemToInventory(String item) {
+        inventory.addItem(item);
+    }
+
+    public void removeItemFromInventory(String item) {
+        inventory.removeItem(item);
+    }
+
+    public boolean hasItemInInventory(String item) {
+        return inventory.hasItem(item);
+    }
+
+    public List<String> getInventoryItems() {
+        return inventory.getItems();
     }
 }
