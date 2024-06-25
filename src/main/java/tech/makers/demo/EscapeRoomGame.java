@@ -43,10 +43,9 @@ public class EscapeRoomGame extends Application {
     private Scene currentScene;
     private Sound musicSound;
     private Sound[] seSound;
-   private double musicVolume = 0.5;
-   private double seVolume = 0.5;
+    private double musicVolume = 0.5;
+    private double seVolume = 0.5;
     private final double DEFAULT_VOLUME_DB = -10.0;
-
 
     public static void main(String[] args) {
         launch(args);
@@ -54,7 +53,6 @@ public class EscapeRoomGame extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
         this.primaryStage = primaryStage;
         HomeScreen homeScreen = new HomeScreen(primaryStage, this);
         primaryStage.setTitle("Escape Room Game");
@@ -113,8 +111,6 @@ public class EscapeRoomGame extends Application {
             Door door = currentLevel.getDoor();
             Eddie helperCharacter = currentLevel.getHelperCharacter();
             List<Interaction> interactions = currentLevel.getInteractions();
-
-
             if (event.getCode() == KeyCode.ESCAPE) {
                 toggleOptionsMenu();
             } else if (!isOptionsMenuVisible) {
@@ -123,9 +119,8 @@ public class EscapeRoomGame extends Application {
                 if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) player.moveLeft(puzzles, door);
                 if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) player.moveRight(puzzles, door);
                 if (event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.E) {
-                    if (door.isInRange() && !door.isLocked()) {
+                    if (door.isInRange()) {
                         door.interact(levelManager);
-                        currentLevel.isCompleted();
                     } else {
                         for (Puzzle puzzle : puzzles) {
                             puzzle.interact();
@@ -141,14 +136,11 @@ public class EscapeRoomGame extends Application {
                     }
                 }
             }
-            });
-
-
+        });
         scene.setOnKeyReleased(event -> {
             if (!isOptionsMenuVisible) {
                 Level currentLevel = levelManager.getCurrentLevel();
                 Player player = currentLevel.getPlayer();
-
                 // Reset player state to idle when movement keys are released
                 if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W ||
                         event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S ||
@@ -159,7 +151,6 @@ public class EscapeRoomGame extends Application {
             }
         });
     }
-
 
     private void startGameLoop() {
         gameLoop = new AnimationTimer() {
@@ -216,6 +207,11 @@ public class EscapeRoomGame extends Application {
             // Right column (ChairLeft)
             for (int i = 0; i < canvasHeight; i += tileSize) {
                 positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], canvasWidth - tileSize, i));
+            }
+        } else if (levelNumber == 3) {
+            // Custom object positions for level 3
+            for (int i = 0; i < canvasWidth; i += tileSize) {
+                positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], i, random.nextInt((int)canvasHeight)));
             }
         }
 
@@ -283,6 +279,7 @@ public class EscapeRoomGame extends Application {
     }
 
     public void loadLevel(int levelNumber) {
+        System.out.println("Loading level " + levelNumber);
         switch (levelNumber) {
             case 1:
                 tileManager = new TileManager("/tiles/StoneTile.png");
@@ -296,6 +293,8 @@ public class EscapeRoomGame extends Application {
                 tileManager = new TileManager("/tiles/StoneTile.png");
                 objectPositions = initializeObjectPositions(canvas, 3);
                 break;
+            default:
+                System.out.println("Invalid level number: " + levelNumber);
         }
     }
 
@@ -328,8 +327,6 @@ public class EscapeRoomGame extends Application {
             this.y = y;
         }
     }
-
-
 
     public double calculateAdjustedVolume(double volume) {
         double minVolume = -80.0; // Minimum volume in dB (muted)
