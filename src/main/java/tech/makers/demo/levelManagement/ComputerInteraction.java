@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext; // Import GraphicsContext for render
 import javafx.scene.control.Alert; // Import Alert for displaying alerts
 import javafx.scene.control.TextInputDialog; // Import TextInputDialog for input dialogs
 import tech.makers.demo.assets.Door; // Import Door class for door interaction
+import tech.makers.demo.assets.Sound;
 
 import java.util.Optional; // Import Optional for handling optional values
 
@@ -12,6 +13,8 @@ public class ComputerInteraction extends Interaction { // ComputerInteraction cl
     private boolean hasPassword; // Private boolean to check if password has been entered
     private final String wifiPassword = "escape123"; // Final string for Wi-Fi password
     private Door door; // Private Door object
+    Sound sound = new Sound();
+
 
     public ComputerInteraction(double x, double y, String imagePath, Door door) { // Constructor for ComputerInteraction
         super(x, y, imagePath); // Call to super class constructor
@@ -40,8 +43,14 @@ public class ComputerInteraction extends Interaction { // ComputerInteraction cl
     @Override
     public void interact() { // Override interact method
         if (!isRouterOn) { // Check if router is off
+            sound.setFile(15);
+            sound.setVolume(-10.0f); // Set volume as needed
+            sound.play();
             showAlert("The computer is off. Turn on the router to power it up."); // Show alert to turn on the router
         } else if (!hasPassword) { // Check if password has not been entered
+            sound.setFile(2);
+            sound.setVolume(-25.0f);
+            sound.play();
             TextInputDialog dialog = new TextInputDialog(); // Create a new TextInputDialog
             dialog.setTitle("Wi-Fi Password"); // Set dialog title
             dialog.setHeaderText("Enter the Wi-Fi password:"); // Set dialog header text
@@ -50,6 +59,9 @@ public class ComputerInteraction extends Interaction { // ComputerInteraction cl
                 if (password.equals(wifiPassword)) { // Check if password is correct
                     hasPassword = true; // Set hasPassword to true
                     door.unlock(); // Unlock the door
+                    sound.setFile(14);
+                    sound.setVolume(-30.0f);
+                    sound.play();
                     showAlert("Password correct! The door is now unlocked."); // Show success alert
                 } else { // If password is incorrect
                     showAlert("Incorrect password. Try again."); // Show error alert
