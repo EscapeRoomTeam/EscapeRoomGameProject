@@ -9,7 +9,6 @@ import tech.makers.demo.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Level2 extends Level {
 
     public Level2() {
@@ -28,24 +27,17 @@ public class Level2 extends Level {
         return puzzles;
     }
 
-//    private static EddieInteraction2 createEddieInteraction() {
-//        return new EddieInteraction2(700, 50, "/sprites/Eddie_idle_anim.png");
-//    }
-
     private static List<Interaction> createInteractions() {
         List<Interaction> interactions = new ArrayList<>();
         Door door = new Door(600, 400, "/sprites/door.png");
         ComputerInteraction2 computerInteraction2 = new ComputerInteraction2(300, 300, "/sprites/Computer.png", door);
-        EddieInteraction2 eddieInteraction = new EddieInteraction2(700, 50, "/sprites/Eddie_idle_anim.png");
-        SafeInteraction safeInteraction = new SafeInteraction(200, 300, "/sprites/Router.png", eddieInteraction);
-        USBInteraction usbInteraction = new USBInteraction(100, 400, "/sprites/Router.png", computerInteraction2);
+        EddieInteraction2 eddieInteraction = new EddieInteraction2(700, 50, "/sprites/transparent.png");
+        SafeInteraction safeInteraction = new SafeInteraction(100, 400, "/sprites/safe22.gif", eddieInteraction, computerInteraction2);
 
         interactions.add(computerInteraction2);
         interactions.add(safeInteraction);
-        interactions.add(usbInteraction);
         interactions.add(eddieInteraction);
 
         return interactions;
     }
 }
-

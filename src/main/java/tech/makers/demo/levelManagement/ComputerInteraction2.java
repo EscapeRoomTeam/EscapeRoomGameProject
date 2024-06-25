@@ -1,12 +1,8 @@
-package tech.makers.demo.levelManagement; // Package declaration for level management
+package tech.makers.demo.levelManagement;
 
-import javafx.scene.canvas.GraphicsContext; // Import GraphicsContext for rendering
-import javafx.scene.control.Alert; // Import Alert for displaying alerts
-import javafx.scene.control.TextInputDialog; // Import TextInputDialog for input dialogs
-import tech.makers.demo.assets.Door; // Import Door class for door interaction
-
-import java.util.Optional; // Import Optional for handling optional values
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
+import tech.makers.demo.assets.Door;
 
 public class ComputerInteraction2 extends Interaction {
     private boolean hasUSB;
@@ -20,6 +16,11 @@ public class ComputerInteraction2 extends Interaction {
         this.osReinstalled = false;
     }
 
+    @Override
+    public void render(GraphicsContext gc) { // Override render method
+        gc.drawImage(image, x, y, 96, 144); // Draw the image at (x, y) with size 96x144
+    }
+
     public void setHasUSB(boolean hasUSB) {
         this.hasUSB = hasUSB;
     }
@@ -30,10 +31,8 @@ public class ComputerInteraction2 extends Interaction {
             showAlert("You need to find the USB drive to reinstall the operating system.");
         } else if (!osReinstalled) {
             osReinstalled = true;
-            Door.unlock();
-            showAlert("Operating system reinstalled! You can now do the coding challenge.");
-            Door.unlock(); // Unlock the door
-            showAlert("Password correct! The door is now unlocked.");
+            showAlert("Operating system reinstalled! You can pass into the final room!");
+            Door.unlock(); // Unlock the door when the OS is reinstalled
         } else {
             showAlert("You have already reinstalled the operating system and completed the challenge.");
         }
