@@ -3,6 +3,7 @@ package tech.makers.demo.levelManagement;
 import javafx.scene.canvas.GraphicsContext;
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Eddie;
+import tech.makers.demo.assets.Obstacle;
 import tech.makers.demo.player.Player;
 import tech.makers.demo.levelManagement.Puzzle;
 
@@ -13,17 +14,19 @@ public class Level {
     private List<Puzzle> puzzles;
     private Door door;
     private Eddie helperCharacter;
-    private List<Interaction> interactions;  // List of interactions
+    private List<Interaction> interactions;
+    private List<Obstacle> obstacles; // List of interactions
 
     private boolean completed;
 
-    public Level(Player player, List<Puzzle> puzzles, Door door, Eddie helperCharacter, List<Interaction> interactions) {
+    public Level(Player player, List<Puzzle> puzzles, Door door, Eddie helperCharacter, List<Interaction> interactions, List<Obstacle> obstacles) {
         this.player = player;
         this.puzzles = puzzles;
         this.door = door;
         this.helperCharacter = helperCharacter;
         this.interactions = interactions;
         this.completed = false;
+        this.obstacles = obstacles;
     }
 
     public void render(GraphicsContext gc) {
@@ -37,6 +40,9 @@ public class Level {
         }
         for (Interaction interaction : interactions) {
             interaction.render(gc);
+        }
+        for (Obstacle obstacle : obstacles) {  // Render obstacles
+            obstacle.render(gc);
         }
     }
 
@@ -98,7 +104,15 @@ public class Level {
         return interactions;
     }
 
+    public List<Obstacle> getObstacles() {  // New getter for obstacles
+        return obstacles;
+    }
+
     public void completeLevel() {
         this.completed = true;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 }

@@ -2,6 +2,7 @@ package tech.makers.demo.levelManagement.levels;
 
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Eddie;
+import tech.makers.demo.assets.Obstacle;
 import tech.makers.demo.levelManagement.ComputerInteraction;
 import tech.makers.demo.levelManagement.HelperCharacter;
 import tech.makers.demo.levelManagement.Interaction;
@@ -14,18 +15,29 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class Level2 extends Level {
 
     public Level2() {
         super(
-                new Player(100, 100),
+                new Player(100, 100, 768, 576),
                 createPuzzles(), // Pass the list of puzzles
                 new Door(600, 400, "/sprites/Door 2.png"),
                 new Eddie(700, 50, "/sprites/Eddie_idle_anim.png", "Remember to check your syntax!"),
-                createInteractions()  // Add interactions list
+                createInteractions(),
+                createObstacles()  // Add this new method call
+
+
         );
     }
 
+    private static List<Obstacle> createObstacles() {
+        List<Obstacle> obstacles = new ArrayList<>();
+        obstacles.add(new Obstacle(200, 200, 100, 100, "/sprites/Plant 1.png"));
+        obstacles.add(new Obstacle(500, 100, 80, 80, "/sprites/Plant 1.png"));
+        // Add more obstacles as needed
+        return obstacles;
+    }
     private static List<Puzzle> createPuzzles() {
         List<Puzzle> puzzles = new ArrayList<>();
         puzzles.add(new Puzzle(300, 300, "What is the capital of France?", "Paris", Arrays.asList("Berlin", "Madrid", "Paris", "Rome"), "/sprites/Computer.png"));

@@ -3,6 +3,7 @@ package tech.makers.demo.player;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import tech.makers.demo.assets.Obstacle;
 import tech.makers.demo.levelManagement.Puzzle;
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Sound;
@@ -35,9 +36,17 @@ public class Player {
     private int lastSoundIndex = -1;
     private int[] footstepSounds = {3, 4, 5, 6};
 
-    public Player(double x, double y) {
+    private static final double PLAYER_WIDTH = 25;
+    private static final double PLAYER_HEIGHT = 50;
+    private double gameWidth;
+    private double gameHeight;
+
+    public Player(double x, double y, double gameWidth, double gameHeight) {
         this.x = x;
         this.y = y;
+        this.gameWidth = gameWidth;
+        this.gameHeight = gameHeight;
+
         this.idleSpriteSheet = new Image(getClass().getResource("/sprites/Bob_idle_anim.png").toString());
         this.runSpriteSheet = new Image(getClass().getResource("/sprites/Bob_run.png").toString());
 
@@ -74,90 +83,78 @@ public class Player {
     }
 
     // Method to move the player up
-    public void moveUp(List<Puzzle> puzzles, Door door) {
+    public void moveUp(List<Puzzle> puzzles, Door door, List<Obstacle> obstacles) {
         double newY = y - 20;
-        System.out.println("Trying to move up to: " + x + ", " + newY);
-        if (!checkPuzzleCollision(x, newY, puzzles) && !checkDoorCollision(x, newY, door)) {
+        if (isValidMove(x, newY, puzzles, door, obstacles)) {
             y = newY;
             direction = "up";
             state = "run";
-            // Play sound every other step
-            stepCounter++;
-            if (stepCounter % 4 == 0) {
-                int soundIndex;
-                do {
-                    soundIndex = random.nextInt(footstepSounds.length);
-                } while (soundIndex == lastSoundIndex);
-                lastSoundIndex = soundIndex;
-                sound.setFile(footstepSounds[soundIndex]);
-                sound.setVolume(-27.0f);
-                sound.play();
-            }
+            playFootstepSound();
         }
     }
 
-    public void moveDown(List<Puzzle> puzzles, Door door) {
+    public void moveDown(List<Puzzle> puzzles, Door door, List<Obstacle> obstacles) {
         double newY = y + 20;
-        System.out.println("Trying to move down to: " + x + ", " + newY);
-        if (!checkPuzzleCollision(x, newY, puzzles) && !checkDoorCollision(x, newY, door)) {
+        if (isValidMove(x, newY, puzzles, door, obstacles)) {
             y = newY;
             direction = "down";
             state = "run";
-            stepCounter++;
-            if (stepCounter % 4 == 0) {
-                int soundIndex;
-                do {
-                    soundIndex = random.nextInt(footstepSounds.length);
-                } while (soundIndex == lastSoundIndex);
-                lastSoundIndex = soundIndex;
-                sound.setFile(footstepSounds[soundIndex]);
-                sound.setVolume(-27.0f);
-                sound.play();
-            }
+            playFootstepSound();
         }
     }
 
-    // Method to move the player left
-    public void moveLeft(List<Puzzle> puzzles, Door door) {
+    public void moveLeft(List<Puzzle> puzzles, Door door, List<Obstacle> obstacles) {
         double newX = x - 20;
-        System.out.println("Trying to move left to: " + newX + ", " + y);
-        if (!checkPuzzleCollision(newX, y, puzzles) && !checkDoorCollision(newX, y, door)) {
+        if (isValidMove(newX, y, puzzles, door, obstacles)) {
             x = newX;
             direction = "left";
             state = "run";
-            stepCounter++;
-            if (stepCounter % 4 == 0) {
-                int soundIndex;
-                do {
-                    soundIndex = random.nextInt(footstepSounds.length);
-                } while (soundIndex == lastSoundIndex);
-                lastSoundIndex = soundIndex;
-                sound.setFile(footstepSounds[soundIndex]);
-                sound.setVolume(-27.0f);
-                sound.play();
-            }
+            playFootstepSound();
         }
     }
 
-    // Method to move the player right
-    public void moveRight(List<Puzzle> puzzles, Door door) {
+    public void moveRight(List<Puzzle> puzzles, Door door, List<Obstacle> obstacles) {
         double newX = x + 20;
-        System.out.println("Trying to move right to: " + newX + ", " + y);
-        if (!checkPuzzleCollision(newX, y, puzzles) && !checkDoorCollision(newX, y, door)) {
+        if (isValidMove(newX, y, puzzles, door, obstacles)) {
             x = newX;
             direction = "right";
             state = "run";
-            stepCounter++;
-            if (stepCounter % 4 == 0) {
-                int soundIndex;
-                do {
-                    soundIndex = random.nextInt(footstepSounds.length);
-                } while (soundIndex == lastSoundIndex);
-                lastSoundIndex = soundIndex;
-                sound.setFile(footstepSounds[soundIndex]);
-                sound.setVolume(-27.0f);
-                sound.play();
+            playFootstepSound();
+        }
+    }
+
+    private boolean isValidMove(double newX, double newY, List<Puzzle> puzzles, Door door, List<Obstacle> obstacles) {
+        return !checkPuzzleCollision(newX, newY, puzzles) &&
+                !checkDoorCollision(newX, newY, door) &&
+                !checkObstacleCollision(newX, newY, obstacles) &&
+                isWithinBounds(newX, newY);
+    }
+
+    private boolean checkObstacleCollision(double newX, double newY, List<Obstacle> obstacles) {
+        for (Obstacle obstacle : obstacles) {
+            if (obstacle.intersects(newX, newY, PLAYER_WIDTH, PLAYER_HEIGHT)) {
+                return true;
             }
+        }
+        return false;
+    }
+
+    private boolean isWithinBounds(double newX, double newY) {
+        return newX >= 0 && newX + PLAYER_WIDTH <= gameWidth &&
+                newY >= 0 && newY + PLAYER_HEIGHT <= gameHeight;
+    }
+
+    private void playFootstepSound() {
+        stepCounter++;
+        if (stepCounter % 4 == 0) {
+            int soundIndex;
+            do {
+                soundIndex = random.nextInt(footstepSounds.length);
+            } while (soundIndex == lastSoundIndex);
+            lastSoundIndex = soundIndex;
+            sound.setFile(footstepSounds[soundIndex]);
+            sound.setVolume(-27.0f);
+            sound.play();
         }
     }
 
@@ -246,6 +243,7 @@ public class Player {
         double distance = Math.sqrt(Math.pow(door.getX() - x, 2) + Math.pow(door.getY() - y, 2));
         return distance < 100;
     }
+
 
     public void setState(String state) {
         this.state = state;

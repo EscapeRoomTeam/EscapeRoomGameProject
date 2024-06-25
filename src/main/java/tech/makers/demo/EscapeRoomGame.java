@@ -11,6 +11,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Eddie;
+import tech.makers.demo.assets.Obstacle;
 import tech.makers.demo.assets.Sound;
 import tech.makers.demo.gui.HomeScreen;
 import tech.makers.demo.gui.LevelCompletionScreen;
@@ -36,6 +37,8 @@ public class EscapeRoomGame extends Application {
     private AnimationTimer gameLoop;
     private Canvas canvas;
     private GraphicsContext gc;
+    private List<Obstacle> obstacles;
+
 
     public static void main(String[] args) {
         launch(args);
@@ -55,6 +58,9 @@ public class EscapeRoomGame extends Application {
         gc = canvas.getGraphicsContext2D();
 
         levelManager = new LevelManager(gc, this);
+
+        obstacles = new ArrayList<>();
+        obstacles.add(new Obstacle(200, 200, 100, 100, "sprites/Plant 1.png"));
 
         // Initialize the images before loading the level
         moneyImages = new Image[]{
@@ -92,10 +98,10 @@ public class EscapeRoomGame extends Application {
             Eddie helperCharacter = currentLevel.getHelperCharacter();
             List<Interaction> interactions = currentLevel.getInteractions();
 
-            if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) player.moveUp(puzzles, door);
-            if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) player.moveDown(puzzles, door);
-            if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) player.moveLeft(puzzles, door);
-            if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) player.moveRight(puzzles, door);
+            if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.W) player.moveUp(puzzles, door, obstacles);
+            if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.S) player.moveDown(puzzles, door, obstacles);
+            if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.A) player.moveLeft(puzzles, door, obstacles);
+            if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.D) player.moveRight(puzzles, door, obstacles);
             if (event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.E) {
                 if (door.isInRange() && !door.isLocked()) {
                     door.interact(levelManager);
@@ -140,6 +146,7 @@ public class EscapeRoomGame extends Application {
                 levelManager.render();
                 levelManager.update();
                 renderObjects(gc);
+                renderObstacles(gc);
             }
         };
         gameLoop.start();
@@ -198,6 +205,13 @@ public class EscapeRoomGame extends Application {
         }
     }
 
+    private void renderObstacles(GraphicsContext gc) {
+        for (Obstacle obstacle : obstacles) {
+            obstacle.render(gc);
+        }
+    }
+
+
     public void playMusic(int i) {
         System.out.println("Playing music track: " + i);
         sound.setFile(i);
@@ -243,13 +257,18 @@ public class EscapeRoomGame extends Application {
                 break;
             // Add more cases for additional levels
         }
+        Level currentLevel = levelManager.getCurrentLevel();
+        Player player = new Player(currentLevel.getPlayer().getX(), currentLevel.getPlayer().getY(), canvas.getWidth(), canvas.getHeight());
+        currentLevel.setPlayer(player);
     }
 
     public void setupNextLevel() {
         Level currentLevel = levelManager.getCurrentLevel();
-        Player player = currentLevel.getPlayer();
-        List<Puzzle> puzzle = currentLevel.getPuzzles();
+        Player player = new Player(currentLevel.getPlayer().getX(), currentLevel.getPlayer().getY(), canvas.getWidth(), canvas.getHeight());
+        currentLevel.setPlayer(player);
+        List<Puzzle> puzzles = currentLevel.getPuzzles();
         Door door = currentLevel.getDoor();
+
 
         objectPositions = initializeObjectPositions(canvas, levelManager.getCurrentLevelNumber());
 
