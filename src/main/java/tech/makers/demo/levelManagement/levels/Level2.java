@@ -2,40 +2,50 @@ package tech.makers.demo.levelManagement.levels;
 
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Eddie;
-import tech.makers.demo.levelManagement.ComputerInteraction;
-import tech.makers.demo.levelManagement.HelperCharacter;
-import tech.makers.demo.levelManagement.Interaction;
-import tech.makers.demo.levelManagement.Level;
-import tech.makers.demo.levelManagement.Puzzle;
-import tech.makers.demo.levelManagement.RouterInteraction;
+import tech.makers.demo.levelManagement.*;
+import tech.makers.demo.player.Inventory;
 import tech.makers.demo.player.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
 
 public class Level2 extends Level {
 
     public Level2() {
         super(
-                new Player(100, 100),
-                createPuzzles(), // Pass the list of puzzles
-                new Door(600, 400, "/sprites/Door 2.png"),
-                new Eddie(700, 50, "/sprites/Eddie_idle_anim.png", "Remember to check your syntax!"),
-                createInteractions()  // Add interactions list
+                new Player(100, 100, new Inventory()), // Creating a new Inventory),
+                createPuzzles(),
+                new Door(600, 400, "/sprites/Door.png"),
+                new Eddie(700, 50, "/sprites/Eddie_idle_anim.png", "..."),
+                createInteractions()
         );
     }
 
     private static List<Puzzle> createPuzzles() {
         List<Puzzle> puzzles = new ArrayList<>();
-        puzzles.add(new Puzzle(300, 300, "What is the capital of France?", "Paris", Arrays.asList("Berlin", "Madrid", "Paris", "Rome"), "/sprites/Computer.png"));
-        puzzles.add(new Puzzle(400, 150, "Say Hi", "Hi", Arrays.asList("Hello", "Hi", "Hey", "Hola"), "/sprites/Computer.png"));
+        // Add any initial puzzles here if needed
         return puzzles;
     }
 
-    private static List<Interaction> createInteractions() {  // Change the return type to List<Interaction>
-        List<Interaction> interactions = new ArrayList<>();  // Change the list type to Interaction
-        Door door = new Door(600, 400, "/sprites/Door 2.png");
+    private static EddieInteraction2 createEddieInteraction() {
+        return new EddieInteraction2(700, 50, "/sprites/Eddie_idle_anim.png");
+    }
+
+    private static List<Interaction> createInteractions() {
+        List<Interaction> interactions = new ArrayList<>();
+        Door door = new Door(600, 400, "/sprites/door.png");
+        ComputerInteraction2 computerInteraction2 = new ComputerInteraction2(300, 300, "/sprites/Computer.png", door);
+        EddieInteraction2 eddieInteraction = new EddieInteraction2(700, 50, "/sprites/Eddie_idle_anim.png");
+        SafeInteraction safeInteraction = new SafeInteraction(200, 300, "/sprites/Router.png", eddieInteraction);
+        USBInteraction usbInteraction = new USBInteraction(100, 400, "/sprites/Router.png", computerInteraction2);
+
+        interactions.add(computerInteraction2);
+        interactions.add(safeInteraction);
+        interactions.add(usbInteraction);
+        interactions.add(eddieInteraction);
+
         return interactions;
     }
 }
+

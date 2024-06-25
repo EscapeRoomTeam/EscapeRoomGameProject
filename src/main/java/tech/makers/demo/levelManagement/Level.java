@@ -54,7 +54,7 @@ public class Level {
             interaction.checkPlayerInRange(player);
         }
 
-        boolean allPuzzlesSolved = true;
+        boolean allPuzzlesSolved = false;
         for (Puzzle puzzle : puzzles) {
             if (!puzzle.isSolved()) {
                 allPuzzlesSolved = false;
