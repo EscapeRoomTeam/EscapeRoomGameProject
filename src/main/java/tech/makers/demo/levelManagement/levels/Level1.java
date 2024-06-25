@@ -12,6 +12,7 @@ import tech.makers.demo.levelManagement.RouterInteraction;
 import tech.makers.demo.player.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Level1 extends Level {
@@ -28,7 +29,7 @@ public class Level1 extends Level {
 
     private static List<Puzzle> createPuzzles() {
         List<Puzzle> puzzles = new ArrayList<>();
-        // Add any initial puzzles here if needed
+        puzzles.add(new Puzzle(200, 200, "What is the capital of France?", "Paris", Arrays.asList("Berlin", "Madrid", "Paris", "Rome"), "/sprites/Computer.png"));
         return puzzles;
     }
 

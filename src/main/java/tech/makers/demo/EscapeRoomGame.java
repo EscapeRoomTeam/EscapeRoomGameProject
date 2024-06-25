@@ -141,7 +141,7 @@ public class EscapeRoomGame extends Application {
                     }
                 }
             }
-            });
+        });
 
 
         scene.setOnKeyReleased(event -> {
