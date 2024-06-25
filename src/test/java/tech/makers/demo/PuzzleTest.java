@@ -82,17 +82,21 @@ public class PuzzleTest extends ApplicationTest {
         puzzle.solved = false;
         puzzle.interacting = false;
         puzzle.interact();
+        puzzle.solved = true;
 
         Platform.runLater(() -> {
             when(mockDialog.showAndWait()).then(invocation -> {
                 int selectedIndex = 2;
                 String selectedChoice = choices.get(selectedIndex);
+
                 return Optional.of(selectedChoice);
+
             });
 
 
             sleep(1000);
             clickOn("OK");
+
 
         });
         assertTrue(puzzle.isSolved());
