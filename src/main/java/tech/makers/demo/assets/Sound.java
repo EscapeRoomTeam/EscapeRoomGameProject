@@ -31,6 +31,8 @@ public class Sound {
         soundURL[17] = getClass().getResource("/tech/makers/demo/Sound/SE_ClickBassy.wav");
         soundURL[18] = getClass().getResource("/tech/makers/demo/Sound/SE_ClickBright.wav");
         soundURL[19] = getClass().getResource("/tech/makers/demo/Sound/TEST_CLICK.wav");
+        soundURL[20] = getClass().getResource("/tech/makers/demo/Sound/SE_RouterOn.wav");
+        soundURL[21] = getClass().getResource("/tech/makers/demo/Sound/SE_Typing.wav");
 
 
         // Log to verify URLs
