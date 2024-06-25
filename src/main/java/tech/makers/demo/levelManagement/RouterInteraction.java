@@ -26,7 +26,7 @@ public class RouterInteraction extends Interaction { // RouterInteraction class 
         ChoiceDialog<String> dialog = new ChoiceDialog<>("on", Arrays.asList("on", "off")); // Create a new ChoiceDialog with options "on" and "off"
         dialog.setTitle("Router Control"); // Set dialog title
         sound.setFile(21);
-        sound.setVolume(-10.0f); // Set volume as needed
+        sound.setVolume(-10.0f);
         sound.play();
         dialog.setHeaderText("Would you like to turn the router on or off?"); // Set dialog header text
         Optional<String> result = dialog.showAndWait(); // Show dialog and wait for result
