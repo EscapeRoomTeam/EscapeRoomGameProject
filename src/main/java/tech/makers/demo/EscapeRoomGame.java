@@ -21,6 +21,8 @@ import tech.makers.demo.levelManagement.LevelManager;
 import tech.makers.demo.levelManagement.Puzzle;
 import tech.makers.demo.player.Player;
 import tech.makers.demo.Tile.TileManager;
+import tech.makers.demo.assets.Obstacle;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +48,7 @@ public class EscapeRoomGame extends Application {
     private double musicVolume = 0.5;
     private double seVolume = 0.5;
     private final double DEFAULT_VOLUME_DB = -10.0;
+    private List<Obstacle> obstacles;
 
     public static void main(String[] args) {
         launch(args);
@@ -73,6 +76,8 @@ public class EscapeRoomGame extends Application {
         gc = canvas.getGraphicsContext2D();
 
         levelManager = new LevelManager(gc, this);
+
+        obstacles = new ArrayList<>();
 
         // Initialize the images before loading the level
         moneyImages = new Image[]{
@@ -163,6 +168,7 @@ public class EscapeRoomGame extends Application {
                 levelManager.render();
                 levelManager.update();
                 renderObjects(gc);
+                renderObstacles(gc);
             }
         };
         gameLoop.start();
@@ -240,6 +246,13 @@ public class EscapeRoomGame extends Application {
             gc.drawImage(position.image, position.x, position.y, 48, 48);
         }
     }
+
+    private void renderObstacles(GraphicsContext gc) {
+        for (Obstacle obstacle : obstacles) {
+            obstacle.render(gc);
+        }
+    }
+
 
     public void playMusic(int i) {
         System.out.println("Playing music track: " + i);
