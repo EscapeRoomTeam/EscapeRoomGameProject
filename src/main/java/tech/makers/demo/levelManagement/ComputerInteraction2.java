@@ -32,6 +32,8 @@ public class ComputerInteraction2 extends Interaction {
             osReinstalled = true;
             Door.unlock();
             showAlert("Operating system reinstalled! You can now do the coding challenge.");
+            Door.unlock(); // Unlock the door
+            showAlert("Password correct! The door is now unlocked.");
         } else {
             showAlert("You have already reinstalled the operating system and completed the challenge.");
         }

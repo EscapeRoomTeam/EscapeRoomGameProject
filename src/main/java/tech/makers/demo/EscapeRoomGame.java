@@ -43,10 +43,9 @@ public class EscapeRoomGame extends Application {
     private Scene currentScene;
     private Sound musicSound;
     private Sound[] seSound;
-   private double musicVolume = 0.5;
-   private double seVolume = 0.5;
+    private double musicVolume = 0.5;
+    private double seVolume = 0.5;
     private final double DEFAULT_VOLUME_DB = -10.0;
-
 
     public static void main(String[] args) {
         launch(args);
@@ -54,7 +53,6 @@ public class EscapeRoomGame extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
         this.primaryStage = primaryStage;
         HomeScreen homeScreen = new HomeScreen(primaryStage, this);
         primaryStage.setTitle("Escape Room Game");
@@ -154,7 +152,6 @@ public class EscapeRoomGame extends Application {
         });
     }
 
-
     private void startGameLoop() {
         gameLoop = new AnimationTimer() {
             @Override
@@ -210,6 +207,11 @@ public class EscapeRoomGame extends Application {
             // Right column (ChairLeft)
             for (int i = 0; i < canvasHeight; i += tileSize) {
                 positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], canvasWidth - tileSize, i));
+            }
+        } else if (levelNumber == 3) {
+            // Custom object positions for level 3
+            for (int i = 0; i < canvasWidth; i += tileSize) {
+                positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], i, random.nextInt((int)canvasHeight)));
             }
         }
 
@@ -277,6 +279,7 @@ public class EscapeRoomGame extends Application {
     }
 
     public void loadLevel(int levelNumber) {
+        System.out.println("Loading level " + levelNumber);
         switch (levelNumber) {
             case 1:
                 tileManager = new TileManager("/tiles/StoneTile.png");
@@ -290,6 +293,8 @@ public class EscapeRoomGame extends Application {
                 tileManager = new TileManager("/tiles/StoneTile.png");
                 objectPositions = initializeObjectPositions(canvas, 3);
                 break;
+            default:
+                System.out.println("Invalid level number: " + levelNumber);
         }
     }
 
@@ -322,8 +327,6 @@ public class EscapeRoomGame extends Application {
             this.y = y;
         }
     }
-
-
 
     public double calculateAdjustedVolume(double volume) {
         double minVolume = -80.0; // Minimum volume in dB (muted)

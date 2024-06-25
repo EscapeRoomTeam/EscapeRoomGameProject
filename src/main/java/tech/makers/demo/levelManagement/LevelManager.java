@@ -5,6 +5,7 @@ import tech.makers.demo.EscapeRoomGame;
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.levelManagement.levels.Level1;
 import tech.makers.demo.levelManagement.levels.Level2;
+import tech.makers.demo.levelManagement.levels.Level3;
 
 public class LevelManager {
     public Level[] levels;
@@ -22,7 +23,8 @@ public class LevelManager {
     protected void initializeLevels() {
         levels = new Level[] {
                 new Level1(),
-                new Level2()
+                new Level2(),
+                new Level3()
         };
     }
 
@@ -37,6 +39,7 @@ public class LevelManager {
     public void loadNextLevel() {
         if (currentLevelIndex < levels.length - 1) {
             currentLevelIndex++;
+            loadLevel(currentLevelIndex);
             game.setupNextLevel(); // Ensure the game setup for the next level
         } else {
             // Handle the end of the game
@@ -65,7 +68,9 @@ public class LevelManager {
         this.levels = levels;
     }
 
-    public HelperCharacter getHelperCharacter() {
-        return getCurrentLevel().getHelperCharacter();
+    public void loadLevel(int levelIndex) {
+        Door.lock(); // Lock the door at the start of the level
+        Level currentLevel = levels[levelIndex];
+        // Perform additional setup for the level if needed
     }
 }
