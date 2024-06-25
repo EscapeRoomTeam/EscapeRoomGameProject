@@ -30,6 +30,7 @@ public class ComputerInteraction2 extends Interaction {
             showAlert("You need to find the USB drive to reinstall the operating system.");
         } else if (!osReinstalled) {
             osReinstalled = true;
+            Door.unlock();
             showAlert("Operating system reinstalled! You can now do the coding challenge.");
             Door.unlock(); // Unlock the door
             showAlert("Password correct! The door is now unlocked.");

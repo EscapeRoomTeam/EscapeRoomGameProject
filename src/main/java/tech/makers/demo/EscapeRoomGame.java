@@ -76,9 +76,9 @@ public class EscapeRoomGame extends Application {
 
         // Initialize the images before loading the level
         moneyImages = new Image[]{
-                new Image(getClass().getResource("/sprites/money 1.png").toString()),
-                new Image(getClass().getResource("/sprites/money 2.png").toString()),
-                new Image(getClass().getResource("/sprites/money 3.png").toString())
+                new Image(getClass().getResource("/sprites/plant 1.png").toString()),
+                new Image(getClass().getResource("/sprites/plant 2.png").toString()),
+                new Image(getClass().getResource("/sprites/plant 3.png").toString())
         };
 
         loadLevel(1); // Start with level 1
@@ -209,9 +209,24 @@ public class EscapeRoomGame extends Application {
                 positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], canvasWidth - tileSize, i));
             }
         } else if (levelNumber == 3) {
-            // Custom object positions for level 3
+            // Top row (ChairDown)
             for (int i = 0; i < canvasWidth; i += tileSize) {
-                positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], i, random.nextInt((int)canvasHeight)));
+                positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], i, 0));
+            }
+
+            // Bottom row (ChairUp)
+            for (int i = 0; i < canvasWidth; i += tileSize) {
+                positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], i, canvasHeight - tileSize));
+            }
+
+            // Left column (ChairRight)
+            for (int i = 0; i < canvasHeight; i += tileSize) {
+                positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], 0, i));
+            }
+
+            // Right column (ChairLeft)
+            for (int i = 0; i < canvasHeight; i += tileSize) {
+                positions.add(new ImagePosition(moneyImages[random.nextInt(moneyImages.length)], canvasWidth - tileSize, i));
             }
         }
 
