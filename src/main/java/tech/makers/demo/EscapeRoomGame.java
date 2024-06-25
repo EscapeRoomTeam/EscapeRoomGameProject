@@ -292,7 +292,10 @@ public class EscapeRoomGame extends Application {
                 tileManager = new TileManager("/tiles/RedTile.png");
                 objectPositions = initializeObjectPositions(canvas, 2);
                 break;
-            // Add more cases for additional levels
+            case 3:
+                tileManager = new TileManager("/tiles/StoneTile.png");
+                objectPositions = initializeObjectPositions(canvas, 3);
+                break;
         }
     }
 

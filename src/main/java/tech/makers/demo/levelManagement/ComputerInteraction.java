@@ -40,7 +40,7 @@ public class ComputerInteraction extends Interaction { // ComputerInteraction cl
     @Override
     public void interact() { // Override interact method
         if (!isRouterOn) { // Check if router is off
-            showAlert("The computer is off. Turn on the router to power it up."); // Show alert to turn on the router
+            showAlert("The WiFi is disconnected. Please connect to WiFi."); // Show alert to turn on the router
         } else if (!hasPassword) { // Check if password has not been entered
             TextInputDialog dialog = new TextInputDialog(); // Create a new TextInputDialog
             dialog.setTitle("Wi-Fi Password"); // Set dialog title
@@ -49,7 +49,7 @@ public class ComputerInteraction extends Interaction { // ComputerInteraction cl
             result.ifPresent(password -> { // If password is present
                 if (password.equals(wifiPassword)) { // Check if password is correct
                     hasPassword = true; // Set hasPassword to true
-                    door.unlock(); // Unlock the door
+                    Door.unlock(); // Unlock the door
                     showAlert("Password correct! The door is now unlocked."); // Show success alert
                 } else { // If password is incorrect
                     showAlert("Incorrect password. Try again."); // Show error alert
