@@ -46,7 +46,7 @@ public class ComputerInteraction extends Interaction { // ComputerInteraction cl
             sound.setFile(15);
             sound.setVolume(-10.0f); // Set volume as needed
             sound.play();
-            showAlert("The computer is off. Turn on the router to power it up."); // Show alert to turn on the router
+            showAlert("The WiFi is disconnected. Please connect to WiFi."); // Show alert to turn on the router
         } else if (!hasPassword) { // Check if password has not been entered
             sound.setFile(2);
             sound.setVolume(-25.0f);
@@ -62,6 +62,7 @@ public class ComputerInteraction extends Interaction { // ComputerInteraction cl
                     sound.setFile(14);
                     sound.setVolume(-30.0f);
                     sound.play();
+
                     showAlert("Password correct! The door is now unlocked."); // Show success alert
                 } else { // If password is incorrect
                     showAlert("Incorrect password. Try again."); // Show error alert
