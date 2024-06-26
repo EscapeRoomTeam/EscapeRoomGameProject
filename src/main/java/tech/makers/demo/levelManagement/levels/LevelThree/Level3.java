@@ -20,7 +20,7 @@ public class Level3 extends Level {
         super(
                 new Player(100, 150, new Inventory()),
                 createPuzzles(),
-                new Door(350, 50, "/sprites/transparent.png"),
+                new Door(600, 400, "/sprites/door.png"),
                 new Eddie(450, 50, "/sprites/Eddie_idle_anim.png", "..."),
                 createInteractions(),
                 createObstacles()
