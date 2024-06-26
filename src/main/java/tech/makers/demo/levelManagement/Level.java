@@ -17,7 +17,6 @@ public class Level {
     private List<Interaction> interactions;  // List of interactions
     private List<Obstacle> obstacles;
 
-
     private boolean completed;
 
     public Level(Player player, List<Puzzle> puzzles, Door door, Eddie helperCharacter, List<Interaction> interactions, List<Obstacle> obstacles) {
@@ -31,20 +30,31 @@ public class Level {
     }
 
     public void render(GraphicsContext gc) {
-        player.render(gc);
-        for (Puzzle puzzle : puzzles) {
-            puzzle.render(gc);
-        }
-        door.render(gc);
-        if (helperCharacter != null) {
-            helperCharacter.render(gc);
-        }
-        for (Interaction interaction : interactions) {
-            interaction.render(gc);
-        }
+        // Render obstacles first
         for (Obstacle obstacle : obstacles) {
             obstacle.render(gc);
         }
+
+        // Render interactions next
+        for (Interaction interaction : interactions) {
+            interaction.render(gc);
+        }
+
+        // Render puzzles
+        for (Puzzle puzzle : puzzles) {
+            puzzle.render(gc);
+        }
+
+        // Render the door
+        door.render(gc);
+
+        // Render the helper character if it exists
+        if (helperCharacter != null) {
+            helperCharacter.render(gc);
+        }
+
+        // Render the player last
+        player.render(gc);
     }
 
     public void update() {
@@ -60,20 +70,6 @@ public class Level {
         for (Interaction interaction : interactions) {
             interaction.checkPlayerInRange(player);
         }
-
-
-
-//        boolean allPuzzlesSolved = false;
-//        for (Puzzle puzzle : puzzles) {
-//            if (!puzzle.isSolved()) {
-//                allPuzzlesSolved = false;
-//                Door.lock();
-//                break;
-//            }
-//        }
-//        if (allPuzzlesSolved) {
-//            Door.unlock();
-//        }
     }
 
     public boolean isCompleted() {

@@ -1,9 +1,10 @@
-package tech.makers.demo.levelManagement;
+package tech.makers.demo.levelManagement.levels.LevelThree.interactions;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import tech.makers.demo.levelManagement.Interaction;
 
 public class EddieInteraction3 extends Interaction {
     private final String defaultMessage = "I have your new MacBook credentials!";

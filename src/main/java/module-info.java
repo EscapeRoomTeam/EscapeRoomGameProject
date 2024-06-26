@@ -23,6 +23,18 @@ module tech.makers.demo {
     exports tech.makers.demo.player;
     opens tech.makers.demo.player to javafx.fxml, org.testfx.junit5;  // Open to TestFX
 
-    exports tech.makers.demo.gui;
-    opens tech.makers.demo.gui to javafx.fxml, org.testfx.junit5;  // Open to TestFX
+    exports tech.makers.demo.screens;
+    opens tech.makers.demo.screens to javafx.fxml, org.testfx.junit5;
+    exports tech.makers.demo.levelManagement.levels.LevelThree;
+    opens tech.makers.demo.levelManagement.levels.LevelThree to javafx.fxml, org.testfx.junit5;
+    exports tech.makers.demo.levelManagement.levels.LevelTwo;
+    opens tech.makers.demo.levelManagement.levels.LevelTwo to javafx.fxml, org.testfx.junit5;
+    exports tech.makers.demo.levelManagement.levels.LevelOne;
+    opens tech.makers.demo.levelManagement.levels.LevelOne to javafx.fxml, org.testfx.junit5;
+    exports tech.makers.demo.levelManagement.levels.LevelOne.interactions;
+    opens tech.makers.demo.levelManagement.levels.LevelOne.interactions to javafx.fxml, org.testfx.junit5;
+    exports tech.makers.demo.levelManagement.levels.LevelTwo.interactions;
+    opens tech.makers.demo.levelManagement.levels.LevelTwo.interactions to javafx.fxml, org.testfx.junit5;
+    exports tech.makers.demo.levelManagement.levels.LevelThree.interactions;
+    opens tech.makers.demo.levelManagement.levels.LevelThree.interactions to javafx.fxml, org.testfx.junit5;  // Open to TestFX
 }

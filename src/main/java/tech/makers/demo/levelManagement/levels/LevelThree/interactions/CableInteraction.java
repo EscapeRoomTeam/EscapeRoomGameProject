@@ -1,20 +1,21 @@
-package tech.makers.demo.levelManagement;
+package tech.makers.demo.levelManagement.levels.LevelThree.interactions;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
+import tech.makers.demo.levelManagement.Interaction;
 
 public class CableInteraction extends Interaction {
 
     private boolean hasCable;
 
-
     public CableInteraction(double x, double y, String imagePath) {
-        super(x,y, imagePath);
+        super(x, y, imagePath);
         this.hasCable = false;
     }
 
     @Override
-    public void interact(){
-        if(!hasCable){
+    public void interact() {
+        if (!hasCable) {
             hasCable = true;
             showAlert("You picked up the HDMI cable.");
         } else {
@@ -22,16 +23,16 @@ public class CableInteraction extends Interaction {
         }
     }
 
-
     @Override
-    public void render(GraphicsContext gc) { // Override render method
-        gc.drawImage(image, x, y, 15, 15); // Draw the image at (x, y) with size 96x144
+    public void render(GraphicsContext gc) {
+        if (!hasCable) {
+            gc.drawImage(image, x, y, 15, 15); // Draw the image only if the cable has not been picked up
+        }
     }
 
     public boolean hasCable() {
         return hasCable;
     }
-
 
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

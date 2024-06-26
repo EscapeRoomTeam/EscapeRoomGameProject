@@ -1,9 +1,10 @@
-package tech.makers.demo.levelManagement;
+package tech.makers.demo.levelManagement.levels.LevelTwo.interactions;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import tech.makers.demo.assets.Sound;
 import tech.makers.demo.assets.Door;
+import tech.makers.demo.levelManagement.Interaction;
 
 public class ComputerInteraction2 extends Interaction {
     private boolean hasUSB;

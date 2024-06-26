@@ -1,4 +1,4 @@
-package tech.makers.demo.gui;
+package tech.makers.demo.screens;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -7,10 +7,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import tech.makers.demo.EscapeRoomGame;
-
-
-
-import static jdk.internal.misc.OSEnvironment.initialize;
 
 public class OptionsScreen {
     private Scene scene;

@@ -1,8 +1,10 @@
-package tech.makers.demo.levelManagement; // Package declaration for level management
+package tech.makers.demo.levelManagement.levels.LevelTwo.interactions; // Package declaration for level management
 
 import javafx.scene.canvas.GraphicsContext; // Import GraphicsContext for rendering
 import javafx.scene.control.ChoiceDialog; // Import ChoiceDialog for displaying choices
 import tech.makers.demo.assets.Sound;
+import tech.makers.demo.levelManagement.Interaction;
+import tech.makers.demo.levelManagement.levels.LevelOne.interactions.ComputerInteraction;
 
 import java.util.Arrays; // Import Arrays for array manipulation
 import java.util.Optional; // Import Optional for handling optional values

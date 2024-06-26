@@ -1,9 +1,12 @@
-package tech.makers.demo.levelManagement.levels;
+package tech.makers.demo.levelManagement.levels.LevelTwo;
 
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Eddie;
 import tech.makers.demo.assets.Obstacle;
 import tech.makers.demo.levelManagement.*;
+import tech.makers.demo.levelManagement.levels.LevelTwo.interactions.ComputerInteraction2;
+import tech.makers.demo.levelManagement.levels.LevelTwo.interactions.EddieInteraction2;
+import tech.makers.demo.levelManagement.levels.LevelTwo.interactions.SafeInteraction;
 import tech.makers.demo.player.Inventory;
 import tech.makers.demo.player.Player;
 

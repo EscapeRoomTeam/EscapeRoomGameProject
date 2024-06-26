@@ -1,19 +1,20 @@
-package tech.makers.demo.levelManagement.levels;
+package tech.makers.demo.levelManagement.levels.LevelOne;
 
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Eddie;
+
+import tech.makers.demo.levelManagement.levels.LevelOne.interactions.ComputerInteraction;
 import tech.makers.demo.assets.Obstacle;
-import tech.makers.demo.levelManagement.ComputerInteraction;
-import tech.makers.demo.levelManagement.EddieInteraction;
+
 import tech.makers.demo.levelManagement.Interaction;
 import tech.makers.demo.levelManagement.Level;
 import tech.makers.demo.levelManagement.Puzzle;
-import tech.makers.demo.levelManagement.RouterInteraction;
+import tech.makers.demo.levelManagement.levels.LevelOne.interactions.EddieInteraction;
+import tech.makers.demo.levelManagement.levels.LevelTwo.interactions.RouterInteraction;
 import tech.makers.demo.player.Inventory;
 import tech.makers.demo.player.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Level1 extends Level {
