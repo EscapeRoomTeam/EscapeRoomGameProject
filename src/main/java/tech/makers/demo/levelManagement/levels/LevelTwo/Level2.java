@@ -2,6 +2,7 @@ package tech.makers.demo.levelManagement.levels.LevelTwo;
 
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Eddie;
+import tech.makers.demo.assets.Obstacle;
 import tech.makers.demo.levelManagement.*;
 import tech.makers.demo.levelManagement.levels.LevelTwo.interactions.ComputerInteraction2;
 import tech.makers.demo.levelManagement.levels.LevelTwo.interactions.EddieInteraction2;
@@ -9,8 +10,14 @@ import tech.makers.demo.levelManagement.levels.LevelTwo.interactions.SafeInterac
 import tech.makers.demo.player.Inventory;
 import tech.makers.demo.player.Player;
 
+import tech.makers.demo.levelManagement.Interaction;
+import tech.makers.demo.levelManagement.Level;
+import tech.makers.demo.levelManagement.Puzzle;
+
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class Level2 extends Level {
 
@@ -20,7 +27,8 @@ public class Level2 extends Level {
                 createPuzzles(),
                 new Door(600, 400, "/sprites/Door.png"),
                 new Eddie(700, 50, "/sprites/Eddie_idle_anim.png", "..."),
-                createInteractions()
+                createInteractions(),
+                createObstacles()
         );
     }
 
@@ -42,5 +50,13 @@ public class Level2 extends Level {
         interactions.add(eddieInteraction);
 
         return interactions;
+    }
+    private static List<Obstacle> createObstacles() {
+        List<Obstacle> obstacles = new ArrayList<>();
+        obstacles.add(new Obstacle(200, 200, 40, 40, "/sprites/Chimney.gif"));
+        obstacles.add(new Obstacle(500, 100, 40, 40, "/sprites/JackBox.gif"));
+        obstacles.add(new Obstacle(600, 70, 40, 20, "/sprites/PC.gif"));
+        obstacles.add(new Obstacle(650, 50, 40, 40, "/sprites/SnowGlobe.gif"));
+        return obstacles;
     }
 }

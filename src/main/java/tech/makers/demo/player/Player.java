@@ -8,6 +8,7 @@ import tech.makers.demo.levelManagement.Puzzle;
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Sound;
 import tech.makers.demo.levelManagement.levels.LevelThree.interactions.CrowdInteraction;
+import tech.makers.demo.levelManagement.levels.LevelThree.interactions.ReceptionInteraction;
 
 import java.util.List;
 import java.util.Random;
@@ -151,6 +152,12 @@ public class Player {
                 CrowdInteraction crowd = (CrowdInteraction) interaction;
                 if (crowd.collidesWith(newX, newY, width, height)) {
                     System.out.println("Collision with crowd at: " + newX + ", " + newY);
+                    return true;
+                }
+            } else if (interaction instanceof ReceptionInteraction) {
+                ReceptionInteraction reception = (ReceptionInteraction) interaction;
+                if (reception.collidesWith(newX, newY, width, height)) {
+                    System.out.println("Collision with reception at: " + newX + ", " + newY);
                     return true;
                 }
             }
