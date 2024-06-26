@@ -20,7 +20,7 @@ public class HDMIInteractionTest {
     @BeforeEach
     public void setUp() {
         mockMacbookInteraction = mock(MacbookInteraction.class);
-        hdmiInteraction = new HDMIInteraction(0, 0, "/sprites/hdmi.png", mockMacbookInteraction, mockCableInteraction);
+        hdmiInteraction = new HDMIInteraction(0, 0, "sprites/hdmi.png", mockMacbookInteraction, mockCableInteraction);
     }
 
     @Test

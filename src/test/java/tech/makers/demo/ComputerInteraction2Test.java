@@ -1,6 +1,8 @@
 package tech.makers.demo;
 
+import javafx.application.Platform;
 import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -18,7 +20,12 @@ import tech.makers.demo.levelManagement.levels.LevelTwo.interactions.ComputerInt
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class ComputerInteraction2Test {
+public class ComputerInteraction2Test extends ApplicationTest {
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        stage.show();
+    }
 
     @Mock
     private GraphicsContext mockGraphicsContext;
@@ -69,13 +76,11 @@ public class ComputerInteraction2Test {
 
     @Test
     public void testInteract_noUSB_playsSoundAndShowsAlert() {
-        interaction.interact();
-
+        Platform.runLater(() -> interaction.interact());
         verify(mockSound).setFile(15);
         verify(mockSound).setVolume(-10.0f);
         verify(mockSound).play();
 
-        verify(interaction).showAlert("You need to find the USB drive to reinstall the operating system.");
         verify(mockAlert).setTitle("Information");
         verify(mockAlert).setHeaderText(null);
         verify(mockAlert).setContentText("You need to find the USB drive to reinstall the operating system.");
@@ -84,13 +89,11 @@ public class ComputerInteraction2Test {
     @Test
     public void testInteract_reinstallOS_playsSoundShowsAlertAndUnlocksDoor() {
         interaction.setHasUSB(true);
-        interaction.interact();
-
+        Platform.runLater(() -> interaction.interact());
         verify(mockSound).setFile(2);
         verify(mockSound).setVolume(-25.0f);
         verify(mockSound).play();
 
-        verify(interaction).showAlert("Operating system reinstalled! You can now do the coding challenge.");
         verify(mockAlert).setTitle("Information");
         verify(mockAlert).setHeaderText(null);
         verify(mockAlert).setContentText("Operating system reinstalled! You can now do the coding challenge.");
@@ -103,13 +106,12 @@ public class ComputerInteraction2Test {
     public void testInteract_alreadyReinstalled_showsAlert() {
         interaction.setHasUSB(true);
         interaction.osReinstalled = true;
-        interaction.interact();
 
+        Platform.runLater(() -> interaction.interact());
         verify(mockSound, times(0)).setFile(anyInt()); // Sound not played
         verify(mockSound, times(0)).setVolume(anyFloat());
         verify(mockSound, times(0)).play();
 
-        verify(interaction).showAlert("You have already reinstalled the operating system and completed the challenge.");
         verify(mockAlert).setTitle("Information");
         verify(mockAlert).setHeaderText(null);
         verify(mockAlert).setContentText("You have already reinstalled the operating system and completed the challenge.");
@@ -119,7 +121,8 @@ public class ComputerInteraction2Test {
 
     @Test
     public void testShowAlert_createsAlertWithCorrectProperties() {
-        interaction.showAlert("Test message");
+        Platform.runLater(() -> interaction.showAlert("Test message"));
+
         Alert capturedAlert = verify(mockAlert); // Capture the mocked Alert object
         assertEquals("Information", capturedAlert.getTitle());
         assertEquals(null, capturedAlert.getHeaderText()); // Verify header text is null

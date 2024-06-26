@@ -16,7 +16,7 @@ public class EddieInteraction extends Interaction { // EddieInteraction class ex
     public Image[] idleDownFrames; // Array of Images for idle down frames
     public String direction = "down"; // String to keep track of direction
     public int currentFrame = 0; // Integer to keep track of current frame
-    private long lastFrameTime = 0; // Long to keep track of last frame time
+    public long lastFrameTime = 0; // Long to keep track of last frame time
     public static final int FRAME_DURATION = 150; // Frame duration in milliseconds
 
     public EddieInteraction(double x, double y, String imagePath, ComputerInteraction computerInteraction) { // Constructor for EddieInteraction

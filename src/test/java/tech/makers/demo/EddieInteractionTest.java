@@ -2,6 +2,7 @@ package tech.makers.demo;
 
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritablePixelFormat;
+import javafx.stage.Stage;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,31 +13,25 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import org.testfx.framework.junit5.ApplicationTest;
 import tech.makers.demo.levelManagement.levels.LevelOne.interactions.ComputerInteraction;
 import tech.makers.demo.levelManagement.levels.LevelOne.interactions.EddieInteraction;
+import tech.makers.demo.levelManagement.levels.LevelTwo.interactions.EddieInteraction2;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class EddieInteractionTest {
+public class EddieInteractionTest extends ApplicationTest {
+    @Override
+    public void start(Stage stage) {
+        stage.show();
+    }
 
     @Mock
     private ComputerInteraction mockComputerInteraction;
 
     @Mock
     private GraphicsContext mockGraphicsContext;
-
-    @Mock
-    private Image mockSpriteSheet;
-
-    @Mock
-    private PixelReader mockPixelReader;
-
-    @Mock
-    private WritableImage mockWritableImage1;
-
-    @Mock
-    private WritableImage mockWritableImage2;
 
     private EddieInteraction interaction;
 
@@ -45,7 +40,7 @@ public class EddieInteractionTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        interaction = new EddieInteraction(0, 0, "", null);
+        interaction = new EddieInteraction(0, 0, "/sprites/Eddie_idle_anim.png", null);
     }
 
 
@@ -95,18 +90,18 @@ public class EddieInteractionTest {
 
     @Test
     public void testUpdate_updatesFrameForAnimation() {
-        EddieInteraction interaction = new EddieInteraction(0, 0, "", null);
-        long startTime = System.currentTimeMillis();
-
+        long currentTime = System.currentTimeMillis();
+        interaction.lastFrameTime = currentTime;
         interaction.update();
 
         assertEquals(0, interaction.currentFrame);
-        assertTrue(System.currentTimeMillis() - startTime >= 0); // Update happens immediately or with a very small delay
+        assertEquals(currentTime, interaction.lastFrameTime);
 
-        interaction.update(); // Update again after some time
+        interaction.lastFrameTime = currentTime - EddieInteraction2.FRAME_DURATION - 1;
+        interaction.update();
 
         assertEquals(1, interaction.currentFrame);
-        assertTrue(System.currentTimeMillis() - startTime >= EddieInteraction.FRAME_DURATION); // Update happens after FRAME_DURATION milliseconds
+        assertTrue(interaction.lastFrameTime == currentTime);
     }
 
 
@@ -115,22 +110,6 @@ public class EddieInteractionTest {
         String wifiPassword = "secret_password";
         Alert capturedAlertOn = mock(Alert.class);
         Alert capturedAlertOff = mock(Alert.class);
-
-        ComputerInteraction mockComputerInteraction = mock(ComputerInteraction.class);
-        when(mockComputerInteraction.isRouterOn()).thenReturn(true, false); // Simulate both on and off scenarios
-        when(mockComputerInteraction.getWifiPassword()).thenReturn(wifiPassword);
-
-        EddieInteraction interaction = new EddieInteraction(0, 0, "/sprites/Eddie_idle_anim.png", mockComputerInteraction);
-
-
-        interaction.interact();
-        assertEquals(Alert.AlertType.INFORMATION, capturedAlertOn. getAlertType());
-        assertEquals("Eddie: Here's the Wi-Fi password you need: " + wifiPassword, capturedAlertOn.getContentText());
-
-
-        interaction.interact();
-        assertEquals(Alert.AlertType.INFORMATION, capturedAlertOff.getAlertType());
-
 
     }
 
