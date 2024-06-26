@@ -10,15 +10,15 @@ public class EddieInteraction3 extends Interaction {
     private final String defaultMessage = "I have your new MacBook credentials!";
     private final String username = "newUser"; // Example username
     private final String password = "newPass123"; // Example password
-    private Image idleSpriteSheet;
-    private Image[] idleRightFrames;
-    private Image[] idleUpFrames;
-    private Image[] idleLeftFrames;
-    private Image[] idleDownFrames;
-    private String direction = "down";
-    private int currentFrame = 0;
-    private long lastFrameTime = 0;
-    private static final int FRAME_DURATION = 150;
+    public Image idleSpriteSheet;
+    public Image[] idleRightFrames;
+    public Image[] idleUpFrames;
+    public Image[] idleLeftFrames;
+    public Image[] idleDownFrames;
+    public String direction = "down";
+    public int currentFrame = 0;
+    public long lastFrameTime = 0;
+    public static final int FRAME_DURATION = 150;
 
     public EddieInteraction3(double x, double y, String imagePath) {
         super(x, y, imagePath);
@@ -30,7 +30,7 @@ public class EddieInteraction3 extends Interaction {
         this.idleDownFrames = loadFrames(idleSpriteSheet, 18);
     }
 
-    private Image[] loadFrames(Image spriteSheet, int startFrame) {
+    public Image[] loadFrames(Image spriteSheet, int startFrame) {
         Image[] frames = new Image[6];
         int spriteWidth = 16;
         int spriteHeight = 32;
@@ -78,7 +78,7 @@ public class EddieInteraction3 extends Interaction {
         showAlert("Eddie: Your new username is " + username + " and password is " + password);
     }
 
-    private void showAlert(String message) {
+    public void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Tip");
         alert.setHeaderText(null);

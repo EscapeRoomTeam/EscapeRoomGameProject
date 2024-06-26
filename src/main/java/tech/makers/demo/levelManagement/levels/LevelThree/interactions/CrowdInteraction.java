@@ -6,8 +6,8 @@ import tech.makers.demo.levelManagement.Interaction;
 
 public class CrowdInteraction extends Interaction {
 
-    private final double width;
-    private final double height;
+    public final double width;
+    public final double height;
 
     public CrowdInteraction(double x, double y, String imagePath) {
         super(x, y, imagePath);
@@ -25,7 +25,7 @@ public class CrowdInteraction extends Interaction {
         gc.drawImage(image, x, y, width, height); // Draw the image at (x, y) with size 250x250
     }
 
-    private void showAlert() {
+    public void showAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
         alert.setHeaderText(null);

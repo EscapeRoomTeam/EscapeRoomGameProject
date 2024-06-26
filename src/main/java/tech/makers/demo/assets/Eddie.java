@@ -9,15 +9,15 @@ import tech.makers.demo.levelManagement.HelperCharacter;
 public class Eddie implements HelperCharacter {
     private final double x;
     private final double y;
-    private final Image idleSpriteSheet;
-    private Image[] idleRightFrames;
-    private Image[] idleUpFrames;
-    private Image[] idleLeftFrames;
-    private Image[] idleDownFrames;
-    private String direction = "down";
-    private int currentFrame = 0;
-    private long lastFrameTime = 0;
-    private static final int FRAME_DURATION = 150; // Frame duration in milliseconds
+    public final Image idleSpriteSheet;
+    public Image[] idleRightFrames;
+    public Image[] idleUpFrames;
+    public Image[] idleLeftFrames;
+    public Image[] idleDownFrames;
+    public String direction = "down";
+    public int currentFrame = 0;
+    public long lastFrameTime = 0;
+    public static final int FRAME_DURATION = 150; // Frame duration in milliseconds
     private final String message;
 
     public Eddie(double x, double y, String imagePath, String message) {
@@ -33,7 +33,7 @@ public class Eddie implements HelperCharacter {
         this.idleDownFrames = loadFrames(idleSpriteSheet, 18);
     }
 
-    private Image[] loadFrames(Image spriteSheet, int startFrame) {
+    public Image[] loadFrames(Image spriteSheet, int startFrame) {
         Image[] frames = new Image[6];
         int spriteWidth = 16;
         int spriteHeight = 32;
@@ -101,5 +101,13 @@ public class Eddie implements HelperCharacter {
 
     public double getY() {
         return y;
+    }
+
+    public int getCurrentFrame() {
+        return currentFrame;
+    }
+
+    public void loadImage(GraphicsContext mockGraphicsContext) {
+        render(mockGraphicsContext);
     }
 }

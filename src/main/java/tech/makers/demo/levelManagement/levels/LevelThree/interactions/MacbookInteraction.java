@@ -38,7 +38,7 @@ public class MacbookInteraction extends Interaction {
         return hasMacbook;
     }
 
-    private void showAlert(String message) {
+    public void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
         alert.setHeaderText(null);

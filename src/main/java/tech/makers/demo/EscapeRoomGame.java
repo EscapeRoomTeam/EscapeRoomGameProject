@@ -29,21 +29,21 @@ import java.util.List;
 import java.util.Random;
 
 public class EscapeRoomGame extends Application {
-    private LevelManager levelManager;
+    public LevelManager levelManager;
     private TileManager tileManager;
     private Image[] moneyImages;
     private List<ImagePosition> objectPositions;
-    private Sound sound = new Sound();
+    public Sound sound = new Sound();
     private Random random = new Random();
-    private Stage primaryStage;
-    private AnimationTimer gameLoop;
-    private Canvas canvas;
+    public Stage primaryStage;
+    public AnimationTimer gameLoop;
+    public Canvas canvas;
     private GraphicsContext gc;
-    private OptionsScreen optionsScreen;
-    private boolean isOptionsMenuVisible = false;
+    public OptionsScreen optionsScreen;
+    public boolean isOptionsMenuVisible = false;
     private Scene Scene;
-    private Scene currentScene;
-    private Sound musicSound;
+    public Scene currentScene;
+    public Sound musicSound;
     private Sound[] seSound;
     private double musicVolume = 0.5;
     private double seVolume = 0.5;
@@ -108,7 +108,7 @@ public class EscapeRoomGame extends Application {
         startGameLoop();
     }
 
-    private void setSceneControls(Scene scene) {
+    void setSceneControls(Scene scene) {
         scene.setOnKeyPressed(event -> {
             Level currentLevel = levelManager.getCurrentLevel();
             Player player = currentLevel.getPlayer();

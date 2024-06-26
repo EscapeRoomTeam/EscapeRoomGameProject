@@ -7,17 +7,17 @@ import javafx.scene.image.WritableImage; // Import WritableImage for image manip
 import tech.makers.demo.levelManagement.Interaction;
 
 public class EddieInteraction extends Interaction { // EddieInteraction class extending Interaction
-    private ComputerInteraction computerInteraction; // Private ComputerInteraction object
+    public ComputerInteraction computerInteraction; // Private ComputerInteraction object
     private final String defaultMessage = "Hi there! You need to turn on the router to start your PC!."; // Final default message
-    private Image idleSpriteSheet; // Private Image for the sprite sheet
-    private Image[] idleRightFrames; // Array of Images for idle right frames
-    private Image[] idleUpFrames; // Array of Images for idle up frames
-    private Image[] idleLeftFrames; // Array of Images for idle left frames
-    private Image[] idleDownFrames; // Array of Images for idle down frames
-    private String direction = "down"; // String to keep track of direction
-    private int currentFrame = 0; // Integer to keep track of current frame
+    public Image idleSpriteSheet; // Private Image for the sprite sheet
+    public Image[] idleRightFrames; // Array of Images for idle right frames
+    public Image[] idleUpFrames; // Array of Images for idle up frames
+    public Image[] idleLeftFrames; // Array of Images for idle left frames
+    public Image[] idleDownFrames; // Array of Images for idle down frames
+    public String direction = "down"; // String to keep track of direction
+    public int currentFrame = 0; // Integer to keep track of current frame
     private long lastFrameTime = 0; // Long to keep track of last frame time
-    private static final int FRAME_DURATION = 150; // Frame duration in milliseconds
+    public static final int FRAME_DURATION = 150; // Frame duration in milliseconds
 
     public EddieInteraction(double x, double y, String imagePath, ComputerInteraction computerInteraction) { // Constructor for EddieInteraction
         super(x, y, imagePath); // Call to super class constructor

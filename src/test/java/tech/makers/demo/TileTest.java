@@ -2,6 +2,7 @@ package tech.makers.demo;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,16 +18,15 @@ public class TileTest {
 
 
 
-    @BeforeAll // starting the Test App before all tests
-    public static void initJfx() {
-        TestApp.launchApp();
-    }
+
     @BeforeEach
     public void setUp() { // Create a new instance of the Tile class before each test
         mockGc = mock(GraphicsContext.class);
         mockImage = mock(Image.class);
         tile = new Tile(100.0, 150.0, "floor", mockImage, 50.0, 50.0);
     }
+
+
 
     @Test // Test the constructor
     public void testConstructor() {
@@ -61,5 +61,6 @@ public class TileTest {
     public void testGetImage() {
         assertEquals(mockImage, tile.getImage());
     }
+
 }
 

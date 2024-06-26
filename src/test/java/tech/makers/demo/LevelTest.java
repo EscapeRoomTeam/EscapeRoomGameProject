@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tech.makers.demo.assets.Door;
+import tech.makers.demo.assets.Obstacle;
+import tech.makers.demo.levelManagement.Interaction;
 import tech.makers.demo.levelManagement.Level;
 import tech.makers.demo.levelManagement.Puzzle;
 import tech.makers.demo.player.Player;
@@ -24,11 +26,10 @@ public class LevelTest {
     private Eddie mockHelperCharacter;
     private GraphicsContext mockGc;
     private Level level;
+    private List<Interaction> mockInteractions;
+    private List<Obstacle> mockObstacles;
 
-    @BeforeAll // starting the Test App before all tests
-    public static void initJfx() {
-        TestApp.launchApp();
-    }
+
     @BeforeEach
     public void setUp() {
         mockPlayer = mock(Player.class);
@@ -37,7 +38,9 @@ public class LevelTest {
         mockHelperCharacter = mock(Eddie.class);
         mockDoor = mock(Door.class);
         mockGc = mock(GraphicsContext.class);
-        level = new Level(mockPlayer, mockPuzzles, mockDoor, mockHelperCharacter);
+        mockInteractions = new ArrayList<>();
+        mockInteractions.add(mock(Interaction.class));
+        level = new Level(mockPlayer, mockPuzzles, mockDoor, mockHelperCharacter, mockInteractions, mockObstacles);
     }
 
     @Test

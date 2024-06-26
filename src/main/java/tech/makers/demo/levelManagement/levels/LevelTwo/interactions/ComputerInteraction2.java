@@ -7,10 +7,10 @@ import tech.makers.demo.assets.Door;
 import tech.makers.demo.levelManagement.Interaction;
 
 public class ComputerInteraction2 extends Interaction {
-    private boolean hasUSB;
-    private boolean osReinstalled;
+    public boolean hasUSB;
+    public boolean osReinstalled;
     private Door door;
-    Sound sound = new Sound();
+    public Sound sound = new Sound();
 
     public ComputerInteraction2(double x, double y, String imagePath, Door door) {
         super(x, y, imagePath);
@@ -47,7 +47,7 @@ public class ComputerInteraction2 extends Interaction {
         }
     }
 
-    private void showAlert(String message) {
+    public void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
         alert.setHeaderText(null);

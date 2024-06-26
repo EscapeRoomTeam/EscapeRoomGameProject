@@ -1,5 +1,7 @@
 package tech.makers.demo;
 
+import javafx.stage.Stage;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +17,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class TileManagerTest extends ApplicationTest {
+    @Override
+    public void start(Stage stage) throws Exception {
+        stage.show();
+    }
 
     private TileManager manager;
 
@@ -64,6 +70,11 @@ public class TileManagerTest extends ApplicationTest {
         int canvasHeight = 576;  // Assuming canvasHeight from TileManager
         int tileSize = 48;       // Assuming tile size from TileManager
         assertNull(manager.getTileAt(canvasWidth + tileSize, canvasHeight + tileSize));
+    }
+
+    @AfterAll
+    public static void cleanup() {
+        TestApp.stopApp();
     }
 
 
