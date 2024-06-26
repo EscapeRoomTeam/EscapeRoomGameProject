@@ -53,10 +53,13 @@ public class Level2 extends Level {
     }
     private static List<Obstacle> createObstacles() {
         List<Obstacle> obstacles = new ArrayList<>();
-        obstacles.add(new Obstacle(200, 200, 40, 40, "/sprites/Chimney.gif"));
-        obstacles.add(new Obstacle(500, 100, 40, 40, "/sprites/JackBox.gif"));
-        obstacles.add(new Obstacle(600, 70, 40, 20, "/sprites/PC.gif"));
-        obstacles.add(new Obstacle(650, 50, 40, 40, "/sprites/SnowGlobe.gif"));
+        obstacles.add(new Obstacle(550, 85, 100, 70, "/sprites/deloitterug.png"));
+        obstacles.add(new Obstacle(560, 35, 80, 100, "/sprites/Chimney.gif"));
+        obstacles.add(new Obstacle(40, 40, 150, 100, "/sprites/BookShelf.gif"));
+        obstacles.add(new Obstacle(200, 40, 150, 100, "/sprites/BookShelf.gif"));
+        obstacles.add(new Obstacle(360, 40, 150, 100, "/sprites/BookShelf.gif"));
+        obstacles.add(new Obstacle(570, 30, 40, 40, "/sprites/SnowGlobe.gif"));
+        obstacles.add(new Obstacle(500, 600, 100, 100, "/sprites/Sofa.png"));
         return obstacles;
     }
 }
