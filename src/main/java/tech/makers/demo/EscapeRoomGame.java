@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Eddie;
 import tech.makers.demo.assets.Sound;
+import tech.makers.demo.screens.GameCompletionScreen;
 import tech.makers.demo.screens.HomeScreen;
 import tech.makers.demo.screens.LevelCompletionScreen;
 import tech.makers.demo.levelManagement.Interaction;
@@ -29,21 +30,21 @@ import java.util.List;
 import java.util.Random;
 
 public class EscapeRoomGame extends Application {
-    public LevelManager levelManager;
+    private LevelManager levelManager;
     private TileManager tileManager;
     private Image[] moneyImages;
     private List<ImagePosition> objectPositions;
-    public Sound sound = new Sound();
+    private Sound sound = new Sound();
     private Random random = new Random();
-    public Stage primaryStage;
-    public AnimationTimer gameLoop;
-    public Canvas canvas;
+    private Stage primaryStage;
+    private AnimationTimer gameLoop;
+    private Canvas canvas;
     private GraphicsContext gc;
-    public OptionsScreen optionsScreen;
-    public boolean isOptionsMenuVisible = false;
+    private OptionsScreen optionsScreen;
+    private boolean isOptionsMenuVisible = false;
     private Scene Scene;
-    public Scene currentScene;
-    public Sound musicSound;
+    private Scene currentScene;
+    private Sound musicSound;
     private Sound[] seSound;
     private double musicVolume = 0.5;
     private double seVolume = 0.5;
@@ -108,7 +109,7 @@ public class EscapeRoomGame extends Application {
         startGameLoop();
     }
 
-    void setSceneControls(Scene scene) {
+    private void setSceneControls(Scene scene) {
         scene.setOnKeyPressed(event -> {
             Level currentLevel = levelManager.getCurrentLevel();
             Player player = currentLevel.getPlayer();
@@ -293,7 +294,17 @@ public class EscapeRoomGame extends Application {
 
     public void completeLevel() {
         gameLoop.stop(); // Stop the game loop before showing the level completion screen
-        showLevelCompletionScreen();
+
+        if (levelManager.getCurrentLevelNumber() < 3) {
+            showLevelCompletionScreen();
+        } else {
+            showGameCompletionScreen();
+        }
+    }
+
+    public void showGameCompletionScreen() {
+        GameCompletionScreen gameCompletionScreen = new GameCompletionScreen(primaryStage, this);
+        gameCompletionScreen.show();
     }
 
     public void showLevelCompletionScreen() {
@@ -312,7 +323,7 @@ public class EscapeRoomGame extends Application {
         System.out.println("Loading level " + levelNumber);
         switch (levelNumber) {
             case 1:
-                tileManager = new TileManager("/tiles/StoneTile.png");
+                tileManager = new TileManager("/tiles/BlueTile.png");
                 objectPositions = initializeObjectPositions(canvas, 1);
                 break;
             case 2:
@@ -320,7 +331,7 @@ public class EscapeRoomGame extends Application {
                 objectPositions = initializeObjectPositions(canvas, 2);
                 break;
             case 3:
-                tileManager = new TileManager("/tiles/StoneTile.png");
+                tileManager = new TileManager("/tiles/BrickTile.png");
                 objectPositions = initializeObjectPositions(canvas, 3);
                 break;
             default:
