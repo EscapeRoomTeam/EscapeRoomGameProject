@@ -1,5 +1,6 @@
 package tech.makers.demo;
 
+import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextInputDialog;
@@ -75,9 +76,7 @@ public class SafeInteractionTest {
         when(mockDialog.showAndWait()).thenReturn(mockOptionalString);
         when(mockOptionalString.isPresent()).thenReturn(true);
         when(mockOptionalString.get()).thenReturn("1234");
-
-        interaction.interact();
-
+        Platform.runLater(() -> interaction.interact());
         verify(mockSound).setFile(22);
         verify(mockSound).setVolume(-17.0f);
         verify(mockSound).play();
@@ -95,9 +94,7 @@ public class SafeInteractionTest {
         when(mockDialog.showAndWait()).thenReturn(mockOptionalString);
         when(mockOptionalString.isPresent()).thenReturn(true);
         when(mockOptionalString.get()).thenReturn("5678");
-
-        interaction.interact();
-
+        Platform.runLater(() -> interaction.interact());
         verify(mockSound).setFile(15);
         verify(mockSound).setVolume(-10.0f);
         verify(mockSound).play();
@@ -114,9 +111,7 @@ public class SafeInteractionTest {
         when(mockEddieInteraction2.getSafeCode()).thenReturn("1234");
         when(mockDialog.showAndWait()).thenReturn(mockOptionalString);
         when(mockOptionalString.isPresent()).thenReturn(false);
-
-        interaction.interact();
-
+        Platform.runLater(() -> interaction.interact());
         verify(mockSound, times(0)).setFile(anyInt());
         verify(mockSound, times(0)).setVolume(anyFloat());
         verify(mockSound, times(0)).play();
@@ -131,9 +126,7 @@ public class SafeInteractionTest {
     @Test
     public void testInteract_safeOpen_showsAlert() {
         interaction.isOpen = true;
-
-        interaction.interact();
-
+        Platform.runLater(() -> interaction.interact());
         verify(mockDialog, times(0)).showAndWait();
         verify(mockSound, times(0)).setFile(anyInt());
         verify(mockSound, times(0)).setVolume(anyFloat());
@@ -147,7 +140,7 @@ public class SafeInteractionTest {
 
     @Test
     public void testShowAlert_createsAlertWithCorrectProperties() {
-        interaction.showAlert("Test message");
+        Platform.runLater(() -> interaction.showAlert("Test message"));
 
         verify(mockAlert).setTitle("Information");
         verify(mockAlert).setHeaderText(null);
