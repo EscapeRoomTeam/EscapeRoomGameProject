@@ -327,11 +327,11 @@ public class EscapeRoomGame extends Application {
                 objectPositions = initializeObjectPositions(canvas, 1);
                 break;
             case 2:
-                tileManager = new TileManager("/tiles/RedTile.png");
+                tileManager = new TileManager("/tiles/BrickTile.png");
                 objectPositions = initializeObjectPositions(canvas, 2);
                 break;
             case 3:
-                tileManager = new TileManager("/tiles/BrickTile.png");
+                tileManager = new TileManager("/tiles/WoodTile.png");
                 objectPositions = initializeObjectPositions(canvas, 3);
                 break;
             default:
