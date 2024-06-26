@@ -1,5 +1,6 @@
 package tech.makers.demo.levelManagement.levels.LevelThree.interactions;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import tech.makers.demo.assets.Sound;
 import tech.makers.demo.levelManagement.Interaction;
@@ -23,6 +24,13 @@ public class MacbookInteraction extends Interaction {
             showAlert("You picked up the Golden MacBook.");
         } else {
             showAlert("You already have the Golden MacBook.");
+        }
+    }
+
+    @Override
+    public void render(GraphicsContext gc) {
+        if (!hasMacbook) {
+            gc.drawImage(image, x, y, 48, 48); // Draw the image only if the MacBook has not been picked up
         }
     }
 

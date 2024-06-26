@@ -40,8 +40,8 @@ public class Level3 extends Level {
     private static List<Interaction> createInteractions() {
         List<Interaction> interactions = new ArrayList<>();
         EddieInteraction3 eddieInteraction = new EddieInteraction3(450, 50, "/sprites/transparent.png");
-        MacbookInteraction macbookInteraction = new MacbookInteraction(246, 490, "/sprites/less_pixelated_goldenmac.png");
-        CableInteraction cableInteraction = new CableInteraction(100, 300, "/sprites/hdmi.png");
+        MacbookInteraction macbookInteraction = new MacbookInteraction(345, 440, "/sprites/less_pixelated_goldenmac.png");
+        CableInteraction cableInteraction = new CableInteraction(700, 200, "/sprites/hdmi.png");
         HDMIInteraction hdmiInteraction = new HDMIInteraction(350, 50, "/sprites/tvscreen.png", macbookInteraction, cableInteraction);
         CrowdInteraction crowdInteraction = new CrowdInteraction(250, 150, "/sprites/crowded.gif");
         ReceptionInteraction receptionInteraction = new ReceptionInteraction (50, 50, "/sprites/reception.png");
@@ -56,12 +56,11 @@ public class Level3 extends Level {
 
     private static List<Obstacle> createObstacles() {
         List<Obstacle> obstacles = new ArrayList<>();
-        obstacles.add(new Obstacle(200, 200, 40, 40, "/sprites/Cuckoo.gif"));
-        obstacles.add(new Obstacle(500, 100, 40, 40, "/sprites/Fishtank.gif"));
-        obstacles.add(new Obstacle(600, 70, 40, 20, "/sprites/BookShelf.gif"));
-        obstacles.add(new Obstacle(650, 50, 40, 40, "/sprites/Checker.gif"));
-        obstacles.add(new Obstacle(50, 500, 250, 50, "/sprites/desks.png"));
-
+        obstacles.add(new Obstacle(50, 450, 350, 50, "/sprites/deskswithcomps.png"));
+        obstacles.add(new Obstacle(675, 75, 55, 90, "/sprites/BrownDesk.png"));
+        obstacles.add(new Obstacle(660, 65, 75, 80, "/sprites/OfficeChairRight.png"));
+        obstacles.add(new Obstacle(675, 165, 55, 90, "/sprites/BrownDesk.png"));
+        obstacles.add(new Obstacle(660, 155, 75, 80, "/sprites/OfficeChairRight.png"));
         return obstacles;
     }
 
