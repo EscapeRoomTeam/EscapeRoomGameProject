@@ -1,6 +1,7 @@
-package tech.makers.demo.levelManagement;
+package tech.makers.demo.levelManagement.levels.LevelTwo.interactions;
 
 import javafx.scene.control.Alert;
+import tech.makers.demo.levelManagement.Interaction;
 
 public class USBInteraction extends Interaction {
     private ComputerInteraction2 computerInteraction2;

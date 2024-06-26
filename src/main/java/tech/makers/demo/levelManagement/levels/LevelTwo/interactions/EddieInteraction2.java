@@ -1,9 +1,10 @@
-package tech.makers.demo.levelManagement;
+package tech.makers.demo.levelManagement.levels.LevelTwo.interactions;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import tech.makers.demo.levelManagement.Interaction;
 
 public class EddieInteraction2 extends Interaction {
     private final String defaultMessage = "I have the code for the safe, but you need to talk to me first!";

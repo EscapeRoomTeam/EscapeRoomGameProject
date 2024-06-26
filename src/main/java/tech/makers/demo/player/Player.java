@@ -7,7 +7,7 @@ import tech.makers.demo.levelManagement.Interaction;
 import tech.makers.demo.levelManagement.Puzzle;
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Sound;
-import tech.makers.demo.levelManagement.CrowdInteraction;
+import tech.makers.demo.levelManagement.levels.LevelThree.interactions.CrowdInteraction;
 
 import java.util.List;
 import java.util.Random;

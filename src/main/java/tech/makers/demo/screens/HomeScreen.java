@@ -1,4 +1,4 @@
-package tech.makers.demo.gui;
+package tech.makers.demo.screens;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

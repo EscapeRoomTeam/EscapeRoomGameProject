@@ -1,7 +1,8 @@
-package tech.makers.demo.levelManagement;
+package tech.makers.demo.levelManagement.levels.LevelThree.interactions;
 
 import javafx.scene.control.Alert;
 import tech.makers.demo.assets.Sound;
+import tech.makers.demo.levelManagement.Interaction;
 
 public class MacbookInteraction extends Interaction {
     private boolean hasMacbook;

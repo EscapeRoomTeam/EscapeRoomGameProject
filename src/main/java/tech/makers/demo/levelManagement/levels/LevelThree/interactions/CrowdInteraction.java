@@ -1,8 +1,8 @@
-package tech.makers.demo.levelManagement;
+package tech.makers.demo.levelManagement.levels.LevelThree.interactions;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
+import tech.makers.demo.levelManagement.Interaction;
 
 public class CrowdInteraction extends Interaction {
 

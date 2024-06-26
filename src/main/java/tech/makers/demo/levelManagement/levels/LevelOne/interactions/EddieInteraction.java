@@ -1,9 +1,10 @@
-package tech.makers.demo.levelManagement; // Package declaration for level management
+package tech.makers.demo.levelManagement.levels.LevelOne.interactions; // Package declaration for level management
 
 import javafx.scene.canvas.GraphicsContext; // Import GraphicsContext for rendering
 import javafx.scene.control.Alert; // Import Alert for displaying alerts
 import javafx.scene.image.Image; // Import Image class for handling images
 import javafx.scene.image.WritableImage; // Import WritableImage for image manipulation
+import tech.makers.demo.levelManagement.Interaction;
 
 public class EddieInteraction extends Interaction { // EddieInteraction class extending Interaction
     private ComputerInteraction computerInteraction; // Private ComputerInteraction object

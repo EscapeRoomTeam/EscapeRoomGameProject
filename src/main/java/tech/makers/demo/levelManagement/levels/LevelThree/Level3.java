@@ -1,23 +1,17 @@
-package tech.makers.demo.levelManagement.levels;
+package tech.makers.demo.levelManagement.levels.LevelThree;
 
 import tech.makers.demo.assets.Door;
 import tech.makers.demo.assets.Eddie;
 import tech.makers.demo.levelManagement.*;
+import tech.makers.demo.levelManagement.levels.LevelThree.interactions.*;
 import tech.makers.demo.player.Inventory;
 import tech.makers.demo.player.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import tech.makers.demo.assets.Door;
-import tech.makers.demo.levelManagement.ComputerInteraction;
 import tech.makers.demo.levelManagement.Interaction;
 import tech.makers.demo.levelManagement.Level;
-import tech.makers.demo.player.Player;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Level3 extends Level {
 

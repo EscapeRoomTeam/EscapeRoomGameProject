@@ -1,10 +1,11 @@
-package tech.makers.demo.levelManagement; // Package declaration for level management
+package tech.makers.demo.levelManagement.levels.LevelOne.interactions; // Package declaration for level management
 
 import javafx.scene.canvas.GraphicsContext; // Import GraphicsContext for rendering
 import javafx.scene.control.Alert; // Import Alert for displaying alerts
 import javafx.scene.control.TextInputDialog; // Import TextInputDialog for input dialogs
 import tech.makers.demo.assets.Door; // Import Door class for door interaction
 import tech.makers.demo.assets.Sound;
+import tech.makers.demo.levelManagement.Interaction;
 
 import java.util.Optional; // Import Optional for handling optional values
 
