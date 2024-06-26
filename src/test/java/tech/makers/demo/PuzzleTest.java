@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.TextInputDialog;
+import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
@@ -23,15 +24,17 @@ import static org.mockito.Mockito.*;
 
 public class PuzzleTest extends ApplicationTest {
 
+    @Override
+    public void start(Stage stage) throws Exception {
+        stage.show();
+    }
+
     private Puzzle puzzle;
     private Player mockPlayer;
     private ChoiceDialog<String> mockDialog = mock(ChoiceDialog.class);
     List<String> choices = Arrays.asList("5", "10", "15", "20");
 
-    @Override
-    public void start(javafx.stage.Stage stage) {
-        // This method is required by ApplicationTest, but we don't need to set up a stage for these tests.
-    }
+
 
     @BeforeEach
     public void setUp() {

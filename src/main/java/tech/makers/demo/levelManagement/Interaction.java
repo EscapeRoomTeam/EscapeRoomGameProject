@@ -5,8 +5,8 @@ import javafx.scene.image.Image; // Import Image class for handling images
 import tech.makers.demo.player.Player; // Import Player class for player interaction
 
 public abstract class Interaction { // Abstract class Interaction
-    protected double x; // Protected variable for x coordinate
-    protected double y; // Protected variable for y coordinate
+    public double x; // Protected variable for x coordinate
+    public double y; // Protected variable for y coordinate
     protected Image image; // Protected variable for the image
     protected boolean inRange; // Protected boolean to check if in range
 

@@ -91,13 +91,13 @@ public class HomeScreen {
         // Display help information (e.g., a new scene or dialog with instructions)
     }
 
-    private void stopAudio() {
+    public void stopAudio() {
         System.out.println("Stopping audio");
         if (buttonSound != null) {
             buttonSound.stop();
         }
     }
-    private void stopMusic() {
+    public void stopMusic() {
         System.out.println("Stopping music");
         if (backgroundMusic != null) {
             backgroundMusic.stop();

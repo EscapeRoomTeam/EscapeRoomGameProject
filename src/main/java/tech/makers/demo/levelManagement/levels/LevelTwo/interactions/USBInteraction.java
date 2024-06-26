@@ -4,8 +4,8 @@ import javafx.scene.control.Alert;
 import tech.makers.demo.levelManagement.Interaction;
 
 public class USBInteraction extends Interaction {
-    private ComputerInteraction2 computerInteraction2;
-    private boolean hasUSB;
+    public ComputerInteraction2 computerInteraction2;
+    public boolean hasUSB;
 
     public USBInteraction(double x, double y, String imagePath, ComputerInteraction2 computerInteraction2) {
         super(x, y, imagePath);
@@ -24,7 +24,7 @@ public class USBInteraction extends Interaction {
         }
     }
 
-    private void showAlert(String message) {
+    public void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
         alert.setHeaderText(null);

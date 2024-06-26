@@ -9,11 +9,13 @@ import javafx.stage.Stage;
 import tech.makers.demo.EscapeRoomGame;
 
 public class OptionsScreen {
+    public Button resumeButton;
+    public Button exitButton;
     private Scene scene;
     private Stage primaryStage;
     private EscapeRoomGame game;
-    private Slider musicVolumeSlider;
-    private Slider seVolumeSlider;
+    public Slider musicVolumeSlider;
+    public Slider seVolumeSlider;
 
 
     public OptionsScreen(Stage primaryStage, EscapeRoomGame game) {

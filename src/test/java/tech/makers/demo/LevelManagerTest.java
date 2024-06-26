@@ -1,5 +1,7 @@
 package tech.makers.demo;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -23,6 +25,8 @@ public class LevelManagerTest {
     @InjectMocks
     private LevelManager levelManager;
 
+
+
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this); // Initialize mocks
@@ -32,6 +36,7 @@ public class LevelManagerTest {
         Level level2 = mock(Level.class);
         levelManager.setLevels(new Level[]{level1, level2});
     }
+
 
     @Test
     void testGetCurrentLevel() {

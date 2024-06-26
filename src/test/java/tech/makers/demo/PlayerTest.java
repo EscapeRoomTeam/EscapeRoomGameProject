@@ -7,7 +7,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import tech.makers.demo.assets.Door;
+import tech.makers.demo.levelManagement.Interaction;
 import tech.makers.demo.levelManagement.Puzzle;
+import tech.makers.demo.levelManagement.levels.LevelThree.interactions.CableInteraction;
+import tech.makers.demo.player.Inventory;
 import tech.makers.demo.player.Player;
 
 import java.util.Collections;
@@ -16,22 +19,24 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class PlayerTest extends ApplicationTest {
+public class PlayerTest {
+
 
     private List<Puzzle> mockPuzzle;
+    private List<Interaction> mockInteractions;
     private Door mockDoor;
     private Player player;
+    private Inventory mockInventory;
+    private CableInteraction mockCableInteraction;
 
-    @Override
-    public void start(javafx.stage.Stage stage) {
-        // This method is required by ApplicationTest, but we don't need to set up a stage for these tests.
-    }
+
 
     @BeforeEach
     public void setUp() {
         mockPuzzle = Collections.singletonList(mock(Puzzle.class));
+        mockInteractions = Collections.singletonList(mock(Interaction.class));
         mockDoor = mock(Door.class);
-        player = new Player(100, 200);
+        player = new Player(100, 200, mockInventory);
     }
 
     @Test
@@ -42,25 +47,25 @@ public class PlayerTest extends ApplicationTest {
 
     @Test
     public void testMoveUp() {
-        player.moveUp(mockPuzzle, mockDoor);
+        player.moveUp(mockPuzzle, mockDoor, mockInteractions);
         assertEquals(180, player.getY(), 0.0);
     }
 
     @Test
     public void testMoveDown() {
-        player.moveDown(mockPuzzle, mockDoor);
+        player.moveDown(mockPuzzle, mockDoor, mockInteractions);
         assertEquals(220, player.getY(), 0.0);
     }
 
     @Test
     public void testMoveLeft() {
-        player.moveLeft(mockPuzzle, mockDoor);
+        player.moveLeft(mockPuzzle, mockDoor, mockInteractions);
         assertEquals(80, player.getX(), 0.0);
     }
 
     @Test
     public void testMoveRight() {
-        player.moveRight(mockPuzzle, mockDoor);
+        player.moveRight(mockPuzzle, mockDoor, mockInteractions);
         assertEquals(120, player.getX(), 0.0);
     }
 

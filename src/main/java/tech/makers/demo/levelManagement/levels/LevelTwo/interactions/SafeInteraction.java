@@ -11,8 +11,10 @@ import java.util.Optional;
 public class SafeInteraction extends Interaction {
     private EddieInteraction2 eddieInteraction;
     private ComputerInteraction2 computerInteraction2;
-    private boolean isOpen;
-    Sound sound = new Sound();
+    public boolean isOpen;
+    public Sound sound = new Sound();
+    private TextInputDialog dialog;
+    private Alert alert;
 
     public SafeInteraction(double x, double y, String imagePath, EddieInteraction2 eddieInteraction, ComputerInteraction2 computerInteraction2) {
         super(x, y, imagePath);
@@ -54,11 +56,19 @@ public class SafeInteraction extends Interaction {
         }
     }
 
-    private void showAlert(String message) {
+    public void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void setDialog(TextInputDialog mockDialog) {
+        this.dialog = mockDialog;
+    }
+
+    public void setAlert(Alert mockAlert) {
+        this.alert = mockAlert;
     }
 }

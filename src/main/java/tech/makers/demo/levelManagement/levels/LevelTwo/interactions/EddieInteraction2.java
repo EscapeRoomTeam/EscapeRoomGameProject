@@ -8,16 +8,16 @@ import tech.makers.demo.levelManagement.Interaction;
 
 public class EddieInteraction2 extends Interaction {
     private final String defaultMessage = "I have the code for the safe, but you need to talk to me first!";
-    private final String safeCode = "1234"; // Example code for the safe
-    private Image idleSpriteSheet;
-    private Image[] idleRightFrames;
-    private Image[] idleUpFrames;
-    private Image[] idleLeftFrames;
-    private Image[] idleDownFrames;
-    private String direction = "down";
-    private int currentFrame = 0;
-    private long lastFrameTime = 0;
-    private static final int FRAME_DURATION = 150;
+    public final String safeCode = "1234"; // Example code for the safe
+    public Image idleSpriteSheet;
+    public Image[] idleRightFrames;
+    public Image[] idleUpFrames;
+    public Image[] idleLeftFrames;
+    public Image[] idleDownFrames;
+    public String direction = "down";
+    public int currentFrame = 0;
+    public long lastFrameTime = 0;
+    public static final int FRAME_DURATION = 150;
 
     public EddieInteraction2(double x, double y, String imagePath) {
         super(x, y, imagePath);
@@ -29,7 +29,7 @@ public class EddieInteraction2 extends Interaction {
         this.idleDownFrames = loadFrames(idleSpriteSheet, 18);
     }
 
-    private Image[] loadFrames(Image spriteSheet, int startFrame) {
+    public Image[] loadFrames(Image spriteSheet, int startFrame) {
         Image[] frames = new Image[6];
         int spriteWidth = 16;
         int spriteHeight = 32;
