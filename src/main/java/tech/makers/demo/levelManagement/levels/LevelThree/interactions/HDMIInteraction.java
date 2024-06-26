@@ -26,7 +26,7 @@ public class HDMIInteraction extends Interaction {
             sound.setFile(20);
             sound.setVolume(-2.0f); // Set volume as needed
             sound.play();
-            showAlert("You plugged the MacBook into the screen.");
+            showAlert("You plugged the MacBook into the screen and give the best presentation! It's time to end your journey, please exit through the door!");
             Door.unlock();
         } else if (!macbookInteraction.hasMacbook() || !cableInteraction.hasCable()) {
             sound.setFile(15);
